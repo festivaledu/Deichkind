@@ -1,5 +1,6 @@
 package ml.festival.edu.deichkind
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -69,7 +70,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 // Handle the camera action
             }
             R.id.nav_gallery -> {
-
+                val intent = Intent(this, TestActivity::class.java)
+                startActivity(intent)
             }
             R.id.nav_slideshow -> {
 
