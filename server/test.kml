@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Unbenannte Ebene</name>
+    <Style id="line-000000-1200-nodesc-normal">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.2</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <Style id="line-000000-1200-nodesc-highlight">
+      <LineStyle>
+        <color>ff000000</color>
+        <width>1.8</width>
+      </LineStyle>
+      <BalloonStyle>
+        <text><![CDATA[<h3>$[name]</h3>]]></text>
+      </BalloonStyle>
+    </Style>
+    <StyleMap id="line-000000-1200-nodesc">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#line-000000-1200-nodesc-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#line-000000-1200-nodesc-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Placemark>
+      <name>Räber Spring</name>
+      <styleUrl>#line-000000-1200-nodesc</styleUrl>
+      <LineString>
+        <tessellate>1</tessellate>
+        <coordinates>
+          10.3740095,52.8616643,0
+          10.3744494,52.8618651,0
+          10.3745567,52.8619817,0
+          10.3756617,52.8626294,0
+          10.37593,52.8628691,0
+          10.3778612,52.864022,0
+          10.3784083,52.8642617,0
+          10.3786873,52.8643394,0
+          10.3812193,52.8653951,0
+          10.3822814,52.8662177,0
+          10.383129,52.8667553,0
+          10.384513,52.8670208,0
+          10.3862833,52.8682384,0
+          10.3876566,52.8687695,0
+          10.3889762,52.8691516,0
+          10.3891586,52.8691321,0
+          10.3892659,52.8691516,0
+          10.3893261,52.8691171,0
+          10.3893422,52.869007,0
+          10.3897982,52.8690297,0
+          10.3900449,52.8690847,0
+          10.3900771,52.8691624,0
+          10.3902273,52.8692369,0
+          10.3902863,52.8693179,0
+          10.3908979,52.869687,0
+          10.3908474,52.8698642,0
+          10.3909654,52.869984,0
+          10.3909547,52.8701362,0
+          10.3914643,52.8704406,0
+          10.3917969,52.8704406,0
+          10.3918184,52.8705118,0
+          10.391931,52.870596,0
+          10.3921081,52.8706025,0
+          10.3941197,52.8704665,0
+          10.3956243,52.8708391,0
+          10.4059883,52.8737144,0
+        </coordinates>
+      </LineString>
+    </Placemark>
+  </Document>
+</kml>
