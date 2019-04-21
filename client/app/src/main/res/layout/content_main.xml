@@ -10,24 +10,34 @@
         tools:context=".MainActivity">
 
     <android.support.design.widget.TabLayout
-            android:layout_height="0dp" tools:layout_editor_absoluteY="5dp"
-            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="parent" android:layout_width="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_width="0dp"
+            app:layout_constraintTop_toTopOf="parent" android:background="@color/colorPrimary"
+            app:tabSelectedTextColor="@android:color/white" app:tabTextColor="#8FFFFFFF">
 
         <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Monday"/>
+                android:text="Monday" android:foreground="@android:color/white"/>
 
         <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tuesday"/>
+                android:text="Tuesday" android:foreground="@android:color/white"/>
 
         <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wednesday"/>
+                android:text="Wednesday" android:foreground="@android:color/white"/>
     </android.support.design.widget.TabLayout>
+
+    <ListView
+            android:id="@+id/list_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="48dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
