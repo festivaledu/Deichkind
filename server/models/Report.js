@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
 			}
 		}
 	});
-	Report.associate = function({ Account, Dyke, Comment }) {
+	Report.associate = function({ Account, Dyke, Comment, ReportPhoto }) {
 		// associations can be defined here
 		Report.belongsTo(Account, {
 			foreignKey: "accountId"
@@ -47,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
 		Report.hasMany(Comment, {
 			foreignKey: "reportId",
 			as: "comments",
+			onDelete: "CASCADE"
+		});
+		Report.hasMany(ReportPhoto, {
+			foreignKey: "reportId",
+			as: "photos",
 			onDelete: "CASCADE"
 		});
 	};

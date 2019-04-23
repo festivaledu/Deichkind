@@ -208,6 +208,55 @@ router.get("/", (req, res) => {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any comment with identifier {commentId}"]
 				}
+			},
+			"GET /:reportId/photos": {
+				method: "GET",
+				description: "Gets a list of photos linked to a specific report",
+				errors: {
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photos"]
+				}
+			},
+			"POST /:reportId/photos": {
+				method: "POST",
+				description: "Adds a list of photos to a report",
+				parameters: {
+					files: "A list of files to add to a report. The FormData class requires a name for each file uploaded (see Object), which can be anything since the API only cares about the list of files itself (see Array)"
+				},
+				errors: {
+					[httpStatus.BAD_REQUEST]: ["No photos supplied"],
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
+				}
+			},
+			"DELETE /:reportId/photos": {
+				method: "DELETE",
+				description: "Deletes every photo associated to a report",
+				errors: {
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photos"]
+				}
+			},
+			"GET /:reportId/photos/:photoId": {
+				method: "GET",
+				description: "Gets the details of a specific photo linked to a report",
+				errors: {
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photo with identifier {commentId}"]
+				}
+			},
+			"GET /:reportId/photos/:photoId/file": {
+				method: "GET",
+				description: "Gets the binary data for a photo linked to a report",
+				errors: {
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photo with identifier {commentId}"]
+				}
+			},
+			"DELETE /:reportId/photos/:photoId": {
+				method: "DELETE",
+				description: "Deletes a specific photo associated to a report",
+				errors: {
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photo with identifier {photoId}"]
+				}
 			}
 		}
 	});
