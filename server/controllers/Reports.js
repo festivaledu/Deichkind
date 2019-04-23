@@ -169,7 +169,7 @@ router.post("/:reportId/comment", (req, res) => {
 		});
 		
 		Comment.create({
-			id: String.prototype.concat(reportObj.id, account.id, new Date().getTime()),
+			id: String.prototype.concat(reportObj.dykeId, reportObj.id, account.id, new Date().getTime()),
 			dykeId: reportObj.dykeId,
 			reportId: reportObj.id,
 			message: req.body.message,
