@@ -61,7 +61,7 @@ httpServer.use("/", (req, res, next) => {
 	req.models = db.models;
 	return next();
 });
-//httpServer.use(controllers);
+httpServer.use(controllers);
 
 httpServer.listen(3000, () => {
 	console.log('Server is up on port 3000');
