@@ -20,6 +20,12 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		latitude: DataTypes.STRING,
 		longitude: DataTypes.STRING,
+		x: DataTypes.STRING,
+		y: DataTypes.STRING,
+		category: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
 		accountId: {
 			type: DataTypes.STRING(32),
 			allowNull: false
