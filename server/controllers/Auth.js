@@ -59,7 +59,7 @@ router.post("/register", (req, res) => {
 			return res
 				.status(httpStatus.OK)
 				.cookie("authToken", token, {
-					expires: new Date().getTime() + (7200 * 1000),
+					expiresIn: new Date().getTime() + (7200 * 1000),
 					httpOnly: true
 				})
 				.json({
