@@ -9,7 +9,18 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			primaryKey: true,
 		},
-		name: DataTypes.STRING,
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		city: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
+		state: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
 		kmlFile: {
 			type: DataTypes.BLOB,
 			allowNull: false
