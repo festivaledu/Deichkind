@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 			as: "comments",
 			where: { deleted: false },
 			separate: true,
-			order: [["createdAt", "ASC"]],
+			order: [["createdAt", "DESC"]],
 		}]
 	}).then(reportList => {
 		if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
@@ -54,7 +54,7 @@ router.get("/:reportId", (req, res) => {
 			as: "comments",
 			where: { deleted: false },
 			separate: true,
-			order: [["createdAt", "ASC"]],
+			order: [["createdAt", "DESC"]],
 		}],
 	}).then(reportObj => {
 		if (!reportObj) return res.status(httpStatus.NOT_FOUND).send({
@@ -131,7 +131,7 @@ router.get("/:reportId/comments", (req, res) => {
 				reportId: reportObj.id,
 				deleted: false
 			},
-			order: [["createdAt", "ASC"]],
+			order: [["createdAt", "DESC"]],
 		})
 	}).then(commentList => {
 		if (!commentList || !commentList.length) return res.status(httpStatus.NOT_FOUND).send({
@@ -208,8 +208,7 @@ router.get("/:reportId/comments/:commentId", (req, res) => {
 				id: req.params.commentId,
 				reportId: reportObj.id,
 				deleted: false
-			},
-			order: [["createdAt", "ASC"]],
+			}
 		});
 	}).then(commentObj => {
 		if (!commentObj) return res.status(httpStatus.NOT_FOUND).send({
@@ -252,8 +251,7 @@ router.delete("/:reportId/comments/:commentId", (req, res) => {
 				id: req.params.commentId,
 				reportId: reportObj.id,
 				deleted: false
-			},
-			order: [["createdAt", "ASC"]],
+			}
 		});
 	}).then(commentObj => {
 		if (!commentObj) return res.status(httpStatus.NOT_FOUND).send({
