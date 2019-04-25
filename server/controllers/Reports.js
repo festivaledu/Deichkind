@@ -27,11 +27,11 @@ router.get("/", (req, res) => {
 			order: [["createdAt", "DESC"]],
 		}]
 	}).then(reportList => {
-		if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
-			name: httpStatus[httpStatus.NOT_FOUND],
-			code: httpStatus.NOT_FOUND,
-			message: "There are no reports to show"
-		});
+		// if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
+		// 	name: httpStatus[httpStatus.NOT_FOUND],
+		// 	code: httpStatus.NOT_FOUND,
+		// 	message: "There are no reports to show"
+		// });
 		
 		return res.status(httpStatus.OK).send(reportList);
 	}).catch(error => ErrorHandler(req, res, error));
@@ -302,11 +302,11 @@ router.get("/:reportId/photos", (req, res) => {
 			order: [["createdAt", "ASC"]],
 			attributes: { exclude: ["photoData"] },
 		}).then(photoList => {
-			if (!photoList || !photoList.length) return res.status(httpStatus.NOT_FOUND).send({
-				name: httpStatus[httpStatus.NOT_FOUND],
-				code: httpStatus.NOT_FOUND,
-				message: "Report does not have any photos"
-			});
+			// if (!photoList || !photoList.length) return res.status(httpStatus.NOT_FOUND).send({
+			// 	name: httpStatus[httpStatus.NOT_FOUND],
+			// 	code: httpStatus.NOT_FOUND,
+			// 	message: "Report does not have any photos"
+			// });
 			
 			return res.status(httpStatus.OK).send(photoList);
 		}).catch(error => ErrorHandler(req, res, error));

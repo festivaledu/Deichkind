@@ -28,11 +28,11 @@ router.get("/", (req, res) => {
 		}],
 		attributes: { exclude: ["kmlFile"] }
 	}).then(dykeList => {
-		if (!dykeList || !dykeList.length) return res.status(httpStatus.NOT_FOUND).send({
-			name: httpStatus[httpStatus.NOT_FOUND],
-			code: httpStatus.NOT_FOUND,
-			message: "No dykes found"
-		});
+		// if (!dykeList || !dykeList.length) return res.status(httpStatus.NOT_FOUND).send({
+		// 	name: httpStatus[httpStatus.NOT_FOUND],
+		// 	code: httpStatus.NOT_FOUND,
+		// 	message: "No dykes found"
+		// });
 		
 		return res.status(httpStatus.OK).send(dykeList);
 	}).catch(error => ErrorHandler(req, res, error));
@@ -250,11 +250,11 @@ router.get("/:dykeId/reports", (req, res) => {
 			}]
 		});
 	}).then(reportList => {
-		if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
-			name: httpStatus[httpStatus.NOT_FOUND],
-			code: httpStatus.NOT_FOUND,
-			message: "Dyke does not have any reports"
-		});
+		// if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
+		// 	name: httpStatus[httpStatus.NOT_FOUND],
+		// 	code: httpStatus.NOT_FOUND,
+		// 	message: "Dyke does not have any reports"
+		// });
 		
 		return res.status(httpStatus.OK).send(reportList);
 	}).catch(error => ErrorHandler(req, res, error));
