@@ -14,7 +14,7 @@ let asyncForEach = async (array, callback) => {
  * GET /reports
  */
 router.get("/", (req, res) => {
-	const { Report, Comment } = req.models;
+	const { Report, Comment, ReportPhoto } = req.models;
 	
 	Report.findAll({
 		where: { deleted: false },
@@ -25,6 +25,14 @@ router.get("/", (req, res) => {
 			where: { deleted: false },
 			separate: true,
 			order: [["createdAt", "DESC"]],
+		}, 
+		{
+			model: ReportPhoto,
+			as: "photos",
+			attributes: ["id", "photoMime", "createdAt", "updatedAt"],
+			where: { deleted: false },
+			separate: true,
+			order: [["createdAt", "DESC"]]
 		}]
 	}).then(reportList => {
 		// if (!reportList || !reportList.length) return res.status(httpStatus.NOT_FOUND).send({
@@ -41,7 +49,7 @@ router.get("/", (req, res) => {
  * GET /reports/:reportId
  */
 router.get("/:reportId", (req, res) => {
-	const { Report, Comment } = req.models;
+	const { Report, Comment, ReportPhoto } = req.models;
 	
 	Report.findOne({
 		where: {
@@ -55,6 +63,14 @@ router.get("/:reportId", (req, res) => {
 			where: { deleted: false },
 			separate: true,
 			order: [["createdAt", "DESC"]],
+		},
+		{
+			model: ReportPhoto,
+			as: "photos",
+			attributes: ["id", "photoMime", "createdAt", "updatedAt"],
+			where: { deleted: false },
+			separate: true,
+			order: [["createdAt", "DESC"]]
 		}],
 	}).then(reportObj => {
 		if (!reportObj) return res.status(httpStatus.NOT_FOUND).send({
