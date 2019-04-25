@@ -122,7 +122,9 @@ router.get("/:userId/avatar", (req, res) => {
 			message: "User does not have any profile image"
 		});
 		
-		return res.status(httpStatus.OK).send(accountObj);
+		res.header("Content-Type", accountObj.profileImageMime);
+		res.write(accountObj.profileImage, "binary");
+		return res.end(undefined, "binary");
 	}).catch(error => ErrorHandler(req, res, error));
 });
 
