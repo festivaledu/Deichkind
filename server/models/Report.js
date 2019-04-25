@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING(32),
 			allowNull: false
 		},
+		resolved: {
+			type: DataTypes.BOOLEAN,
+			defaultValue: false
+		},
 		deleted: {
 			type: DataTypes.BOOLEAN,
 			defaultValue: false
