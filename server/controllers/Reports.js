@@ -24,7 +24,7 @@ router.get("/", (req, res) => {
 			as: "comments",
 			where: { deleted: false },
 			separate: true,
-			order: [["createdAt", "DESC"]],
+			order: [["createdAt", "ASC"]],
 		}, 
 		{
 			model: ReportPhoto,
@@ -62,7 +62,7 @@ router.get("/:reportId", (req, res) => {
 			as: "comments",
 			where: { deleted: false },
 			separate: true,
-			order: [["createdAt", "DESC"]],
+			order: [["createdAt", "ASC"]],
 		},
 		{
 			model: ReportPhoto,
@@ -147,7 +147,7 @@ router.get("/:reportId/comments", (req, res) => {
 				reportId: reportObj.id,
 				deleted: false
 			},
-			order: [["createdAt", "DESC"]],
+			order: [["createdAt", "ASC"]],
 		})
 	}).then(commentList => {
 		if (!commentList || !commentList.length) return res.status(httpStatus.NOT_FOUND).send({
