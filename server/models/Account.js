@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
 		profileImage: {
 			type: DataTypes.BLOB
 		},
+		profileImageMime: {
+			type: DataTypes.STRING
+		},
 		lastLogin: {
 			type: DataTypes.DATE
 		}

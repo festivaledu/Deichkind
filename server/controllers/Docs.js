@@ -27,6 +27,25 @@ router.get("/", (req, res) => {
 				method: "DELETE",
 				description: "Deletes the currently logged in user account and associated items"
 			},
+			"GET /me/avatar": {
+				method: "GET",
+				description: "Gets the profile image of the currently signed in user",
+				errors: {
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
+					[httpStatus.NOT_FOUND]: ["User does not have any profile image"]
+				}
+			},
+			"PUT /me/avatar": {
+				method: "PUT",
+				description: "Updates the profile image of the currently signed in user",
+				parameters: {
+					file: "The image file to be used as an avatar"
+				},
+				errors: {
+					[httpStatus.BAD_REQUEST]: ["No avatar file specified"],
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
+				}
+			},
 			"GET /:userId": {
 				method: "GET",
 				description: "Gets all public details for a specific user (username, E-Mail, last login)",
