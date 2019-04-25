@@ -39,9 +39,9 @@ module.exports = (sequelize, DataTypes) => {
 	});
 	Dyke.associate = function({Account, Report}) {
 		// associations can be defined here
-		Dyke.belongsTo(Account, {
-			foreignKey: "accountId",
-		});
+		// Dyke.belongsTo(Account, {
+		// 	foreignKey: "accountId",
+		// });
 		Dyke.hasMany(Report, {
 			foreignKey: "dykeId",
 			as: "reports",

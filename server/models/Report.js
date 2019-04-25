@@ -44,12 +44,12 @@ module.exports = (sequelize, DataTypes) => {
 	});
 	Report.associate = function({ Account, Dyke, Comment, ReportPhoto }) {
 		// associations can be defined here
-		Report.belongsTo(Account, {
-			foreignKey: "accountId"
-		});
-		Report.belongsTo(Dyke, {
-			foreignKey: "dykeId"
-		});
+		// Report.belongsTo(Account, {
+		// 	foreignKey: "accountId"
+		// });
+		// Report.belongsTo(Dyke, {
+		// 	foreignKey: "dykeId"
+		// });
 		Report.hasMany(Comment, {
 			foreignKey: "reportId",
 			as: "comments",

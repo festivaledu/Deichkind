@@ -41,17 +41,17 @@ module.exports = (sequelize, DataTypes) => {
 	
 	Comment.associate = function({ Account, Dyke, Report }) {
 		// associations can be defined here
-		Comment.belongsTo(Account, {
-			foreignKey: "accountId"
-		});
+		// Comment.belongsTo(Account, {
+		// 	foreignKey: "accountId"
+		// });
 		
-		Comment.belongsTo(Dyke, {
-			foreignKey: "dykeId"
-		});
+		// Comment.belongsTo(Dyke, {
+		// 	foreignKey: "dykeId"
+		// });
 		
-		Comment.belongsTo(Report, {
-			foreignKey: "reportId"
-		});
+		// Comment.belongsTo(Report, {
+		// 	foreignKey: "reportId"
+		// });
 	};
 	
 	return Comment;

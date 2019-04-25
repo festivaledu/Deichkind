@@ -44,15 +44,15 @@ module.exports = (sequelize, DataTypes) => {
 	});
 	ReportPhoto.associate = function({ Account, Dyke, Comment, Report }) {
 		// associations can be defined here
-		ReportPhoto.belongsTo(Account, {
-			foreignKey: "accountId"
-		});
-		ReportPhoto.belongsTo(Dyke, {
-			foreignKey: "dykeId"
-		});
-		ReportPhoto.belongsTo(Report, {
-			foreignKey: "reportId"
-		});
+		// ReportPhoto.belongsTo(Account, {
+		// 	foreignKey: "accountId"
+		// });
+		// ReportPhoto.belongsTo(Dyke, {
+		// 	foreignKey: "dykeId"
+		// });
+		// ReportPhoto.belongsTo(Report, {
+		// 	foreignKey: "reportId"
+		// });
 	};
 	return ReportPhoto;
 };
