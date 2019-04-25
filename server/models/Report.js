@@ -22,9 +22,10 @@ module.exports = (sequelize, DataTypes) => {
 		longitude: DataTypes.STRING,
 		x: DataTypes.STRING,
 		y: DataTypes.STRING,
-		category: {
-			type: DataTypes.STRING,
-			allowNull: false
+		details: {
+			type: DataTypes.JSON,
+			allowNull: false,
+			defaultValue: {}
 		},
 		accountId: {
 			type: DataTypes.STRING(32),

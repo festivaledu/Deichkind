@@ -144,7 +144,12 @@ router.get("/", (req, res) => {
 				description: "Creates a new report for a specific dyke object",
 				parameters: {
 					title: "The public display name of the created report",
-					message: "The description text of the created report"
+					message: "The description text of the created report",
+					latitude: "The latitudinal position of the issue",
+					longitude: "The longitudinal position of the issue",
+					x: "The horizontal position of the issue on a schematic drawing of the dyke",
+					y: "The vertical position of the issue on a schematic drawing of the dyke",
+					details: "A JSON object representing various details of the issue"
 				},
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
