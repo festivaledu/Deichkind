@@ -16,14 +16,7 @@ router.get("/me", (req, res) => {
 		message: "Invalid authorization token"
 	});
 	
-	return res.status(httpStatus.OK).send({
-		id: account.id,
-		username: account.username,
-		email: account.email,
-		role: account.role,
-		lastLogin: account.lastLogin,
-		createdAt: account.createdAt
-	});
+	return res.status(httpStatus.OK).send(account);
 });
 
 /**

@@ -22,7 +22,8 @@ module.exports = (req, res, next) => {
 		Account.findOne({
 			where: {
 				id: String(decoded.userId)
-			}
+			},
+			attributes: ["id", "username", "email", "role", [Sequelize.fn("COUNT", Sequelize.col("profileImage")), "profileImage"], "lastLogin", "createdAt"]
 		}).then(accountObj => {
 			if (accountObj) {
 				req.account = accountObj;
