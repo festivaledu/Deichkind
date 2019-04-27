@@ -20,8 +20,10 @@ module.exports = (sequelize, DataTypes) => {
 		},
 		latitude: DataTypes.STRING,
 		longitude: DataTypes.STRING,
-		x: DataTypes.STRING,
-		y: DataTypes.STRING,
+		position: {
+			type: DataTypes.STRING,
+			allowNull: false
+		},
 		details: {
 			type: DataTypes.JSON,
 			allowNull: false,
