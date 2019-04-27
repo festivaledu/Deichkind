@@ -84,6 +84,50 @@ router.get("/:reportId", (req, res) => {
 });
 
 /**
+ * PUT /reports/:reportId
+ */
+router.put("/:reportId", (req, res) => {
+	const { account } = req;
+	if (!account) return res.status(httpStatus.UNAUTHORIZED).send({
+		name: httpStatus[httpStatus.UNAUTHORIZED],
+		code: httpStatus.UNAUTHORIZED,
+		message: "Invalid authorization token"
+	});
+	
+	const { Report } = req.models;
+	let reportData = req.body;
+	
+	Report.findOne({
+		where: {
+			id: req.params.reportId,
+			deleted: false
+		},
+	}).then(reportObj => {
+		if (!reportObj) return res.status(httpStatus.NOT_FOUND).send({
+			name: httpStatus[httpStatus.NOT_FOUND],
+			code: httpStatus.NOT_FOUND,
+			message: `No report with identifier ${req.params.reportId} found`
+		});
+		
+		if (reportObj.accountId != account.id) return res.status(httpStatus.UNAUTHORIZED).send({
+			name: httpStatus[httpStatus.UNAUTHORIZED],
+			code: httpStatus.UNAUTHORIZED,
+			message: "You are not allowed to perform this action"
+		});
+		
+		reportObj.update(Object.assign(reportData, {
+			id: reportObj.id,
+			dykeId: reportObj.dykeId,
+			accountId: reportObj.accountId,
+			createdAt: reportObj.createdAt,
+			updatedAt: reportObj.updatedAt
+		})).then(reportObj => {
+			return res.status(httpStatus.OK).send(reportObj);
+		}).catch(error => ErrorHandler(req, res, error));
+	}).catch(error => ErrorHandler(req, res, error));
+});
+
+/**
  * DELETE /reports/:reportId
  */
 router.delete("/:reportId", (req, res) => {
