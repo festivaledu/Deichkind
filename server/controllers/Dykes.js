@@ -288,7 +288,9 @@ router.post("/:dykeId/reports/new", async (req, res) => {
 	Report.create(Object.assign(reportData, {
 		id: String.prototype.concat(dykeObj.id, account.id, new Date().getTime()),
 		dykeId: dykeObj.id,
-		accountId: account.id
+		accountId: account.id,
+		resolved: false,
+		deleted: false
 	})).then(reportObj => {
 		Comment.create({
 			id: String.prototype.concat(dykeObj.id, reportObj.id, account.id, new Date().getTime()),

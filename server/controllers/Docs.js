@@ -109,6 +109,8 @@ router.get("/", (req, res) => {
 				description: "Creates a new dyke object and stores the specified KML file in the database",
 				parameters: {
 					name: "The dyke's public display name",
+					city: "The city the dyke is located in or related to",
+					state: "The state the dyke is located in (not to be mixed up with country)",
 					file: "The dyke's KML file to be displayed in a map view"
 				},
 				errors: {
@@ -166,8 +168,7 @@ router.get("/", (req, res) => {
 					message: "The description text of the created report",
 					latitude: "The latitudinal position of the issue",
 					longitude: "The longitudinal position of the issue",
-					x: "The horizontal position of the issue on a schematic drawing of the dyke",
-					y: "The vertical position of the issue on a schematic drawing of the dyke",
+					position: "The position of the issue on a schematic drawing of the dyke",
 					details: "A JSON object representing various details of the issue"
 				},
 				errors: {
@@ -188,6 +189,23 @@ router.get("/", (req, res) => {
 				method: "GET",
 				description: "Returns a report by its database id",
 				errors: {
+					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
+				}
+			},
+			"PUT /:reportId": {
+				method: "PUT",
+				description: "Updates a report by its database id",
+				parameters: {
+					title: "The public display name of the created report",
+					message: "The description text of the created report",
+					latitude: "The latitudinal position of the issue",
+					longitude: "The longitudinal position of the issue",
+					position: "The position of the issue on a schematic drawing of the dyke",
+					details: "A JSON object representing various details of the issue",
+					resolved: "Marks a report as resolved"
+				},
+				errors: {
+					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
 				}
 			},
