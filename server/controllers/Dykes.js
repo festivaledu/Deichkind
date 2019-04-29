@@ -62,7 +62,7 @@ router.post("/new", async (req, res) => {
 		message: `Dyke with name ${dykeData.name} already exists`
 	});
 	
-	if (!req.files || !req.files.file) return res.status(httpStatus.NOT_FOUND).send({
+	if (!req.files || !req.files.file) return res.status(httpStatus.BAD_REQUEST).send({
 		name: httpStatus[httpStatus.BAD_REQUEST],
 		code: httpStatus.BAD_REQUEST,
 		message: "No dyke file specified"
