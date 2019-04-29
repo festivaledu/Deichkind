@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Alku</string>
+    <string name="main_tab_dykes_name">Deiche</string>
+    <string name="main_tab_reports_name">Meldungen</string>
+    <string name="create_report_waterloss_title">Wasserverlust</string>
+    <string name="create_report_watercondition_title">Wasserbeschaffenheit</string>
+    <string name="create_report_type_title">Meldungsart</string>
+    <string name="create_report_title">Neue Meldung erstellen</string>
+    <string name="create_report_leakagetype_title">Austrittsart</string>
+    <string name="create_report_deformationtype_title">Verformung</string>
+
+    <string-array name="report_spinner_type_values">
+        <item>Erstmeldung</item>
+        <item>Folgemeldung</item>
+    </string-array>
+
+    <string-array name="report_spinner_waterloss_values">
+        <item>Nur feuchte Fläche</item>
+        <item>Punktuell</item>
+        <item>Flächig</item>
+        <item>Anderes</item>
+    </string-array>
+
+    <string-array name="report_spinner_watercondition_values">
+        <item>Klar</item>
+        <item>Trüb</item>
+        <item>Transportiert Feinmaterial</item>
+        <item>Anderes</item>
+    </string-array>
+
+    <string-array name="report_spinner_leakagetype_values">
+        <item>Stehend</item>
+        <item>Fließend</item>
+        <item>Sprudelnd</item>
+        <item>Anderes</item>
+    </string-array>
+
+    <string-array name="report_spinner_deformationtype_values">
+        <item>Aufwölben / Hebung</item>
+        <item>Einsackung</item>
+        <item>Rutschung des Oberbodens</item>
+        <item>Verschiebung / Gleiten</item>
+        <item>Rutschung der Böschung</item>
+        <item>Anderes</item>
+    </string-array>
+    <string name="main_drawer_dykes_name">Deiche</string>
+    <string name="main_drawer_profile_name">Profil</string>
+    <string name="main_drawer_reports_name">Meldungen</string>
+    <string name="main_drawer_settings_name">Einstellungen</string>
+    <string name="main_drawer_solved_name">Erledigte Meldungen</string>
+    <string name="profile_title">Profil</string>
+    <string name="settings_title">Einstellungen</string>
+    <string name="create_report_waterloss_hint">Beschreibe den Wasserverlust</string>
+    <string name="create_report_watercondition_hint">Beschreibe die Wasserbeschaffenheit</string>
+    <string name="create_report_leakagetype_hint">Beschreibe die Austrittsart</string>
+    <string name="create_report_deformationtype_hint">Beschreibe die Verformung</string>
+    <string name="create_report_title_hint">Titel der Meldung</string>
+</resources>
