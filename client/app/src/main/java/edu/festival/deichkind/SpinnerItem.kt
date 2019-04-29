@@ -1,4 +1,4 @@
-package edu.festival.deichkind.models
+package edu.festival.deichkind
 
 class SpinnerItem(private var key: String, private var display: String) {
 

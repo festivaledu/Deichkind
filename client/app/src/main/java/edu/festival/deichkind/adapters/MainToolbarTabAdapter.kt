@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
 import edu.festival.deichkind.R
-import edu.festival.deichkind.fragments.DykesListFragment
+import edu.festival.deichkind.fragments.DykeListFragment
 import edu.festival.deichkind.fragments.ReportsListFragment
 
 class MainToolbarTabAdapter (fm: FragmentManager, c: Context) : FragmentPagerAdapter(fm) {
@@ -19,7 +19,7 @@ class MainToolbarTabAdapter (fm: FragmentManager, c: Context) : FragmentPagerAda
     override fun getItem(itemId: Int): Fragment? {
         return when (itemId) {
             0 -> ReportsListFragment()
-            1 -> DykesListFragment()
+            1 -> DykeListFragment()
             else -> null
         }
     }
