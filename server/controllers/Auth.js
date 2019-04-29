@@ -60,7 +60,7 @@ router.post("/register", (req, res) => {
 				.status(httpStatus.OK)
 				.cookie("authToken", token, {
 					expiresIn: new Date().getTime() + (7200 * 1000),
-					httpOnly: true
+					//httpOnly: true
 				})
 				.json({
 					auth: true,
@@ -119,7 +119,7 @@ router.post("/login", (req, res) => {
 			.status(httpStatus.OK)
 			.cookie("authToken", token, {
 				expiresIn: new Date().getTime() + (7200 * 1000),
-				httpOnly: true
+				//httpOnly: true
 			})
 			.json({
 				auth: true,
@@ -151,7 +151,7 @@ router.get("/verify", (req, res) => {
 		.status(httpStatus.OK)
 		.cookie("authToken", token, {
 			expiresIn: new Date().getTime() + (7200 * 1000),
-			httpOnly: true
+			//httpOnly: true
 		})
 		.json({
 			auth: true,
