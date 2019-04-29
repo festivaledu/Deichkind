@@ -27,8 +27,8 @@
 
 			<md-card-actions>
 				<md-progress-spinner md-mode="indeterminate" :md-diameter="30" :md-stroke="3" v-if="isWorking"></md-progress-spinner>
-				<md-button to="/register" :disabled="isWorking">{{ $t("login.action_register") }}</md-button>
-				<md-button @click="login" :disabled="$v.user.$invalid || isWorking">{{ $t("login.action_signin") }}</md-button>
+				<md-button class="md-primary" to="/register" :disabled="isWorking">{{ $t("login.action_register") }}</md-button>
+				<md-button class="md-primary" @click="login" :disabled="$v.user.$invalid || isWorking">{{ $t("login.action_signin") }}</md-button>
 			</md-card-actions>
 		</md-card>
 		
