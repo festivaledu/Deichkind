@@ -143,7 +143,7 @@ router.get("/:dykeId", (req, res) => {
 /**
  * PUT /dykes/:dykeId
  */
-router.put("/:dykeId", (req, res) => {
+router.put("/:dykeId", async (req, res) => {
 	const { account } = req;
 	if (!account) return res.status(httpStatus.UNAUTHORIZED).send({
 		name: httpStatus[httpStatus.UNAUTHORIZED],
@@ -154,6 +154,31 @@ router.put("/:dykeId", (req, res) => {
 	const { Dyke } = req.models;
 	let dykeData = req.body;
 	let dykeFile = req.files && req.files.file ? req.files.file : undefined;
+	
+	if (dykeFile) {
+		const xmlParser = new xml2js.Parser();
+		let parsed = await new Promise(function(resolve, reject) {
+			try {
+				xmlParser.parseString(dykeFile.data, (err, result) => {
+					if (err) {
+						reject(false);
+					} else {
+						resolve(result);
+					}
+				});
+			} catch (err) {
+				reject(false);
+			}
+		}).catch(some => {
+			
+		});
+
+		if (!parsed) return res.status(httpStatus.BAD_REQUEST).send({
+			name: httpStatus[httpStatus.BAD_REQUEST],
+			code: httpStatus.BAD_REQUEST,
+			message: "Dyke file does not contain valid XML"
+		});
+	}
 	
 	Dyke.findOne({
 		where: { id: req.params.dykeId }

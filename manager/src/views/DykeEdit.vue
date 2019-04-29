@@ -59,7 +59,7 @@
 						
 						<md-field>
 							<label>{{ $t("dykes.fields.replaceKML") }}</label>
-							<md-file v-model="replacementKML" @input="$v.$touch()" accept="application/vnd.google-earth.kml+xml, .kml" :disabled="isWorking || !isOwnedDyke" />
+							<md-file v-model="replacementKML" @input="$v.$touch()" accept="application/vnd.google-earth.kml+xml, .kml" :disabled="isWorking || !isOwnedDyke" ref="fuckingFileSelector" />
 						</md-field>
 					</form>
 				</div>
@@ -155,7 +155,14 @@ export default {
 		},
 		async saveDyke() {
 			this.isWorking = true;
-			let result = await DykeAPI.updateDykeById(this.$route.params.dykeId, this.dykeData);
+			
+			let formData = new FormData();
+			for (var key in this.dykeData) {
+				formData.append(key, this.dykeData[key]);
+			}
+			formData.append("file", this.$refs["fuckingFileSelector"].$refs["inputFile"].files[0]);
+			
+			let result = await DykeAPI.updateDykeById(this.$route.params.dykeId, formData);
 			
 			if (result.status != 200) {
 				this.isWorking = false;
