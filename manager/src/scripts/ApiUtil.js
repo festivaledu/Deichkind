@@ -1,6 +1,5 @@
 import { get, post, put, delete as _delete } from "axios";
-// const apiUrl = `${window.location.origin}/api`;
-const apiUrl = "http://localhost:3000"
+const apiUrl = `${window.location.origin}/api`;
 
 export class AccountAPI {
 	static async getMe() {

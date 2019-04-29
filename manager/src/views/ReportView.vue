@@ -37,8 +37,8 @@
 				<div v-else-if="reportData && dykeData">
 					<md-subheader>{{ $t("reports.photos") }}</md-subheader>
 					<div class="row">
-						<a :href="`http://localhost:3000/reports/${reportData.id}/photos/${photoObj.id}/file`" target="_blank" class="col col-4 col-md-2 col-photo" v-for="(photoObj, index) in reportData.photos" :key="`photo_${index}`">
-							<img :src="`http://localhost:3000/reports/${reportData.id}/photos/${photoObj.id}/file`" />
+						<a :href="`${currentOrigin}/reports/${reportData.id}/photos/${photoObj.id}/file`" target="_blank" class="col col-4 col-md-2 col-photo" v-for="(photoObj, index) in reportData.photos" :key="`photo_${index}`">
+							<img :src="`${currentOrigin}/api/reports/${reportData.id}/photos/${photoObj.id}/file`" />
 						</a>
 					</div>
 					
@@ -63,7 +63,7 @@
 						<div v-for="(comment, index) in reportData.comments" :key="`comment_${index}`">
 							<md-list-item>
 								<md-avatar v-if="userData[comment.accountId].profileImage">
-									<img :src="`http://localhost:3000/account/${comment.accountId}/avatar`">
+									<img :src="`${currentOrigin}/api/account/${comment.accountId}/avatar`">
 								</md-avatar>
 								<md-avatar class="md-avatar-icon" v-else>
 									<md-ripple>{{ initials(userData[comment.accountId].username) }}</md-ripple>
@@ -279,6 +279,9 @@ export default {
 	computed: {
 		isOwnedReport() {
 			return this.reportData != null && this.$store.getters.accountId === this.reportData.accountId
+		},
+		currentOrigin() {
+			return window.location.origin;
 		}
 	},
 	filters: {

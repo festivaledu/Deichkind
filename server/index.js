@@ -48,6 +48,7 @@ db.sequelize.sync();
 
 //#region HTTP Server
 const httpServer = express();
+const serveStatic = require("serve-static");
 const controllers = require("./controllers");
 
 httpServer.use(morgan("\x1b[34m[INFO]\x1b[0m [:date[iso]] :remote-addr \":method :url HTTP/:http-version\" :status (:res[content-length] bytes)"));
@@ -57,11 +58,13 @@ httpServer.use(bodyParser.json());
 httpServer.use(cookieParser());
 httpServer.use(fileupload());
 
-httpServer.use("/", (req, res, next) => {
+httpServer.use("/", serveStatic(path.join(__dirname, "dist")));
+
+httpServer.use("/api", (req, res, next) => {
 	req.models = db.models;
 	return next();
 });
-httpServer.use(controllers);
+httpServer.use("/api", controllers);
 
 httpServer.listen(3000, () => {
 	console.log('Server is up on port 3000');

@@ -33,7 +33,7 @@
 						
 						<md-list-item v-for="(reportItem, index) in reportData" :to="`/reports/${reportItem.id}`" :key="`report_${index}`">
 							<md-avatar v-if="userData[reportItem.accountId].profileImage">
-								<img :src="`http://localhost:3000/account/${reportItem.accountId}/avatar`">
+								<img :src="`${currentOrigin}/api/account/${reportItem.accountId}/avatar`">
 							</md-avatar>
 							<md-avatar class="md-avatar-icon" v-else>
 								<md-ripple>{{ initials(userData[reportItem.accountId].username) }}</md-ripple>
@@ -146,6 +146,11 @@ export default {
 			}
 			
 			return initials;
+		}
+	},
+	computed: {
+		currentOrigin() {
+			return window.location.origin;
 		}
 	},
 	filters: {
