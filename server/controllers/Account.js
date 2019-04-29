@@ -22,12 +22,29 @@ router.get("/me", (req, res) => {
 /**
  * PUT /me
  */
-router.put("/me", (req, res) => {
+router.put("/me", async (req, res) => {
 	const { account } = req;
 	if (!account) return res.status(httpStatus.UNAUTHORIZED).send({
 		name: httpStatus[httpStatus.UNAUTHORIZED],
 		code: httpStatus.UNAUTHORIZED,
 		message: "Invalid authorization token"
+	});
+	
+	let { Account } = req.models;
+	let existing = await Account.findOne({
+		where: Object.assign(JSON.parse(JSON.stringify({
+			username: req.body.username || undefined,
+			email: req.body.email || undefined,
+		})), {
+			id: {
+				[Sequelize.Op.ne]: account.id,
+			}
+		})
+	});
+	if (existing) return res.status(httpStatus.CONFLICT).send({
+		name: httpStatus[httpStatus.CONFLICT],
+		code: httpStatus.CONFLICT,
+		message: "Username or E-Mail address already in use"
 	});
 	
 	account.update(Object.assign(req.body, {
