@@ -1,0 +1,326 @@
+{
+	"en-US": {
+		"app": {
+			"app_name": "Deichkind",
+			"loading": "Loading...",
+			"ok": "Ok",
+			"cancel": "Cancel",
+			"close": "Close",
+			"save": "Save",
+			"error_server_data": "Failed to load server data!",
+			"error_operation": "The operation couldn't be completed!\nThe server returned the following error:",
+			"confirm_cancel": "Are you sure you want to cancel? Any unsaved change will be lost."
+		},
+		"login": {
+			"toolbar_title": "Sign In",
+			"welcome": "Welcome to",
+			"fields": {
+				"username": "Username or E-Mail address",
+				"password": "Password"
+			},
+			"error_message": "There was an error signing you in",
+			"action_register": "Register",
+			"action_signin": "Sign In"
+		},
+		"register": {
+			"toolbar_title": "Register",
+			"welcome": "Register with",
+			"fields": {
+				"username": "Username",
+				"email": "E-Mail Address",
+				"password": "Password",
+				"password_confirm": "Confirm Password"
+			},
+			"field_required": "Required field",
+			"action_register": "Register",
+			"errors": {
+				"409": "Username or E-Mail address already in use",
+				"invalid_email": "Invalid E-Mail address",
+				"password_too_short": "Password too short",
+				"passwords_not_matching": "Passwords do not match"
+			}
+		},
+		"app_drawer": {
+			"menu_dashboard": "Dashboard",
+			"menu_reports": "Reports",
+			"menu_dykes": "Dykes",
+			"menu_api": "API Documentation",
+			"menu_profile": "Profile",
+			"menu_signout": "Sign Out",
+			"action_signout": "Do you really want to sign out? All unsaved progress will be lost."
+		},
+		"dashboard": {
+			"action_showmore": "Show More"
+		},
+		"reports": {
+			"title": "Reports",
+			"no_reports_title": "No Reports",
+			"no_reports_body": "There are currently no reports to show.",
+			"view_report": "View Report",
+			"resolved": "Resolved",
+			"menu": {
+				"action_addComment": "Add Comment",
+				"action_markAsResolved": "Mark as Resolved",
+				"action_deleteReport": "Delete Report"
+			},
+			"photos": "Photos",
+			"details": "Details",
+			"dyke": "Dyke",
+			"detailKeys": {
+				"type": "Report Type",
+				"waterLoss": "Water Loss",
+				"waterCondition": "Water Condition",
+				"leakageType": "Leakage Type",
+				"deformationType": "Deformation Type"
+			},
+			"detailValues": {
+				"type": {
+					"initial": "Initial",
+					"followup": "Follow-Up"
+				},
+				"waterLoss": {
+					"none": "None",
+					"isolated": "Isolated",
+					"punctually": "Punctually",
+					"areally": "Areally"
+				},
+				"waterCondition": {
+					"clear": "Clear",
+					"muddy": "Muddy",
+					"sedimented": "Sedimented"
+				},
+				"leakageType": {
+					"none": "None",
+					"stagnant": "Stagnant",
+					"flowing": "Flowing",
+					"effervescent": "Effervescent"
+				},
+				"deformationType": {
+					"none": "None",
+					"upheavel": "Upheavel", 
+					"bagging": "Bagging", 
+					"slipped-topsoil": "Slipped Topsoil", 
+					"shift": "Shift",
+					"slipped-slope": "Slipped Slope"
+				}
+			},
+			"comments": "Comments",
+			"message_resolved": "Report has been resolved!",
+			"message_deleted": "Report has been successfully deleted!",
+			"confirm_deleteReport": "Are you sure you want to delete this report? This action cannot be undone."
+		},
+		"dykes": {
+			"title": "Dykes",
+			"last_updated": "Last Updated",
+			"no_dykes_title": "No Dykes",
+			"no_dykes_body": "There are currently no dykes to show.",
+			"add_dyke": "Add Dyke",
+			"edit_dyke": "Edit Dyke",
+			"menu": {
+				"action_createDyke": "New Dyke",
+				"action_deleteDyke": "Delete Dyke"
+			},
+			"fields": {
+				"name": "Name",
+				"city": "City",
+				"state": "State",
+				"file": "KML File",
+				"replaceKML": "Replace KML file"
+			},
+			"error_not_allowed": "You are not allowed to edit this dyke.",
+			"message_updated": "Dyke has been updated successfully!",
+			"message_deleted": "Dyke has been deleted successfully!",
+			"confirm_deleteDyke": "Are you sure you want to delete this dyke? This action cannot be undone."
+		},
+		"profile": {
+			"change_avatar": "Change Profile Picture",
+			"change_username": "Change Username",
+			"change_username_dialog": {
+				"title": "Change your Username",
+				"placeholder": "New Username"
+			},
+			"change_email": "Change E-Mail Address",
+			"change_email_dialog": {
+				"title": "Change your E-Mail Address",
+				"placeholder": "New E-Mail Address"
+			},
+			"change_password": "Change Password",
+			"change_password_dialog": {
+				"title": "Change your Password",
+				"placeholder": "New Password",
+				"placeholder_confirm": "Confirm Password"
+			},
+			"errors": {
+				"generic": "There was an error updating your profile. Pleasy try again later.",
+				"password_too_short": "Password too short",
+				"passwords_not_matching": "Passwords do not match"
+			},
+			"avatar_success": "Profile Image has been saved successfully.",
+			"username_success": "Username has been updated successfully.",
+			"email_success": "E-Mail Address has been updated successfully.",
+			"password_success": "Password has been changed successfully."
+		}
+	},
+	"de-DE": {
+		"app": {
+			"app_name": "Deichkind",
+			"loading": "Lade Daten...",
+			"ok": "OK",
+			"cancel": "Abbrechen",
+			"close": "Schließen",
+			"save": "Speichern",
+			"error_server_data": "Laden der Server-Daten fehlgeschlagen!",
+			"error_operation": "Die Anfrage konnte nicht abgeschlossen werden!\nDer Server liefert folgenden Fehler zurück:",
+			"confirm_cancel": "Möchtest du wirklich abbrechen? Sämtlicher nicht gespeicherter Fortschritt geht verloren."
+		},
+		"login": {
+			"toolbar_title": "Anmeldung",
+			"welcome": "Willkommen zu",
+			"fields": {
+				"username": "Benutzername oder E-Mail-Adresse",
+				"password": "Passwort"
+			},
+			"error_message": "Beim Anmelden ist ein Fehler aufgetreten",
+			"action_register": "Registrieren",
+			"action_signin": "Anmelden"
+		},
+		"register": {
+			"toolbar_title": "Registrierem",
+			"welcome": "Registrieren – ",
+			"fields": {
+				"username": "Benutzername",
+				"email": "E-Mail-Adresse",
+				"password": "Passwort",
+				"password_confirm": "Passwort bestätigen"
+			},
+			"field_required": "Benötigtes Feld",
+			"action_register": "Registrieren",
+			"errors": {
+				"409": "Benutzername oder E-Mail-Adresse werden bereits verwendet",
+				"invalid_email": "Ungültige E-Mail-Adresse",
+				"password_too_short": "Passwort zu kurz",
+				"passwords_not_matching": "Passwörter stimmen nicht überein"
+			}
+		},
+		"app_drawer": {
+			"menu_dashboard": "Dashboard",
+			"menu_reports": "Berichte",
+			"menu_dykes": "Deiche",
+			"menu_api": "API-Dokumentation",
+			"menu_profile": "Profil",
+			"menu_signout": "Abmelden",
+			"action_signout": "Möchtest du dich wirklich abmelden? Sämtlicher nicht gespeicherter Fortschritt geht verloren."
+		},
+		"dashboard": {
+			"action_showmore": "Mehr zeigen"
+		},
+		"reports": {
+			"title": "Berichte",
+			"no_reports_title": "Keine Berichte",
+			"no_reports_body": "Es gibt derzeit keine Berichte, die angezeigt werden können.",
+			"view_report": "Bericht Ansehen",
+			"resolved": "Gelöst",
+			"menu": {
+				"action_addComment": "Kommentar hinzufügen",
+				"action_markAsResolved": "Als \"Gelöst\" markieren",
+				"action_deleteReport": "Bericht löschen"
+			},
+			"photos": "Fotos",
+			"details": "Details",
+			"dyke": "Deich",
+			"detailKeys": {
+				"type": "Art der Meldung",
+				"waterLoss": "Wasserverlust",
+				"waterCondition": "Zustand des Wassers",
+				"leakageType": "Wasserverlust",
+				"deformationType": "Verformung"
+			},
+			"detailValues": {
+				"type": {
+					"initial": "Erstmeldung",
+					"followup": "Folgemeldung"
+				},
+				"waterLoss": {
+					"none": "Kein",
+					"isolated": "Isoliert",
+					"punctually": "Punktuell",
+					"areally": "Fächendeckend"
+				},
+				"waterCondition": {
+					"clear": "Klar",
+					"muddy": "Trüb",
+					"sedimented": "Sedimentiert"
+				},
+				"leakageType": {
+					"none": "Kein",
+					"stagnant": "Stehend",
+					"flowing": "Fließend",
+					"effervescent": "Sprudelnd"
+				},
+				"deformationType": {
+					"none": "Keine",
+					"upheavel": "Aufwölbung / Hebung", 
+					"bagging": "Einsackung", 
+					"slipped-topsoil": "Rutschung des Oberbodens", 
+					"shift": "Verschiebung / Gleiten",
+					"slipped-slope": "Rutschung der Böschung"
+				}
+			},
+			"comments": "Kommentare",
+			"message_resolved": "Bericht wurde als \"Gelöst\" markiert!",
+			"message_deleted": "Bericht wurde erfolgreich gelöscht!",
+			"confirm_deleteReport": "Möchtest du diesen Bericht wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+		},
+		"dykes": {
+			"title": "Deiche",
+			"last_updated": "Zuletzt aktualisiert",
+			"no_dykes_title": "Keine Deiche",
+			"no_dykes_body": "Es gibt derzeit keine Deiche, die angezeigt werden können.",
+			"add_dyke": "Deich Hinzufügen",
+			"edit_dyke": "Deich bearbeiten",
+			"menu": {
+				"action_createDyke": "Neuer Deich",
+				"action_deleteDyke": "Deich löschen"
+			},
+			"fields": {
+				"name": "Name",
+				"city": "Stadt",
+				"state": "Bundesland",
+				"file": "KML-Datei",
+				"replaceKML": "KML-Datei ersetzen"
+			},
+			"error_not_allowed": "Dir ist es nicht erlaubt, diesen Deich zu bearbeiten.",
+			"message_updated": "Deich wurde erfolgreich gespeichert!",
+			"message_deleted": "Deich wurde erfolgreich gelöscht!",
+			"confirm_deleteDyke": "Möchtest du diesen Deich wirklich löschen? Diese Aktion kann nicht rückgängig gemacht werden."
+		},
+		"profile": {
+			"change_avatar": "Profilbild ändern",
+			"change_username": "Benutzernamen ändern",
+			"change_username_dialog": {
+				"title": "Benutzernamen ändern",
+				"placeholder": "Neuer Benutzername"
+			},
+			"change_email": "E-Mail-Adresse ändern",
+			"change_email_dialog": {
+				"title": "E-Mail-Adresse ändern",
+				"placeholder": "Neue E-Mail-Adresse"
+			},
+			"change_password": "Passwort ändern",
+			"change_password_dialog": {
+				"title": "Passwort ändern",
+				"placeholder": "Neues Passwort",
+				"placeholder_confirm": "Passwort bestätigen"
+			},
+			"errors": {
+				"generic": "Ein Fehler ist aufgetreten. Bitte versuche es später noch einmal.",
+				"password_too_short": "Passwort zu kurz",
+				"passwords_not_matching": "Passwörter stimmen nicht überein"
+			},
+			"avatar_success": "Profilbild wurde erfolgreich gespeichert.",
+			"username_success": "Benutzername wurde erfolgreich aktualisiert.",
+			"email_success": "E-Mail-Adresse wurde erfolgreich aktualisiert.",
+			"password_success": "Passwort wurde erfolgreich geändert."
+		}
+	}
+}

@@ -1,0 +1,29 @@
+{
+  "name": "manager",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "crypto-js": "^3.1.9-1",
+    "mime-types": "^2.1.24",
+    "vue": "^2.6.10",
+    "vue-cookies": "^1.5.13",
+    "vue-i18n": "^8.11.1",
+    "vue-material": "^1.0.0-beta-10.2",
+    "vue-router": "^3.0.1",
+    "vuelidate": "^0.7.4",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-service": "^3.6.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
+    "vue-template-compiler": "^2.5.21"
+  }
+}
