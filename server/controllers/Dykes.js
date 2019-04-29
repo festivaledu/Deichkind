@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const httpStatus = require("http-status");
+const xml2js = require("xml2js");
 
 const ErrorHandler = require("../helpers/ErrorHandler");
 
@@ -67,6 +68,29 @@ router.post("/new", async (req, res) => {
 		message: "No dyke file specified"
 	});
 	let dykeFile = req.files.file;
+	
+	const xmlParser = new xml2js.Parser();
+	let parsed = await new Promise(function(resolve, reject) {
+		try {
+			xmlParser.parseString(dykeFile.data, (err, result) => {
+				if (err) {
+					reject(false);
+				} else {
+					resolve(result);
+				}
+			});
+		} catch (err) {
+			reject(false);
+		}
+	}).catch(some => {
+		
+	});
+
+	if (!parsed) return res.status(httpStatus.BAD_REQUEST).send({
+		name: httpStatus[httpStatus.BAD_REQUEST],
+		code: httpStatus.BAD_REQUEST,
+		message: "Dyke file does not contain valid XML"
+	});
 	
 	Dyke.create(Object.assign(dykeData, {
 		id: String.prototype.concat(dykeData.name, new Date().getTime()),
