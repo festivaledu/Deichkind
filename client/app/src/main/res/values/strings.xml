@@ -1,16 +1,66 @@
 <resources>
-    <string name="app_name">Deichkind</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Alku</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
+    <string name="main_drawer_close_description" translatable="false"></string>
+    <string name="main_drawer_open_description" translatable="false"></string>
+    <string name="main_drawer_reports_name">Reports</string>
+    <string name="main_drawer_solved_name">Solved</string>
+    <string name="main_drawer_dykes_name">Dykes</string>
+    <string name="main_drawer_profile_name">Profile</string>
+    <string name="main_drawer_settings_name">Settings</string>
+
+    <string name="main_tab_reports_name">Reports</string>
+    <string name="main_tab_dykes_name">Dykes</string>
+
+    <string name="create_report_title">Create new report</string>
+    <string name="create_report_type_title">Report type</string>
+    <string name="create_report_waterloss_title">Water loss</string>
+    <string name="create_report_watercondition_title">Water condition</string>
+    <string name="create_report_leakagetype_title">Leakage type</string>
+    <string name="create_report_deformationtype_title">Deformation type</string>
+
+    <string name="profile_title">Profile</string>
+
+    <string name="settings_title">Settings</string>
+
+    <string-array name="report_spinner_type_values">
+        <item>Initial</item>
+        <item>Follow-up</item>
+    </string-array>
+
+    <string-array name="report_spinner_waterloss_values">
+        <item>Moist area</item>
+        <item>Punctually</item>
+        <item>Areally</item>
+        <item>Other</item>
+    </string-array>
+    
+    <string-array name="report_spinner_watercondition_values">
+        <item>Clear</item>
+        <item>Muddy</item>
+        <item>Sedimented</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="report_spinner_leakagetype_values">
+        <item>Stagnant</item>
+        <item>Flowing</item>
+        <item>Effervescent</item>
+        <item>Other</item>
+    </string-array>
+    
+    <string-array name="report_spinner_deformationtype_values">
+        <item>Upheavel / Raising</item>
+        <item>Bagging</item>
+        <item>Slipped topsoil</item>
+        <item>Shift / Slide</item>
+        <item>Slipped slope</item>
+        <item>Other</item>
+    </string-array>
+    <string name="create_report_waterloss_hint">Describe the water loss</string>
+    <string name="create_report_watercondition_hint">Describe the water condition</string>
+    <string name="create_report_leakagetype_hint">Describe the leakage type</string>
+    <string name="create_report_deformationtype_hint">Describe the deformation type</string>
+    <string name="create_report_title_hint">Report title</string>
+
 </resources>
