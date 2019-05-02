@@ -12,21 +12,21 @@ router.get("/", (req, res) => {
 	const { Dyke, Report, Comment } = req.models;
 	
 	Dyke.findAll({
-		include: [{
-			model: Report,
-			as: "reports",
-			where: { deleted: false },
-			separate: true,
-			attributes: { exclude: ["kmlFile"] },
-			order: [["createdAt", "DESC"]],
-			include: [{
-				model: Comment,
-				as: "comments",
-				where: { deleted: false },
-				separate: true,
-				order: [["createdAt", "ASC"]],
-			}]
-		}],
+		// include: [{
+		// 	model: Report,
+		// 	as: "reports",
+		// 	where: { deleted: false },
+		// 	separate: true,
+		// 	attributes: { exclude: ["kmlFile"] },
+		// 	order: [["createdAt", "DESC"]],
+		// 	include: [{
+		// 		model: Comment,
+		// 		as: "comments",
+		// 		where: { deleted: false },
+		// 		separate: true,
+		// 		order: [["createdAt", "ASC"]],
+		// 	}]
+		// }],
 		attributes: { exclude: ["kmlFile"] }
 	}).then(dykeList => {
 		// if (!dykeList || !dykeList.length) return res.status(httpStatus.NOT_FOUND).send({
