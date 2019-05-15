@@ -4,6 +4,8 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.LoaderManager
+import android.support.v4.content.Loader
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,7 +25,7 @@ import kotlinx.coroutines.runBlocking
 import java.net.URL
 import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.adapters.DykeListAdapter
-
+import edu.festival.deichkind.loaders.DykeListAsyncTaskLoader
 
 class DykeListFragment : Fragment() {
 
@@ -37,32 +39,56 @@ class DykeListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<Button>(R.id.dyke_list_refresh_button).setOnClickListener {
-            tryLoadDykes(view)
+            //tryLoadDykes(view)
         }
 
-        tryLoadDykes(view)
+        //tryLoadDykes(view)
+
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.dyke_list_recycler)
+
+        val loaderCallbacks = object : LoaderManager.LoaderCallbacks<Array<Dyke>> {
+            override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<Array<Dyke>> {
+                return DykeListAsyncTaskLoader(this@DykeListFragment.context as Context)
+            }
+
+            override fun onLoadFinished(p0: Loader<Array<Dyke>>, p1: Array<Dyke>?) {
+                view.findViewById<LinearLayout>(R.id.dyke_list_offline_note).visibility = View.GONE
+
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(context)
+                    adapter = DykeListAdapter(p1 as Array<Dyke>)
+                }
+            }
+
+            override fun onLoaderReset(p0: Loader<Array<Dyke>>) {
+
+            }
+        }
+
+        loaderManager.initLoader(0, null, loaderCallbacks)
     }
 
     private fun getDykes() = runBlocking(Dispatchers.Default) {
-        launch {
-            dykesResponse = URL("https://test.festival.ml/deichkind/api/dykes").readText()
-        }
+        dykesResponse = URL("https://edu.festival.ml/deichkind/api/dykes").readText()
     }
 
-    private fun tryLoadDykes(view: View) {
+    private fun tryLoadDykes(view: View) = runBlocking(Dispatchers.Default) {
         val networkInfo = (context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
         if (networkInfo != null && networkInfo.isConnected) {
-            getDykes()
+            launch {
+                getDykes()
 
-            val dykes: Array<Dyke> = Gson().fromJson(dykesResponse, object : TypeToken<Array<Dyke>>() {}.type)
-            val recyclerView = view.findViewById<RecyclerView>(R.id.dyke_list_recycler)
+                val dykes: Array<Dyke> = Gson().fromJson(dykesResponse, object : TypeToken<Array<Dyke>>() {}.type)
+                val recyclerView = view.findViewById<RecyclerView>(R.id.dyke_list_recycler)
 
-            view.findViewById<LinearLayout>(R.id.dyke_list_offline_note).visibility = View.GONE
+                view.findViewById<LinearLayout>(R.id.dyke_list_offline_note).visibility = View.GONE
 
-            recyclerView.apply {
-                layoutManager = LinearLayoutManager(this@DykeListFragment.context)
-                adapter = DykeListAdapter(dykes)
+                recyclerView.apply {
+                    layoutManager = LinearLayoutManager(this@DykeListFragment.context)
+                    adapter = DykeListAdapter(dykes)
+                }
             }
         } else {
             view.findViewById<LinearLayout>(R.id.dyke_list_offline_note).visibility = View.VISIBLE
