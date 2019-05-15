@@ -66,7 +66,7 @@ httpServer.use("/api", (req, res, next) => {
 });
 httpServer.use("/api", controllers);
 
-httpServer.listen(3000, () => {
-	console.log('Server is up on port 3000');
+httpServer.listen(62224, () => {
+	console.log('Server is up on port 62224');
 });
 //#endregion

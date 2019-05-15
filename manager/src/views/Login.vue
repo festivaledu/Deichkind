@@ -13,12 +13,12 @@
 				<form class="md-layout">
 					<md-field>
 						<label>{{ $t("login.fields.username") }}</label>
-						<md-input v-model="user.username" @input="$v.$touch()" required :disabled="isWorking"></md-input>
+						<md-input v-model="user.username" @input="$v.$touch()" @keyup="keyUp" required :disabled="isWorking"></md-input>
 					</md-field>
 					
 					<md-field>
 						<label>{{ $t("login.fields.password") }}</label>
-						<md-input type="password" v-model="user.password" @input="$v.$touch()" required :disabled="isWorking"></md-input>
+						<md-input type="password" v-model="user.password" @input="$v.$touch()" @keyup="keyUp" required :disabled="isWorking"></md-input>
 					</md-field>
 				</form>
 				
@@ -87,6 +87,11 @@ export default {
 		}
 	},
 	methods: {
+		keyUp(e) {
+			if (e.keyCode == 13 && !this.$v.user.$invalid) {
+				this.login();
+			}
+		},
 		async login() {
 			this.isWorking = true;
 			let _authData = await AuthAPI.login({

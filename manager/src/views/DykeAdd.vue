@@ -24,7 +24,7 @@
 					<div class="loading">
 						<md-progress-spinner md-mode="indeterminate" :md-diameter="30" :md-stroke="3" />
 						<div class="loading-label">
-							Loading...
+							{{ $t("app.loading") }}
 						</div>
 					</div>
 				</transition>
