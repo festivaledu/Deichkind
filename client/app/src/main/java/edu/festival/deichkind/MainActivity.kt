@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(lastSelectedNavigationItem)
         currentSelectedNavigationItem = lastSelectedNavigationItem
-        
+
         super.onBackPressed()
     }
 
