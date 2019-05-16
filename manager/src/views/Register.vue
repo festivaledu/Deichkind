@@ -1,5 +1,6 @@
 <template>
 	<div class="page-container md-layout-row">
+		<vue-headful :title="`${$t('register.toolbar_title')} – ${$t('app.app_name')}`" />
 		<md-toolbar class="md-primary">
 			<md-button class="md-icon-button" @click="back">
 				<md-icon>arrow_back</md-icon>

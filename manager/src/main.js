@@ -14,6 +14,9 @@ Vue.use(VueCookies);
 import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
 
+import VueHeadful from "vue-headful";
+Vue.component("vue-headful", VueHeadful);
+
 import VueI18n from 'vue-i18n';
 import messages from './localizable.json';
 Vue.use(VueI18n);

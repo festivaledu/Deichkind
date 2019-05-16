@@ -1,5 +1,6 @@
 <template>
 	<div class="page-container md-layout-row">
+		<vue-headful :title="`${$t('reports.view_report')} – ${$t('app.app_name')}`" />
 		<md-app md-waterfall md-mode="fixed">
 			<md-app-toolbar class="md-primary">
 				<md-button class="md-icon-button" @click="back">

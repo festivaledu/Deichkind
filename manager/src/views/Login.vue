@@ -1,5 +1,6 @@
 <template>
 	<div class="page-container md-layout-row">
+		<vue-headful :title="`${$t('login.toolbar_title')} – ${$t('app.app_name')}`" />
 		<md-toolbar class="md-primary">
 			<h3 class="md-title">{{ $t("login.toolbar_title") }}</h3>
 		</md-toolbar>
