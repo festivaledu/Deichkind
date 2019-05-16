@@ -15,7 +15,16 @@ import edu.festival.deichkind.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    private var currentSelectedNavigationItem: Int = R.id.nav_reports
+    private var lastSelectedNavigationItem: Int = R.id.nav_reports
     private var optionsMenu: Menu? = null
+
+    override fun onBackPressed() {
+        findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(lastSelectedNavigationItem)
+        currentSelectedNavigationItem = lastSelectedNavigationItem
+
+        super.onBackPressed()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +62,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_reports -> {
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, MainFragment()).commit()
                 supportActionBar?.setTitle(R.string.app_name)
+
+                lastSelectedNavigationItem = item.itemId
             }
             R.id.nav_dykes -> {
                 val fragment = MainFragment()
@@ -63,17 +74,28 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, fragment).commit()
                 supportActionBar?.setTitle(R.string.app_name)
+
+                lastSelectedNavigationItem = item.itemId
             }
             R.id.nav_profile -> {
-                supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, ProfileFragment()).commit()
+                if (currentSelectedNavigationItem == R.id.nav_settings) {
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, ProfileFragment()).commit()
+                } else {
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, ProfileFragment()).addToBackStack(null).commit()
+                }
 
                 optionsMenu?.findItem(R.id.option_logout)?.isVisible = true
             }
             R.id.nav_settings -> {
-                supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, SettingsFragment()).commit()
+                if (currentSelectedNavigationItem == R.id.nav_profile) {
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, SettingsFragment()).commit()
+                } else {
+                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, SettingsFragment()).addToBackStack(null).commit()
+                }
             }
         }
 
+        currentSelectedNavigationItem = item.itemId
         findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(item.itemId)
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.main_drawer)

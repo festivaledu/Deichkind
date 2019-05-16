@@ -11,7 +11,7 @@ import android.widget.Toast
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
-        addPreferencesFromResource(edu.festival.deichkind.R.xml.app_resources)
+        addPreferencesFromResource(R.xml.app_resources)
 
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.settings_title)
 
@@ -23,8 +23,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         if (preference is ListPreference) {
             preference.summary = preference.entry
-        }
 
-        Toast.makeText(activity, "Changed " + key + " to: " + (preference as ListPreference).entry, Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "Changed " + key + " to: " + (preference as ListPreference).entry, Toast.LENGTH_LONG).show()
+        }
     }
 }
