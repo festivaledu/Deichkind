@@ -1,5 +1,5 @@
 import { get, post, put, delete as _delete } from "axios";
-const apiUrl = `${window.location.origin}/deichkind/api`;
+const apiUrl = `${window.location.origin + window.location.pathname}/api`;
 
 export class AccountAPI {
 	static async getMe() {

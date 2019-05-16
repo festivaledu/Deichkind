@@ -2,7 +2,7 @@
 	<div>
 		<md-toolbar class="md-primary">
 			<md-avatar class="md-avatar-icon md-large md-primary" v-if="meData && meData.profileImage">
-				<img :src="`${currentOrigin}/deichkind/api/account/${meData.id}/avatar`">
+				<img :src="`${currentOrigin}/api/account/${meData.id}/avatar`">
 			</md-avatar>
 			<md-avatar class="md-avatar-icon md-large md-accent" v-else-if="meData && !meData.profileImage">
 				<md-ripple>{{ initials }}</md-ripple>
@@ -92,7 +92,7 @@ export default {
 			return initials;
 		},
 		currentOrigin() {
-			return window.location.origin;
+			return (window.location.origin + window.location.pathname).replace(/\/$/, "");
 		}
 	}
 }
