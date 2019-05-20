@@ -20,8 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="edu.festival.deichkind.CreateReportActivity" android:parentActivityName="edu.festival.deichkind.MainActivity">
+        <activity android:name="edu.festival.deichkind.CreateReportActivity" android:parentActivityName=".MainActivity">
         </activity>
+        <activity android:name="edu.festival.deichkind.ProfileActivity" android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

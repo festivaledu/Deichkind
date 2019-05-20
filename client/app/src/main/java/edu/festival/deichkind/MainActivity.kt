@@ -1,5 +1,6 @@
 package edu.festival.deichkind
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,7 +11,6 @@ import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
 import edu.festival.deichkind.fragments.MainFragment
-import edu.festival.deichkind.fragments.ProfileFragment
 import edu.festival.deichkind.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -78,11 +78,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 lastSelectedNavigationItem = item.itemId
             }
             R.id.nav_profile -> {
-                if (currentSelectedNavigationItem == R.id.nav_settings) {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, ProfileFragment()).commit()
-                } else {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, ProfileFragment()).addToBackStack(null).commit()
-                }
+                startActivity(Intent(this, ProfileActivity::class.java))
 
                 optionsMenu?.findItem(R.id.option_logout)?.isVisible = true
             }

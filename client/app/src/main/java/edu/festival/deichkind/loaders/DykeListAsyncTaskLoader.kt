@@ -14,7 +14,7 @@ class DykeListAsyncTaskLoader(context: Context) : AsyncTaskLoader<Array<Dyke>>(c
 
     override fun loadInBackground(): Array<Dyke>? {
         val jsonFile = File(context.filesDir, "dykes.json")
-        var jsonText = ""
+        var jsonText: String
 
         jsonText = if (!jsonFile.exists()) {
             URL("https://edu.festival.ml/deichkind/api/dykes").readText()
