@@ -8,22 +8,10 @@ import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
-import android.view.Menu
 import android.view.MenuItem
 import edu.festival.deichkind.fragments.MainFragment
-import edu.festival.deichkind.fragments.SettingsFragment
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-    private var currentSelectedNavigationItem: Int = R.id.nav_reports
-    private var lastSelectedNavigationItem: Int = R.id.nav_reports
-
-    override fun onBackPressed() {
-        findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(lastSelectedNavigationItem)
-        currentSelectedNavigationItem = lastSelectedNavigationItem
-
-        super.onBackPressed()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +40,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_reports -> {
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, MainFragment()).commit()
                 supportActionBar?.setTitle(R.string.app_name)
-
-                lastSelectedNavigationItem = item.itemId
             }
             R.id.nav_dykes -> {
                 val fragment = MainFragment()
@@ -65,22 +51,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, fragment).commit()
                 supportActionBar?.setTitle(R.string.app_name)
 
-                lastSelectedNavigationItem = item.itemId
             }
             R.id.nav_profile -> {
                 startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_settings -> {
-                if (currentSelectedNavigationItem == R.id.nav_profile) {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, SettingsFragment()).commit()
-                } else {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, SettingsFragment()).addToBackStack(null).commit()
-                }
+                startActivity(Intent(this, SettingsActivity::class.java))
             }
         }
-
-        currentSelectedNavigationItem = item.itemId
-        findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(item.itemId)
 
         val drawerLayout = findViewById<DrawerLayout>(R.id.main_drawer)
         drawerLayout.closeDrawer(GravityCompat.START)

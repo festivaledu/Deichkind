@@ -34,7 +34,7 @@
         <item>Areally</item>
         <item>Other</item>
     </string-array>
-    
+
     <string-array name="report_spinner_watercondition_values">
         <item>Clear</item>
         <item>Muddy</item>
@@ -48,7 +48,7 @@
         <item>Effervescent</item>
         <item>Other</item>
     </string-array>
-    
+
     <string-array name="report_spinner_deformationtype_values">
         <item>Upheavel / Raising</item>
         <item>Bagging</item>
