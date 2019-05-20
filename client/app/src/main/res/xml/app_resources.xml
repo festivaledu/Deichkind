@@ -20,6 +20,20 @@
         />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="Sync">
+        <SwitchPreference
+                android:key="sync-data-on-startup-if-network-available"
+                android:icon="@drawable/ic_sync_black_24dp"
+                android:title="Sync on Startup"
+                android:summary="Synchronizes report and dyke data on startup when a network is available"
+        />
+        <Preference
+                android:icon="@drawable/ic_update_black_24dp"
+                android:title="Sync now"
+                android:summary="Last synch: 20.05.2019 16:42"
+        />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="About">
         <Preference
                 android:title="Creator"
