@@ -28,6 +28,12 @@
         android:checkableBehavior="single"
     >
         <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_view_list_black_24dp"
+                android:title="Meldungen und Deiche"
+        />
+
+        <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_person_black_24dp"
                 android:title="@string/main_drawer_profile_name"
