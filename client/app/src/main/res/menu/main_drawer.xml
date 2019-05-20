@@ -4,6 +4,7 @@
     <group
             android:id="@+id/nav_group_1"
             android:checkableBehavior="single"
+            android:visible="false"
     >
         <item
                 android:id="@+id/nav_reports"
@@ -25,14 +26,8 @@
     </group>
 
     <group
-        android:checkableBehavior="single"
+        android:checkableBehavior="none"
     >
-        <item
-                android:id="@+id/nav_home"
-                android:icon="@drawable/ic_view_list_black_24dp"
-                android:title="Meldungen und Deiche"
-        />
-
         <item
                 android:id="@+id/nav_profile"
                 android:icon="@drawable/ic_person_black_24dp"
