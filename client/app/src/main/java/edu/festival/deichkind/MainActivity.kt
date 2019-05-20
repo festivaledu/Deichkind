@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     private var currentSelectedNavigationItem: Int = R.id.nav_reports
     private var lastSelectedNavigationItem: Int = R.id.nav_reports
-    private var optionsMenu: Menu? = null
 
     override fun onBackPressed() {
         findViewById<NavigationView>(R.id.main_navigation_view).setCheckedItem(lastSelectedNavigationItem)
@@ -48,16 +47,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setCheckedItem(R.id.nav_reports)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_options, menu)
-        optionsMenu = menu
-
-        return true
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        optionsMenu?.findItem(R.id.option_logout)?.isVisible = false
-
         when (item.itemId) {
             R.id.nav_reports -> {
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, MainFragment()).commit()
@@ -79,8 +69,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
             R.id.nav_profile -> {
                 startActivity(Intent(this, ProfileActivity::class.java))
-
-                optionsMenu?.findItem(R.id.option_logout)?.isVisible = true
             }
             R.id.nav_settings -> {
                 if (currentSelectedNavigationItem == R.id.nav_profile) {
@@ -98,12 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.closeDrawer(GravityCompat.START)
 
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 
 }
