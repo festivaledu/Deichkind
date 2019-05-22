@@ -21,8 +21,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         if (preference is ListPreference) {
             preference.summary = preference.entry
-
-            Toast.makeText(activity, "Changed " + key + " to: " + preference.entry, Toast.LENGTH_LONG).show()
         }
     }
 }
