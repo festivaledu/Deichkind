@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v4.content.AsyncTaskLoader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import edu.festival.deichkind.DykeManager
 import edu.festival.deichkind.models.Dyke
 import java.io.File
 import java.net.URL
@@ -27,6 +28,7 @@ class DykeListAsyncTaskLoader(context: Context) : AsyncTaskLoader<Array<Dyke>>(c
         }
 
         data = Gson().fromJson(jsonText, object : TypeToken<Array<Dyke>>() {}.type)
+        DykeManager.getInstance(context).dykes = data
 
         return data
     }
