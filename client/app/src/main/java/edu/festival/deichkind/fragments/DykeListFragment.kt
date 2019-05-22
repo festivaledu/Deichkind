@@ -38,11 +38,11 @@ class DykeListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<Button>(R.id.dyke_list_refresh_button).setOnClickListener {
-            //tryLoadDykes(view)
+        /* view.findViewById<Button>(R.id.dyke_list_refresh_button).setOnClickListener {
+            tryLoadDykes(view)
         }
 
-        //tryLoadDykes(view)
+        tryLoadDykes(view) */
 
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.dyke_list_recycler)
@@ -69,7 +69,7 @@ class DykeListFragment : Fragment() {
         loaderManager.initLoader(0, null, loaderCallbacks)
     }
 
-    private fun getDykes() = runBlocking(Dispatchers.Default) {
+    /* private fun getDykes() = runBlocking(Dispatchers.Default) {
         dykesResponse = URL("https://edu.festival.ml/deichkind/api/dykes").readText()
     }
 
@@ -93,6 +93,6 @@ class DykeListFragment : Fragment() {
         } else {
             view.findViewById<LinearLayout>(R.id.dyke_list_offline_note).visibility = View.VISIBLE
         }
-    }
+    } */
 
 }
