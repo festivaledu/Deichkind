@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import edu.festival.deichkind.CreateReportActivity
 import edu.festival.deichkind.R
 import edu.festival.deichkind.adapters.ReportListAdapter
@@ -36,9 +37,13 @@ class ReportListFragment : Fragment() {
             }
 
             override fun onLoadFinished(p0: Loader<Array<Report>>, p1: Array<Report>?) {
+                val reportListAdapter = ReportListAdapter(p1 as Array<Report>)
+                reportListAdapter.onItemClick = { report -> onItemClick(report) }
+
                 recyclerView.apply {
+
                     layoutManager = LinearLayoutManager(context)
-                    adapter = ReportListAdapter(p1 as Array<Report>)
+                    adapter = reportListAdapter
                 }
             }
 
@@ -52,6 +57,10 @@ class ReportListFragment : Fragment() {
         view.findViewById<FloatingActionButton>(R.id.report_list_fab).setOnClickListener {
             startActivity(Intent(activity, CreateReportActivity::class.java))
         }
+    }
+
+    fun onItemClick(item: Report) {
+        Toast.makeText(context, item.title, Toast.LENGTH_LONG).show()
     }
 
 }

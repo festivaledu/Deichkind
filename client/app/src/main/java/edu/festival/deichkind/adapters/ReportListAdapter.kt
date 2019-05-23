@@ -12,7 +12,15 @@ import java.text.DateFormat
 
 class ReportListAdapter(val reports: Array<Report>) : RecyclerView.Adapter<ReportListAdapter.ReportListViewHolder>() {
 
-    class ReportListViewHolder(val linearLayout: LinearLayout) : RecyclerView.ViewHolder(linearLayout)
+    var onItemClick: ((Report) -> Unit)? = null
+
+    inner class ReportListViewHolder(val linearLayout: LinearLayout) : RecyclerView.ViewHolder(linearLayout) {
+        init {
+            linearLayout.setOnClickListener {
+                onItemClick?.invoke(reports[adapterPosition])
+            }
+        }
+    }
 
     override fun getItemCount() = reports.size
 
