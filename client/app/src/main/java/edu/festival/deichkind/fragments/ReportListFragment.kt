@@ -3,6 +3,7 @@ package edu.festival.deichkind.fragments
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
@@ -15,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import edu.festival.deichkind.CreateReportActivity
 import edu.festival.deichkind.R
+import edu.festival.deichkind.ReportDetail
 import edu.festival.deichkind.adapters.ReportListAdapter
 import edu.festival.deichkind.loaders.ReportListAsyncTaskLoader
 import edu.festival.deichkind.models.Report
@@ -60,7 +62,13 @@ class ReportListFragment : Fragment() {
     }
 
     fun onItemClick(item: Report) {
-        Toast.makeText(context, item.title, Toast.LENGTH_LONG).show()
+        var bundle = Bundle().apply {
+            putParcelable("REPORT", item)
+        }
+
+        startActivity(Intent(context, ReportDetail::class.java).apply {
+            putExtra("BUNDLE", bundle)
+        })
     }
 
 }

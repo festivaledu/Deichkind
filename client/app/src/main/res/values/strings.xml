@@ -23,9 +23,20 @@
 
     <string name="settings_title">Settings</string>
 
+    <string-array name="report_spinner_type_keys">
+        <item>initial</item>
+        <item>followup</item>
+    </string-array>
+
     <string-array name="report_spinner_type_values">
         <item>Initial</item>
         <item>Follow-up</item>
+    </string-array>
+
+    <string-array name="report_spinner_waterloss_keys">
+        <item>isolated</item>
+        <item>punctually</item>
+        <item>areally</item>
     </string-array>
 
     <string-array name="report_spinner_waterloss_values">
@@ -35,6 +46,12 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="report_spinner_watercondition_keys">
+        <item>clear</item>
+        <item>muddy</item>
+        <item>sedimented</item>
+    </string-array>
+
     <string-array name="report_spinner_watercondition_values">
         <item>Clear</item>
         <item>Muddy</item>
@@ -42,11 +59,25 @@
         <item>Other</item>
     </string-array>
 
+    <string-array name="report_spinner_leakagetype_keys">
+        <item>stagnant</item>
+        <item>flowing</item>
+        <item>effervescent</item>
+    </string-array>
+
     <string-array name="report_spinner_leakagetype_values">
         <item>Stagnant</item>
         <item>Flowing</item>
         <item>Effervescent</item>
         <item>Other</item>
+    </string-array>
+
+    <string-array name="report_spinner_deformationtype_keys">
+        <item>upheavel</item>
+        <item>bagging</item>
+        <item>slipped-topsoil</item>
+        <item>shift</item>
+        <item>slipped-slope</item>
     </string-array>
 
     <string-array name="report_spinner_deformationtype_values">
