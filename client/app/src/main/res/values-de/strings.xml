@@ -56,4 +56,5 @@
     <string name="create_report_leakagetype_hint">Beschreibe die Austrittsart</string>
     <string name="create_report_deformationtype_hint">Beschreibe die Verformung</string>
     <string name="create_report_title_hint">Titel der Meldung</string>
+    <string name="create_report_dyke_title">Beschädigter Deich</string>
 </resources>

@@ -2,6 +2,7 @@ package edu.festival.deichkind
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import edu.festival.deichkind.listeners.OnItemSelectedListener
+import edu.festival.deichkind.models.Dyke
+import java.net.HttpURLConnection
+import java.net.URL
 
 class CreateReportActivity : AppCompatActivity() {
 
@@ -22,6 +26,32 @@ class CreateReportActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         supportActionBar?.setTitle(R.string.create_report_title)
+
+        findViewById<FloatingActionButton>(R.id.create_report_fab).setOnClickListener {
+            URL("https://edu.festival.ml/deichkind/api/dykes/:dykeId/reports/new").openConnection().let {
+                it as HttpURLConnection
+            }.apply {
+                setRequestProperty("Content-Type", "application/json; charset=utf-8")
+                requestMethod = "POST"
+                doOutput = true
+
+            }
+        }
+
+        val dykeEntries: MutableList<SpinnerItem> = DykeManager.getInstance(null).dykes.map {
+            SpinnerItem(it.id, it.name)
+        } as MutableList<SpinnerItem>
+
+        for (i in 0 until 30) {
+            dykeEntries.add(SpinnerItem(i.toString(), "Deich "+ i))
+        }
+
+
+        val dykeSpinner = findViewById<Spinner>(R.id.create_report_dyke_spinner)
+        ArrayAdapter(this, R.layout.spinner_item, dykeEntries).also {
+            it.setDropDownViewResource(R.layout.spinner_dropdown_item)
+            dykeSpinner.adapter = it
+        }
 
         val typeSpinner = findViewById<Spinner>(R.id.create_report_type_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(

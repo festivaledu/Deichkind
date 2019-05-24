@@ -13,6 +13,7 @@
     <string name="main_tab_dykes_name">Dykes</string>
 
     <string name="create_report_title">Create new report</string>
+    <string name="create_report_dyke_title">Damaged dyke</string>
     <string name="create_report_type_title">Report type</string>
     <string name="create_report_waterloss_title">Water loss</string>
     <string name="create_report_watercondition_title">Water condition</string>
