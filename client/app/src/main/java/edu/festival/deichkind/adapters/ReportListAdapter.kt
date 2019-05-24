@@ -29,7 +29,7 @@ class ReportListAdapter(val reports: Array<Report>) : RecyclerView.Adapter<Repor
         val dyke = DykeManager.getInstance(null).dykes.find { it.id == reports[position].dykeId }
 
         holder.linearLayout.findViewById<TextView>(R.id.report_list_item_title).text = reports[position].title
-        holder.linearLayout.findViewById<TextView>(R.id.report_list_item_location).text = dyke?.name + " (" + dyke?.city + ")" + " – " + DateFormat.getInstance().format(reports[position].createdAt)
+        holder.linearLayout.findViewById<TextView>(R.id.report_list_item_location).text = dyke?.name + ", " + dyke?.city + " – " + DateFormat.getInstance().format(reports[position].createdAt)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReportListViewHolder {
