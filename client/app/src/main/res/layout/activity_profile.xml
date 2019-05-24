@@ -27,7 +27,9 @@
             android:orientation="vertical"
             android:padding="16dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:layout_constraintTop_toBottomOf="@id/profile_toolbar">
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/profile_toolbar"
+    >
 
         <ImageView
                 android:layout_height="wrap_content"
@@ -54,6 +56,7 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/profile_subbar"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="?attr/colorPrimaryDark"
@@ -61,7 +64,59 @@
             android:padding="16dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:layout_constraintTop_toBottomOf="@id/profile_head"
-            tools:layout_editor_absoluteX="0dp">
+    >
+        <TextView
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:text="Melde dich an, um Meldungen erstellen zu können"
+                android:textColor="@android:color/white"
+        />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/profile_subbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="48dp" app:layout_constraintVertical_bias="0.0">
+        <EditText
+                android:id="@+id/profile_username"
+                android:hint="Benutzername"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="12dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+        />
+
+        <EditText
+                android:id="@+id/profile_password"
+                android:hint="Passwort"
+                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_width="match_parent"
+                android:singleLine="true"
+        />
+
+        <Button
+                android:id="@+id/profile_login_button"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="12dp"
+                android:layout_width="match_parent"
+                android:text="Anmelden"
+        />
+
+        <TextView
+                android:id="@+id/profile_register_link"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+        />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
