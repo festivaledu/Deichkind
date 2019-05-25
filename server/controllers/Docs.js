@@ -94,6 +94,16 @@ router.get("/", (req, res) => {
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid or no authorization token provided"]
 				}
+			},
+			"POST /token": {
+				method: "POST",
+				description: "Generates a new authToken using a specified refresh token",
+				parameters: {
+					token: "The current valid non-expired refresh token"
+				},
+				errors: {
+					[httpStatus.UNAUTHORIZED]: ["Invalid or no authorization token provided"]
+				}
 			}
 		},
 		"/dykes": {

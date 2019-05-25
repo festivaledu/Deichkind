@@ -43,7 +43,11 @@ Object.keys(db.models).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.sequelize.sync();
+db.sequelize.sync().then(() => {
+	db.models.Token.destroy({
+		truncate: true
+	});
+});
 //#endregion
 
 //#region HTTP Server

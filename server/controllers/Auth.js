@@ -7,14 +7,14 @@ const ErrorHandler = require("../helpers/ErrorHandler");
 const UserRole = require("../helpers/UserRole");
 
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = process.env;
+const { JWT_SECRET, JWT_REFRESH_SECRET } = process.env;
 const bcrypt = require("bcryptjs");
 
 /**
- * POST /register
+ * POST /auth/register
  */
 router.post("/register", (req, res) => {
-	const { Account } = req.models;
+	const { Account, Token } = req.models;
 	
 	if (!req.body.username || !req.body.password) return res.status(httpStatus.BAD_REQUEST).send({
 		name: httpStatus[httpStatus.BAD_REQUEST],
@@ -56,6 +56,24 @@ router.post("/register", (req, res) => {
 				expiresIn: 7200
 			});
 			
+			let refreshToken = jwt.sign({
+				userId: accountObj.id,
+				email: accountObj.email,
+				role: accountObj.role
+			}, JWT_REFRESH_SECRET, {
+				expiresIn: 86400
+			});
+			
+			Token.create({
+				id: refreshToken,
+				content: {
+					token: token,
+					refreshToken: refreshToken,
+					role: accountObj.role
+				},
+				expires: new Date(new Date().getTime() + (86400 * 1000))
+			});
+			
 			return res
 				.status(httpStatus.OK)
 				.cookie("authToken", token, {
@@ -65,6 +83,7 @@ router.post("/register", (req, res) => {
 				.json({
 					auth: true,
 					token: token,
+					refreshToken: refreshToken,
 					role: accountObj.role
 				});
 		}).catch(error => ErrorHandler(req, res, error));
@@ -72,10 +91,10 @@ router.post("/register", (req, res) => {
 });
 
 /**
- * POST /login
+ * POST /auth/login
  */
 router.post("/login", (req, res) => {
-	const { Account } = req.models;
+	const { Account, Token } = req.models;
 	
 	if (!req.body.username || !req.body.password) return res.status(httpStatus.BAD_REQUEST).send({
 		name: httpStatus[httpStatus.BAD_REQUEST],
@@ -115,6 +134,24 @@ router.post("/login", (req, res) => {
 			expiresIn: 7200
 		});
 		
+		let refreshToken = jwt.sign({
+			userId: accountObj.id,
+			email: accountObj.email,
+			role: accountObj.role
+		}, JWT_REFRESH_SECRET, {
+			expiresIn: 86400
+		});
+		
+		Token.create({
+			id: refreshToken,
+			content: {
+				token: token,
+				refreshToken: refreshToken,
+				role: accountObj.role
+			},
+			expires: new Date(new Date().getTime() + (86400 * 1000))
+		});
+		
 		return res
 			.status(httpStatus.OK)
 			.cookie("authToken", token, {
@@ -124,13 +161,14 @@ router.post("/login", (req, res) => {
 			.json({
 				auth: true,
 				token: token,
+				refreshToken: refreshToken,
 				role: accountObj.role
 			});
 	}).catch(error => ErrorHandler(req, res, error));
 });
 
 /**
- * GET /verify
+ * GET /auth/verify
  */
 router.get("/verify", (req, res) => {
 	if (!req.account) return res.status(httpStatus.UNAUTHORIZED).send({
@@ -158,6 +196,65 @@ router.get("/verify", (req, res) => {
 			token: token,
 			role: req.account.role
 		});
+});
+
+/** 
+ * POST /auth/token
+ */
+router.post("/token", (req, res) => {
+	const { Token } = req.models;
+	
+	const token = req.body.token;
+	if (!token) return res.status(httpStatus.UNAUTHORIZED).send({
+		name: httpStatus[httpStatus.UNAUTHORIZED],
+		code: httpStatus.UNAUTHORIZED,
+		message: "Invalid or no authorization token provided"
+	});
+	
+	Token.findOne({
+		where: {
+			id: token,
+			expires: {
+				[Sequelize.Op.gte]: new Date()
+			}
+		}
+	}).then(tokenObj => {
+		if (!tokenObj) return res.status(httpStatus.UNAUTHORIZED).send({
+			name: httpStatus[httpStatus.UNAUTHORIZED],
+			code: httpStatus.UNAUTHORIZED,
+			message: "Invalid or no authorization token provided"
+		});
+		
+		jwt.verify(token, JWT_REFRESH_SECRET, (error, decoded) => {
+			if (error) return res.status(httpStatus.UNAUTHORIZED).send({
+				name: httpStatus[httpStatus.UNAUTHORIZED],
+				code: httpStatus.UNAUTHORIZED,
+				message: "Invalid or no authorization token provided"
+			});
+			
+			let newToken = jwt.sign({
+				userId: decoded.id,
+				email: decoded.email,
+				role: decoded.role
+			}, JWT_SECRET, {
+				expiresIn: 7200
+			});
+			
+			tokenObj.update({
+				content: {
+					token: newToken,
+					refreshToken: token,
+					role: decoded.role
+				}
+			}).catch(error => ErrorHandler(req, res, error));
+			
+			return res
+				.status(httpStatus.OK)
+				.json({
+					token: newToken
+				});
+		})
+	}).catch(error => ErrorHandler(req, res, error));
 });
 
 module.exports = router;
