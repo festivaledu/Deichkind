@@ -1,0 +1,116 @@
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ReportDetail">
+
+    <android.support.v7.widget.Toolbar
+            android:id="@+id/report_detail_toolbar"
+            android:background="?attr/colorPrimary"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_width="match_parent"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    />
+
+    <ScrollView
+            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/report_detail_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
+    >
+
+        <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+        >
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_type_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_type"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_waterloss_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_waterloss"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_watercondition_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_watercondition"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_leakagetype_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_leakagetype"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_deformationtype_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_deformationtype"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>

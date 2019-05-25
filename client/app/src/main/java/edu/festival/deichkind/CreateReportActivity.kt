@@ -2,6 +2,7 @@ package edu.festival.deichkind
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
@@ -11,6 +12,9 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import edu.festival.deichkind.listeners.OnItemSelectedListener
+import edu.festival.deichkind.models.Dyke
+import java.net.HttpURLConnection
+import java.net.URL
 
 class CreateReportActivity : AppCompatActivity() {
 
@@ -23,14 +27,40 @@ class CreateReportActivity : AppCompatActivity() {
 
         supportActionBar?.setTitle(R.string.create_report_title)
 
+        findViewById<FloatingActionButton>(R.id.create_report_fab).setOnClickListener {
+            URL("https://edu.festival.ml/deichkind/api/dykes/:dykeId/reports/new").openConnection().let {
+                it as HttpURLConnection
+            }.apply {
+                setRequestProperty("Content-Type", "application/json; charset=utf-8")
+                requestMethod = "POST"
+                doOutput = true
+
+            }
+        }
+
+        val dykeEntries: MutableList<SpinnerItem> = DykeManager.getInstance(null).dykes.map {
+            SpinnerItem(it.id, it.name)
+        } as MutableList<SpinnerItem>
+
+        for (i in 0 until 30) {
+            dykeEntries.add(SpinnerItem(i.toString(), "Deich "+ i))
+        }
+
+
+        val dykeSpinner = findViewById<Spinner>(R.id.create_report_dyke_spinner)
+        ArrayAdapter(this, R.layout.spinner_item, dykeEntries).also {
+            it.setDropDownViewResource(R.layout.spinner_dropdown_item)
+            dykeSpinner.adapter = it
+        }
+
         val typeSpinner = findViewById<Spinner>(R.id.create_report_type_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(
             SpinnerItem(
-                "initial",
+                resources.getStringArray(R.array.report_spinner_type_keys)[0],
                 resources.getStringArray(R.array.report_spinner_type_values)[0]
             ),
             SpinnerItem(
-                "followup",
+                resources.getStringArray(R.array.report_spinner_type_keys)[1],
                 resources.getStringArray(R.array.report_spinner_type_values)[1]
             )
         )).also {
@@ -41,22 +71,22 @@ class CreateReportActivity : AppCompatActivity() {
         val waterLossSpinner = findViewById<Spinner>(R.id.create_report_waterloss_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(
             SpinnerItem(
-                "isolated",
+                resources.getStringArray(R.array.report_spinner_waterloss_keys)[0],
                 resources.getStringArray(R.array.report_spinner_waterloss_values)[0]
             ),
             SpinnerItem(
-                "punctually",
+                resources.getStringArray(R.array.report_spinner_waterloss_keys)[1],
                 resources.getStringArray(R.array.report_spinner_waterloss_values)[1]
             ),
             SpinnerItem(
-                "areally",
+                resources.getStringArray(R.array.report_spinner_waterloss_keys)[2],
                 resources.getStringArray(R.array.report_spinner_waterloss_values)[2]
             ),
             SpinnerItem(
                 "other",
                 resources.getStringArray(R.array.report_spinner_waterloss_values)[3]
             )
-        )).also { 
+        )).also {
             it.setDropDownViewResource(R.layout.spinner_dropdown_item)
             waterLossSpinner.adapter = it
         }
@@ -70,15 +100,15 @@ class CreateReportActivity : AppCompatActivity() {
         val waterConditionSpinner = findViewById<Spinner>(R.id.create_report_watercondition_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(
             SpinnerItem(
-                "clear",
+                resources.getStringArray(R.array.report_spinner_watercondition_keys)[0],
                 resources.getStringArray(R.array.report_spinner_watercondition_values)[0]
             ),
             SpinnerItem(
-                "muddy",
+                resources.getStringArray(R.array.report_spinner_watercondition_keys)[1],
                 resources.getStringArray(R.array.report_spinner_watercondition_values)[1]
             ),
             SpinnerItem(
-                "sedimented",
+                resources.getStringArray(R.array.report_spinner_watercondition_keys)[2],
                 resources.getStringArray(R.array.report_spinner_watercondition_values)[2]
             ),
             SpinnerItem(
@@ -99,15 +129,15 @@ class CreateReportActivity : AppCompatActivity() {
         val leakageTypeSpinner = findViewById<Spinner>(R.id.create_report_leakagetype_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(
             SpinnerItem(
-                "stagnant",
+                resources.getStringArray(R.array.report_spinner_leakagetype_keys)[0],
                 resources.getStringArray(R.array.report_spinner_leakagetype_values)[0]
             ),
             SpinnerItem(
-                "flowing",
+                resources.getStringArray(R.array.report_spinner_leakagetype_keys)[1],
                 resources.getStringArray(R.array.report_spinner_leakagetype_values)[1]
             ),
             SpinnerItem(
-                "effervescent",
+                resources.getStringArray(R.array.report_spinner_leakagetype_keys)[2],
                 resources.getStringArray(R.array.report_spinner_leakagetype_values)[2]
             ),
             SpinnerItem(
@@ -128,23 +158,23 @@ class CreateReportActivity : AppCompatActivity() {
         val deformationTypeSpinner = findViewById<Spinner>(R.id.create_report_deformationtype_spinner)
         ArrayAdapter(this, R.layout.spinner_item, arrayOf(
             SpinnerItem(
-                "upheavel",
+                resources.getStringArray(R.array.report_spinner_deformationtype_keys)[0],
                 resources.getStringArray(R.array.report_spinner_deformationtype_values)[0]
             ),
             SpinnerItem(
-                "bagging",
+                resources.getStringArray(R.array.report_spinner_deformationtype_keys)[1],
                 resources.getStringArray(R.array.report_spinner_deformationtype_values)[1]
             ),
             SpinnerItem(
-                "slipped-topsoil",
+                resources.getStringArray(R.array.report_spinner_deformationtype_keys)[2],
                 resources.getStringArray(R.array.report_spinner_deformationtype_values)[2]
             ),
             SpinnerItem(
-                "shift",
+                resources.getStringArray(R.array.report_spinner_deformationtype_keys)[3],
                 resources.getStringArray(R.array.report_spinner_deformationtype_values)[3]
             ),
             SpinnerItem(
-                "slipped-slope",
+                resources.getStringArray(R.array.report_spinner_deformationtype_keys)[4],
                 resources.getStringArray(R.array.report_spinner_deformationtype_values)[4]
             ),
             SpinnerItem(
