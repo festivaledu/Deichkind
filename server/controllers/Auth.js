@@ -11,7 +11,7 @@ const { JWT_SECRET, JWT_REFRESH_SECRET } = process.env;
 const bcrypt = require("bcryptjs");
 
 /**
- * POST /register
+ * POST /auth/register
  */
 router.post("/register", (req, res) => {
 	const { Account, Token } = req.models;
@@ -91,7 +91,7 @@ router.post("/register", (req, res) => {
 });
 
 /**
- * POST /login
+ * POST /auth/login
  */
 router.post("/login", (req, res) => {
 	const { Account, Token } = req.models;
@@ -168,7 +168,7 @@ router.post("/login", (req, res) => {
 });
 
 /**
- * GET /verify
+ * GET /auth/verify
  */
 router.get("/verify", (req, res) => {
 	if (!req.account) return res.status(httpStatus.UNAUTHORIZED).send({
