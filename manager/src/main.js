@@ -17,6 +17,9 @@ Vue.use(Vuelidate);
 import VueHeadful from "vue-headful";
 Vue.component("vue-headful", VueHeadful);
 
+import VueHighlightJS from "vue-highlightjs";
+Vue.use(VueHighlightJS);
+
 import VueI18n from 'vue-i18n';
 import messages from './localizable.json';
 Vue.use(VueI18n);

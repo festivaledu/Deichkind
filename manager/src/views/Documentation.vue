@@ -75,6 +75,28 @@
 							</md-table-cell>
 						</md-table-row>
 					</md-table>
+					
+					<div class="code-example" v-if="currentRouteData.exampleRequest">
+						<md-toolbar class="md-primary md-dense md-theme-dark md-elevation-0">
+							<span class="md-title">Example Request</span>
+						</md-toolbar>
+						<div class="code-block">
+							<div class="code-block-wrapper md-scrollbar md-theme-dark">
+								<pre v-highlightjs><code class="json">{{JSON.stringify(currentRouteData.exampleRequest, null, 2)}}</code></pre>
+							</div>
+						</div>
+					</div>
+					
+					<div class="code-example" v-if="currentRouteData.exampleResponse">
+						<md-toolbar class="md-primary md-dense md-theme-dark md-elevation-0">
+							<span class="md-title">Example Response</span>
+						</md-toolbar>
+						<div class="code-block">
+							<div class="code-block-wrapper md-scrollbar md-theme-dark">
+								<pre v-highlightjs><code class="json">{{JSON.stringify(currentRouteData.exampleResponse, null, 2)}}</code></pre>
+							</div>
+						</div>
+					</div>
 				</md-list>
 			</md-app-content>
 		</md-app>
@@ -87,7 +109,29 @@
 </template>
 
 <style lang="less">
+.code-example {
+	margin: 32px 16px;
+	
+	.code-block {
+		max-width: 100%;
+		overflow: hidden;
+		position: relative;
+		background-color: #212121;
+		
+		::selection {
+			background-color: #bdbdbd;
+			color: inherit;
+		}
 
+		.code-block-wrapper {
+			min-width: 100%;
+			max-height: 450px;
+			min-height: 86px;
+			padding: 16px;
+			overflow: auto;
+		}
+	}
+}
 </style>
 
 
