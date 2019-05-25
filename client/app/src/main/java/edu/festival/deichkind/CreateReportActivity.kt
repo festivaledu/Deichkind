@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import edu.festival.deichkind.listeners.OnItemSelectedListener
-import edu.festival.deichkind.models.Dyke
+import edu.festival.deichkind.util.DykeManager
 import java.net.HttpURLConnection
 import java.net.URL
 
@@ -41,10 +41,6 @@ class CreateReportActivity : AppCompatActivity() {
         val dykeEntries: MutableList<SpinnerItem> = DykeManager.getInstance(null).dykes.map {
             SpinnerItem(it.id, it.name)
         } as MutableList<SpinnerItem>
-
-        for (i in 0 until 30) {
-            dykeEntries.add(SpinnerItem(i.toString(), "Deich "+ i))
-        }
 
 
         val dykeSpinner = findViewById<Spinner>(R.id.create_report_dyke_spinner)

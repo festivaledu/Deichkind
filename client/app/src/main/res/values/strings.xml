@@ -8,6 +8,7 @@
     <string name="main_drawer_dykes_name">Dykes</string>
     <string name="main_drawer_profile_name">Profile</string>
     <string name="main_drawer_settings_name">Settings</string>
+    <string name="main_drawer_anonymous_notice">Go to Profile to log in</string>
 
     <string name="main_tab_reports_name">Reports</string>
     <string name="main_tab_dykes_name">Dykes</string>
@@ -21,6 +22,15 @@
     <string name="create_report_deformationtype_title">Deformation type</string>
 
     <string name="profile_title">Profile</string>
+    <string name="profile_login">Login</string>
+    <string name="profile_login_notice">You need to be logged in to create reports</string>
+    <string name="profile_username_hint">Username</string>
+    <string name="profile_password_hint">Password</string>
+    <string name="profile_empty_fields_notice">You need to fill in all fields</string>
+    <string name="profile_user_unknown_notice">User could not be found</string>
+    <string name="profile_password_incorrect_notice">Password incorrect</string>
+    <string name="profile_login_successful_notice">Login successful</string>
+    <string name="profile_unknown_error_notice">An unexpected error occurred. Please try again later.</string>
 
     <string name="settings_title">Settings</string>
 

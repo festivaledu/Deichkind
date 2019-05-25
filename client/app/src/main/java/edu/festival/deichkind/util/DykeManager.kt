@@ -1,8 +1,7 @@
-package edu.festival.deichkind
+package edu.festival.deichkind.util
 
 import android.content.Context
 import edu.festival.deichkind.models.Dyke
-import edu.festival.deichkind.util.SingletonHolder
 
 class DykeManager private constructor(context: Context?) {
     init {
