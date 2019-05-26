@@ -113,7 +113,7 @@ router.get("/:dykeId", (req, res) => {
 	
 	Dyke.findOne({
 		where: { id: req.params.dykeId },
-		include: [{
+		/*include: [{
 			model: Report,
 			as: "reports",
 			where: { deleted: false },
@@ -127,7 +127,7 @@ router.get("/:dykeId", (req, res) => {
 				separate: true,
 				order: [["createdAt", "ASC"]],
 			}]
-		}],
+		}],*/
 		attributes: { exclude: ["kmlFile"] }
 	}).then(dykeObj => {
 		if (!dykeObj) return res.status(httpStatus.NOT_FOUND).send({

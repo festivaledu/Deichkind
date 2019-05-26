@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"]
 				},
 				exampleResponse: {
-					id: 0,
+					id: "0",
 					username: "username",
 					email: "username@example.com",
 					role: 2,
@@ -41,7 +41,7 @@ router.get("/", (req, res) => {
 					email: "updated@example.com",
 				},
 				exampleResponse: {
-					id: 0,
+					id: "0",
 					username: "updated",
 					email: "updated@example.com",
 					role: 2,
@@ -77,6 +77,13 @@ router.get("/", (req, res) => {
 				description: "Gets all public details for a specific user (username, E-Mail, last login)",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["User not found"]
+				},
+				exampleResponse: {
+					"id": "0",
+					"username": "username",
+					"profileImage": 0,
+					"role": 2,
+					"createdAt": "2019-05-26T07:41:36.663Z"
 				}
 			},
 			"GET /:userId/avatar": {
