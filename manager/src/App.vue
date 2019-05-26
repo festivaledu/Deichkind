@@ -129,4 +129,75 @@ html {
 		max-width: 50vw !important;
 	}
 }
+
+/* HighlightJS */
+.hljs {
+    color: #eee;
+    font-family: Roboto Mono, monospace;
+    font-size: 15px;
+    font-weight: 400;
+    letter-spacing: normal;
+    line-height: 1.5em
+}
+
+.hljs-comment, .hljs-meta, .hljs-quote {
+    color: #7c7c7c
+}
+
+.hljs-keyword, .hljs-name, .hljs-selector-tag {
+    color: #f07178
+}
+
+.hljs-params, .hljs-tag {
+    color: #89ddff
+}
+
+.hljs-attribute {
+    color: #a7bfc9
+}
+
+.hljs-built_in, .hljs-selector-class, .hljs-selector-id {
+    color: #fdd835
+}
+
+.hljs-attr, .hljs-function, .hljs-selector-attr, .hljs-selector-pseudo {
+    color: #bb8adb
+}
+
+.hljs-addition, .hljs-string {
+    color: #bbdf88
+}
+
+.hljs-subst {
+    color: #daefa3
+}
+
+.hljs-link, .hljs-regexp {
+    color: #e9c062
+}
+
+.hljs-doctag, .hljs-section, .hljs-title, .hljs-type {
+    color: #ffffb6
+}
+
+.hljs-bullet, .hljs-deletion, .hljs-literal, .hljs-number, .hljs-symbol,
+.hljs-template-variable, .hljs-variable {
+    color: #ffab40
+}
+
+.hljs-emphasis {
+    font-style: italic
+}
+
+.hljs-strong {
+    font-weight: 500
+}
+
+.scss, .undefined {
+    color: #89dcfe
+}
+
+.javascript .hljs-attr {
+    color: #bbdf88
+}
 </style>

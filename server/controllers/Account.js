@@ -50,6 +50,8 @@ router.put("/me", async (req, res) => {
 	account.update(Object.assign(req.body, {
 		id: account.id,
 		role: account.role,
+		profileImage: account.profileImage,
+		profileImageMime: account.profileImageMime,
 		lastLogin: account.lastLogin,
 		createdAt: account.createdAt,
 		updatedAt: account.updatedAt
