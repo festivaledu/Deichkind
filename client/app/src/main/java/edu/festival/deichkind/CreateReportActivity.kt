@@ -29,7 +29,9 @@ import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
+import edu.festival.deichkind.fragments.NoSessionDialog
 import edu.festival.deichkind.models.ReportBlueprint
+import edu.festival.deichkind.util.SessionManager
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -73,13 +75,34 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
         supportActionBar?.setTitle(R.string.create_report_title)
 
         findViewById<FloatingActionButton>(R.id.create_report_fab).setOnClickListener {
-            val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
+            if (findViewById<EditText>(R.id.create_report_title_input).text.isEmpty()) {
+                Toast.makeText(this, "You need to give this report a title", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-            Toast.makeText(this, dykeId, Toast.LENGTH_SHORT).show()
+            val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
+            val title = findViewById<EditText>(R.id.create_report_title_input).text.toString()
+            val type = (findViewById<Spinner>(R.id.create_report_type_spinner).selectedItem as SpinnerItem).getKey()
+            val waterLoss = (findViewById<Spinner>(R.id.create_report_waterloss_spinner).selectedItem as SpinnerItem).getKey()
+            val waterCondition = (findViewById<Spinner>(R.id.create_report_watercondition_spinner).selectedItem as SpinnerItem).getKey()
+            val leakage = (findViewById<Spinner>(R.id.create_report_leakagetype_spinner).selectedItem as SpinnerItem).getKey()
+            val deformation = (findViewById<Spinner>(R.id.create_report_deformationtype_spinner).selectedItem as SpinnerItem).getKey()
 
             GlobalScope.launch {
                 sendReport(dykeId, ReportBlueprint().apply {
-                    title = "Test"
+                    this.title = title
+                    this.message = ""
+                    this.latitude = location?.latitude as Double
+                    this.longitde = location?.longitude as Double
+                    this.position = ""
+
+                    details.apply {
+                        this.type = type
+                        this.waterLoss = waterLoss
+                        this.waterCondition = waterCondition
+                        this.leakageType = leakage
+                        this.deformationType = deformation
+                    }
                 })
             }
         }
@@ -307,7 +330,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                     finish()
                 }
                 else -> {
-                    Toast.makeText(this@CreateReportActivity, "The report couldn't be made", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CreateReportActivity, result.rawResult, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -321,6 +344,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
             it as HttpURLConnection
         }.apply {
             setRequestProperty("Content-Type", "application/json; charset=utf-8")
+            setRequestProperty("Authorization", "Bearer " + SessionManager.getInstance(null).session?.authToken)
             requestMethod = "POST"
             doOutput = true
 

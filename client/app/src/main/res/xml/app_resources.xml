@@ -29,6 +29,7 @@
                 android:summary="Synchronizes report and dyke data on startup when a network is available"
         />
         <Preference
+                android:key="sync-data-now"
                 android:icon="@drawable/ic_update_black_24dp"
                 android:title="Sync now"
                 android:summary="Last sync: 20.05.2019 16:42"

@@ -20,6 +20,7 @@
     <string name="create_report_watercondition_title">Water condition</string>
     <string name="create_report_leakagetype_title">Leakage type</string>
     <string name="create_report_deformationtype_title">Deformation type</string>
+    <string name="create_report_no_session_notice">You need to be logged in, in order to send reports.</string>
 
     <string name="profile_title">Profile</string>
     <string name="profile_login">Login</string>
@@ -104,5 +105,8 @@
     <string name="create_report_leakagetype_hint">Describe the leakage type</string>
     <string name="create_report_deformationtype_hint">Describe the deformation type</string>
     <string name="create_report_title_hint">Report title</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

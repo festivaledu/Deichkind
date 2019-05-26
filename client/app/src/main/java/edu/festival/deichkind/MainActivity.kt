@@ -15,12 +15,23 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import edu.festival.deichkind.fragments.MainFragment
+import edu.festival.deichkind.fragments.ReportListFragment
 import edu.festival.deichkind.util.SessionManager
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var drawerLayout: DrawerLayout? = null
+
+    var reportListFragment: ReportListFragment? = null
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 0 && resultCode == RESULT_OK) {
+            forceReloadLoaders()
+            Toast.makeText(this, "Sync in progress...", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +69,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 supportFragmentManager.beginTransaction().replace(R.id.main_frame_layout, fragment).commit()
                 supportActionBar?.setTitle(R.string.app_name)
-
             }
             R.id.nav_profile -> {
                 startActivity(Intent(this, ProfileActivity::class.java))
             }
             R.id.nav_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
             }
         }
 
@@ -88,5 +98,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.GONE
             drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.VISIBLE
         }
+    }
+
+    fun forceReloadLoaders() {
+        reportListFragment?.forceReloadLoader()
     }
 }

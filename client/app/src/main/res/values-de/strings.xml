@@ -57,4 +57,16 @@
     <string name="create_report_deformationtype_hint">Beschreibe die Verformung</string>
     <string name="create_report_title_hint">Titel der Meldung</string>
     <string name="create_report_dyke_title">Beschädigter Deich</string>
+    <string name="create_report_no_session_notice">Du musst angemeldet sein, um Meldungen machen zu können.</string>
+    <string name="profile_empty_fields_notice">Du musst alle Felder ausfüllen</string>
+    <string name="profile_login">Anmelden</string>
+    <string name="profile_login_notice">Du musst angemeldet sein, um Meldungen erstellen zu können</string>
+    <string name="profile_login_successful_notice">Erfolgreich angemeldet</string>
+    <string name="profile_password_hint">Passwort</string>
+    <string name="profile_password_incorrect_notice">Das Passwort ist falsch</string>
+    <string name="profile_unknown_error_notice">Ein unbekannter Fehler ist aufgetreten. Versuch es später erneut.
+    </string>
+    <string name="profile_user_unknown_notice">Der Benutzer konnte nicht gefunden werden.</string>
+    <string name="profile_username_hint">Benutzername</string>
+    <string name="main_drawer_anonymous_notice">Öffne das Profil, um dich anzumelden</string>
 </resources>
