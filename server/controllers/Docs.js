@@ -14,13 +14,39 @@ router.get("/", (req, res) => {
 				description: "Gets all details for the currently logged in user",
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"]
+				},
+				exampleResponse: {
+					id: 0,
+					username: "username",
+					email: "username@example.com",
+					role: 2,
+					lastLogin: "1970-01-01T01:00:00.000Z",
+					updatedAt: "1970-01-01T01:00:00.000Z",
 				}
 			},
 			"PUT /me": {
 				method: "PUT",
 				description: "Updates the currently logged in user profile with the data contained in the body",
+				parameters: {
+					username: "Sets the new username",
+					password: "An SHA512 hash of the updated password",
+					email: "The updated E-Mail address"
+				},
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"]
+				},
+				exampleRequest: {
+					username: "updated",
+					password: "b109f3b[...]cacbc86",
+					email: "updated@example.com",
+				},
+				exampleResponse: {
+					id: 0,
+					username: "updated",
+					email: "updated@example.com",
+					role: 2,
+					lastLogin: "1970-01-01T01:00:00.000Z",
+					updatedAt: "1970-01-02T0:32:17.000Z",
 				}
 			},
 			"DELETE /me": {
@@ -72,7 +98,18 @@ router.get("/", (req, res) => {
 				},
 				errors: {
 					[httpStatus.BAD_REQUEST]: ["No username, email or password provided"],
-					"409": ["Username or E-Mail address already in use"]
+					[httpStatus.CONFLICT]: ["Username or E-Mail address already in use"]
+				},
+				exampleRequest: {
+					username: "username",
+					email: "username@example.com",
+					password: "b109f3b[...]cacbc86"
+				},
+				exampleResponse: {
+					auth: true,
+					token: "eyJhbGc[...]LRa-ca0",
+					refreshToken: "eyJhbGc[...]-4RjabA",
+					role: 2
 				}
 			},
 			"POST /login": {
@@ -86,6 +123,16 @@ router.get("/", (req, res) => {
 					[httpStatus.BAD_REQUEST]: ["No username, email or password provided"],
 					[httpStatus.UNAUTHORIZED]: ["Incorrect password"],
 					[httpStatus.NOT_FOUND]: ["User not found"]
+				},
+				exampleRequest: {
+					username: "username@example.com",
+					password: "b109f3b[...]cacbc86"
+				},
+				exampleResponse: {
+					auth: true,
+					token: "eyJhbGc[...]LRa-ca0",
+					refreshToken: "eyJhbGc[...]-4RjabA",
+					role: 2
 				}
 			},
 			"GET /verify": {
@@ -93,6 +140,11 @@ router.get("/", (req, res) => {
 				description: "Verifys a user's authToken and returns a new one if it's valid",
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid or no authorization token provided"]
+				},
+				exampleResponse: {
+					auth: true,
+					token: "eyJhbGc[...]LRa-ca0",
+					role: 2
 				}
 			},
 			"POST /token": {
@@ -103,6 +155,12 @@ router.get("/", (req, res) => {
 				},
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid or no authorization token provided"]
+				},
+				exampleRequest: {
+					token: "eyJhbGc[...]LRa-ca0",
+				},
+				exampleResponse: {
+					token: "eyJhbGc[...]-4RjabA"
 				}
 			}
 		},
@@ -112,11 +170,31 @@ router.get("/", (req, res) => {
 				description: "Returns a list of every dyke available, including reports and comments",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No dykes found"]
-				}
+				},
+				exampleResponse: [
+					{
+						"id": "5feceb66ffc86f38d952786c6d696c79",
+						"name": "Räber Spring",
+						"city": "Suderburg",
+						"state": "Niedersachsen",
+						"accountId": "5feceb66ffc86f38d952786c6d696c79",
+						"createdAt": "2019-04-29T14:37:40.753Z",
+						"updatedAt": "2019-04-29T14:37:40.753Z"
+					},
+					{
+						"id": "f2649dfb6ee12e5cea8c6a47aa04bfb1",
+						"name": "Unnamed Dyke",
+						"city": "Unknown City",
+						"state": "Unknown State",
+						"accountId": "5feceb66ffc86f38d952786c6d696c79",
+						"createdAt": "2019-05-26T07:08:53.859Z",
+						"updatedAt": "2019-05-26T07:08:53.859Z"
+					}
+				]
 			},
 			"POST /new": {
 				method: "POST",
-				description: "Creates a new dyke object and stores the specified KML file in the database",
+				description: "Creates a new dyke object and stores the specified KML file in the database. Data is supplied using Form Data.",
 				parameters: {
 					name: "The dyke's public display name",
 					city: "The city the dyke is located in or related to",
@@ -127,6 +205,15 @@ router.get("/", (req, res) => {
 					[httpStatus.BAD_REQUEST]: ["No dyke file specified"],
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
 					[httpStatus.CONFLICT]: ["Dyke with name {name} already exists"]
+				},
+				exampleResponse: {
+					"name": "Unnamed Dyke",
+					"city": "Unknown City",
+					"state": "Unknown State",
+					"id": "89158e756f2c0a4153af3b7dfdd2d9e6",
+					"accountId": "5feceb66ffc86f38d952786c6d696c79",
+					"updatedAt": "2019-05-26T07:05:04.509Z",
+					"createdAt": "2019-05-26T07:05:04.509Z"
 				}
 			},
 			"GET /:dykeId": {
@@ -134,18 +221,38 @@ router.get("/", (req, res) => {
 				description: "Returns a dyke object by its database id",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found"]
+				},
+				exampleResponse: {
+					"id": "5feceb66ffc86f38d952786c6d696c79",
+					"name": "Räber Spring",
+					"city": "Suderburg",
+					"state": "Niedersachsen",
+					"accountId": "5feceb66ffc86f38d952786c6d696c79",
+					"createdAt": "2019-04-29T14:37:40.753Z",
+					"updatedAt": "2019-04-29T14:37:40.753Z"
 				}
 			},
 			"PUT /:dykeId": {
 				method: "PUT",
-				description: "Updates a dyke object with the given values",
+				description: "Updates a dyke object with the given values. Data is supplied using Form Data.",
 				parameters: {
 					name: "The dyke's public display name",
+					city: "The city the dyke is located in or related to",
+					state: "The state the dyke is located in (not to be mixed up with country)",
 					file: "The dyke's KML file to be displayed in a map view"
 				},
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
 					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found"]
+				},
+				exampleResponse: {
+					"id": "f2649dfb6ee12e5cea8c6a47aa04bfb1",
+					"name": "Updated Dyke",
+					"city": "Updated City",
+					"state": "Updated State",
+					"accountId": "5feceb66ffc86f38d952786c6d696c79",
+					"createdAt": "2019-05-26T07:08:53.859Z",
+					"updatedAt": "2019-05-26T07:08:53.859Z"
 				}
 			},
 			"DELETE /:dykeId": {
@@ -168,7 +275,41 @@ router.get("/", (req, res) => {
 				description: "Returns a list of reports for a specific dyke",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found", "Dyke does not have any reports"]
-				}
+				},
+				exampleResponse: [
+					{
+						"id": "5feceb66ffc86f38d952786c6d696c79",
+						"dykeId": "5feceb66ffc86f38d952786c6d696c79",
+						"title": "Alles kaputt!",
+						"latitude": "0",
+						"longitude": "0",
+						"position": "pos",
+						"details": {
+							"type": "followup",
+							"waterLoss": "isolated",
+							"waterCondition": "muddy",
+							"leakageType": "flowing",
+							"deformationType": "slipped-topsoil"
+						},
+						"accountId": "5feceb66ffc86f38d952786c6d696c79",
+						"resolved": false,
+						"deleted": false,
+						"createdAt": "2019-04-29T14:37:40.757Z",
+						"updatedAt": "2019-04-29T14:37:40.757Z",
+						"comments": [
+							{
+								"id": "5feceb66ffc86f38d952786c6d696c79",
+								"dykeId": "5feceb66ffc86f38d952786c6d696c79",
+								"reportId": "5feceb66ffc86f38d952786c6d696c79",
+								"message": "Alles kaputt!",
+								"accountId": "5feceb66ffc86f38d952786c6d696c79",
+								"deleted": false,
+								"createdAt": "2019-04-29T14:37:40.760Z",
+								"updatedAt": "2019-04-29T14:37:40.760Z"
+							}
+						]
+					}
+				]
 			},
 			"POST /:dykeId/reports/new": {
 				method: "POST",
@@ -184,6 +325,52 @@ router.get("/", (req, res) => {
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
 					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found"]
+				},
+				exampleRequest: {
+					title: "Report Title",
+					message: "Report Message",
+					latitude: 50.3633,
+					longitude: 14.8429,
+					position: "[Unknown format]",
+					details: {
+						type: "initial",
+						waterLoss: "followup",
+						waterCondition: "clear",
+						leakageType: "flowing",
+						deformationType: "upheavel"
+					}
+				},
+				exampleResponse: {
+					report: {
+						title: "Report Title",
+						latitude: 50.3633,
+						longitude: 14.8429,
+						position: "[Unknown format]",
+						details: {
+							type: "initial",
+							waterLoss: "followup",
+							waterCondition: "clear",
+							leakageType: "flowing",
+							deformationType: "upheavel"
+						},
+						id: "eaaafe0ea3d66d791b48c9deb9b0f8cb",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						resolved: false,
+						deleted: false,
+						updatedAt: "2019-05-26T07:20:48.098Z",
+						createdAt: "2019-05-26T07:20:48.098Z"
+					},
+					comment: {
+						deleted: false,
+						id: "2f377c3de5bd599c9a8fb2531a7060cf",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						reportId: "eaaafe0ea3d66d791b48c9deb9b0f8cb",
+						message: "Report Message",
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						updatedAt: "2019-05-26T07:20:48.107Z",
+						createdAt: "2019-05-26T07:20:48.107Z"
+					}
 				}
 			}
 		},
@@ -193,13 +380,128 @@ router.get("/", (req, res) => {
 				description: "Returns a list of every report available, including comments",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["There are no reports to show"]
-				}
+				},
+				exampleResponse: [
+					{
+						id: "eaaafe0ea3d66d791b48c9deb9b0f8cb",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						title: "Report Title",
+						latitude: "50.3633",
+						longitude: "14.8429",
+						position: "[Unknown format]",
+						details: {
+							type: "initial",
+							waterLoss: "followup",
+							waterCondition: "clear",
+							leakageType: "flowing",
+							deformationType: "upheavel"
+						},
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						resolved: false,
+						deleted: false,
+						createdAt: "2019-05-26T07:20:48.098Z",
+						updatedAt: "2019-05-26T07:20:48.098Z",
+						comments: [
+							{
+								id: "2f377c3de5bd599c9a8fb2531a7060cf",
+								dykeId: "5feceb66ffc86f38d952786c6d696c79",
+								reportId: "eaaafe0ea3d66d791b48c9deb9b0f8cb",
+								message: "Report Message",
+								accountId: "5feceb66ffc86f38d952786c6d696c79",
+								deleted: false,
+								createdAt: "2019-05-26T07:20:48.107Z",
+								updatedAt: "2019-05-26T07:20:48.107Z"
+							}
+						],
+						photos: []
+					},
+					{
+						id: "5feceb66ffc86f38d952786c6d696c79",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						title: "Alles kaputt!",
+						latitude: "0",
+						longitude: "0",
+						position: "pos",
+						details: {
+							type: "followup",
+							waterLoss: "isolated",
+							waterCondition: "muddy",
+							leakageType: "flowing",
+							deformationType: "slipped-topsoil"
+						},
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						resolved: false,
+						deleted: false,
+						createdAt: "2019-04-29T14:37:40.757Z",
+						updatedAt: "2019-04-29T14:37:40.757Z",
+						comments: [
+							{
+								id: "5feceb66ffc86f38d952786c6d696c79",
+								dykeId: "5feceb66ffc86f38d952786c6d696c79",
+								reportId: "5feceb66ffc86f38d952786c6d696c79",
+								message: "Alles kaputt!",
+								accountId: "5feceb66ffc86f38d952786c6d696c79",
+								deleted: false,
+								createdAt: "2019-04-29T14:37:40.760Z",
+								updatedAt: "2019-04-29T14:37:40.760Z"
+							}
+						],
+						photos: [
+							{
+								id: "5feceb66ffc86f38d952786c6d696c79",
+								photoMime: "image/png",
+								createdAt: "2019-04-29T14:37:40.762Z",
+								updatedAt: "2019-04-29T14:37:40.762Z"
+							}
+						]
+					}
+				]
 			},
 			"GET /:reportId": {
 				method: "GET",
 				description: "Returns a report by its database id",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
+				},
+				exampleResponse: {
+					id: "5feceb66ffc86f38d952786c6d696c79",
+					dykeId: "5feceb66ffc86f38d952786c6d696c79",
+					title: "Alles kaputt!",
+					latitude: "0",
+					longitude: "0",
+					position: "pos",
+					details: {
+						type: "followup",
+						waterLoss: "isolated",
+						waterCondition: "muddy",
+						leakageType: "flowing",
+						deformationType: "slipped-topsoil"
+					},
+					accountId: "5feceb66ffc86f38d952786c6d696c79",
+					resolved: false,
+					deleted: false,
+					createdAt: "2019-04-29T14:37:40.757Z",
+					updatedAt: "2019-04-29T14:37:40.757Z",
+					comments: [
+						{
+							id: "5feceb66ffc86f38d952786c6d696c79",
+							dykeId: "5feceb66ffc86f38d952786c6d696c79",
+							reportId: "5feceb66ffc86f38d952786c6d696c79",
+							message: "Alles kaputt!",
+							accountId: "5feceb66ffc86f38d952786c6d696c79",
+							deleted: false,
+							createdAt: "2019-04-29T14:37:40.760Z",
+							updatedAt: "2019-04-29T14:37:40.760Z"
+						}
+					],
+					photos: [
+						{
+							id: "5feceb66ffc86f38d952786c6d696c79",
+							photoMime: "image/png",
+							createdAt: "2019-04-29T14:37:40.762Z",
+							updatedAt: "2019-04-29T14:37:40.762Z"
+						}
+					]
 				}
 			},
 			"PUT /:reportId": {
@@ -207,7 +509,6 @@ router.get("/", (req, res) => {
 				description: "Updates a report by its database id",
 				parameters: {
 					title: "The public display name of the created report",
-					message: "The description text of the created report",
 					latitude: "The latitudinal position of the issue",
 					longitude: "The longitudinal position of the issue",
 					position: "The position of the issue on a schematic drawing of the dyke",
@@ -217,6 +518,30 @@ router.get("/", (req, res) => {
 				errors: {
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token", "You are not allowed to perform this action"],
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
+				},
+				exampleRequest: {
+					title: "Updated Title",
+					resolved: true
+				},
+				exampleResponse: {
+					id: "5feceb66ffc86f38d952786c6d696c79",
+					dykeId: "5feceb66ffc86f38d952786c6d696c79",
+					title: "Updated Title",
+					latitude: "0",
+					longitude: "0",
+					position: "pos",
+					details: {
+						type: "followup",
+						waterLoss: "isolated",
+						waterCondition: "muddy",
+						leakageType: "flowing",
+						deformationType: "slipped-topsoil"
+					},
+					accountId: "5feceb66ffc86f38d952786c6d696c79",
+					resolved: true,
+					deleted: false,
+					createdAt: "2019-04-29T14:37:40.757Z",
+					updatedAt: "2019-04-29T14:37:40.757Z"
 				}
 			},
 			"DELETE /:reportId": {
@@ -232,7 +557,19 @@ router.get("/", (req, res) => {
 				description: "Gets a list of comments linked to a specific report",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any comments"]
-				}
+				},
+				exampleResponse: [
+					{
+						id: "5feceb66ffc86f38d952786c6d696c79",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						reportId: "5feceb66ffc86f38d952786c6d696c79",
+						message: "Alles kaputt!",
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						deleted: false,
+						createdAt: "2019-04-29T14:37:40.760Z",
+						updatedAt: "2019-04-29T14:37:40.760Z"
+					}
+				]
 			},
 			"POST /:reportId/comment": {
 				method: "POST",
@@ -244,6 +581,19 @@ router.get("/", (req, res) => {
 					[httpStatus.BAD_REQUEST]: ["No comment message supplied"],
 					[httpStatus.UNAUTHORIZED]: ["Invalid authorization token"],
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found"]
+				},
+				exampleRequest: {
+					message: "This is a description of damage on a dyke"
+				},
+				exampleResponse: {
+					deleted: false,
+					id: "fb6a49c8047787c044e85a15ed57254f",
+					dykeId: "5feceb66ffc86f38d952786c6d696c79",
+					reportId: "eaaafe0ea3d66d791b48c9deb9b0f8cb",
+					message: "This is a description of damage on a dyke",
+					accountId: "5feceb66ffc86f38d952786c6d696c79",
+					updatedAt: "2019-05-26T07:30:25.077Z",
+					createdAt: "2019-05-26T07:30:25.077Z"
 				}
 			},
 			"GET /:reportId/comments/:commentId": {
@@ -251,6 +601,16 @@ router.get("/", (req, res) => {
 				description: "Gets the details of a specific comment linked to a report",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any comment with identifier {commentId}"]
+				},
+				exampleResponse: {
+					id: "5feceb66ffc86f38d952786c6d696c79",
+					dykeId: "5feceb66ffc86f38d952786c6d696c79",
+					reportId: "5feceb66ffc86f38d952786c6d696c79",
+					message: "Alles kaputt!",
+					accountId: "5feceb66ffc86f38d952786c6d696c79",
+					deleted: false,
+					createdAt: "2019-04-29T14:37:40.760Z",
+					updatedAt: "2019-04-29T14:37:40.760Z"
 				}
 			},
 			"DELETE /:reportId/comments/:commentId": {
@@ -266,7 +626,19 @@ router.get("/", (req, res) => {
 				description: "Gets a list of photos linked to a specific report",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photos"]
-				}
+				},
+				exampleResponse: [
+					{
+						id: "5feceb66ffc86f38d952786c6d696c79",
+						dykeId: "5feceb66ffc86f38d952786c6d696c79",
+						reportId: "5feceb66ffc86f38d952786c6d696c79",
+						photoMime: "image/png",
+						accountId: "5feceb66ffc86f38d952786c6d696c79",
+						deleted: false,
+						createdAt: "2019-04-29T14:37:40.762Z",
+						updatedAt: "2019-04-29T14:37:40.762Z"
+					}
+				]
 			},
 			"POST /:reportId/photos": {
 				method: "POST",
@@ -293,6 +665,16 @@ router.get("/", (req, res) => {
 				description: "Gets the details of a specific photo linked to a report",
 				errors: {
 					[httpStatus.NOT_FOUND]: ["No report with identifier {reportId} found", "Report does not have any photo with identifier {commentId}"]
+				},
+				exampleResponse: {
+					id: "5feceb66ffc86f38d952786c6d696c79",
+					dykeId: "5feceb66ffc86f38d952786c6d696c79",
+					reportId: "5feceb66ffc86f38d952786c6d696c79",
+					photoMime: "image/png",
+					accountId: "5feceb66ffc86f38d952786c6d696c79",
+					deleted: false,
+					createdAt: "2019-04-29T14:37:40.762Z",
+					updatedAt: "2019-04-29T14:37:40.762Z"
 				}
 			},
 			"GET /:reportId/photos/:photoId/file": {

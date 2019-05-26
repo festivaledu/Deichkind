@@ -82,7 +82,7 @@
 						</md-toolbar>
 						<div class="code-block">
 							<div class="code-block-wrapper md-scrollbar md-theme-dark">
-								<pre v-highlightjs><code class="json">{{JSON.stringify(currentRouteData.exampleRequest, null, 2)}}</code></pre>
+								<pre v-highlightjs><code class="json">{{ JSON.stringify(currentRouteData.exampleRequest, null, 4) }}</code></pre>
 							</div>
 						</div>
 					</div>
@@ -93,7 +93,7 @@
 						</md-toolbar>
 						<div class="code-block">
 							<div class="code-block-wrapper md-scrollbar md-theme-dark">
-								<pre v-highlightjs><code class="json">{{JSON.stringify(currentRouteData.exampleResponse, null, 2)}}</code></pre>
+								<pre v-highlightjs><code class="json">{{ JSON.stringify(currentRouteData.exampleResponse, null, 4) }}</code></pre>
 							</div>
 						</div>
 					</div>
@@ -110,7 +110,7 @@
 
 <style lang="less">
 .code-example {
-	margin: 32px 16px;
+	margin: 16px;
 	
 	.code-block {
 		max-width: 100%;
@@ -122,7 +122,7 @@
 			background-color: #bdbdbd;
 			color: inherit;
 		}
-
+		
 		.code-block-wrapper {
 			min-width: 100%;
 			max-height: 450px;
@@ -130,6 +130,10 @@
 			padding: 16px;
 			overflow: auto;
 		}
+	}
+	
+	& + .code-example {
+		margin-top: 0;
 	}
 }
 </style>
