@@ -1,22 +1,67 @@
 package edu.festival.deichkind
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.Toolbar
+import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.Spinner
+import android.widget.*
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import edu.festival.deichkind.listeners.OnItemSelectedListener
 import edu.festival.deichkind.util.DykeManager
 import java.net.HttpURLConnection
 import java.net.URL
+import com.google.android.gms.maps.MapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.gson.Gson
+import edu.festival.deichkind.models.ReportBlueprint
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 
-class CreateReportActivity : AppCompatActivity() {
+
+class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
+    private var location: Location? = null
+
+    private fun getLocation() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                findViewById<TextView>(R.id.create_report_latitude).text = location?.latitude.toString()
+                findViewById<TextView>(R.id.create_report_longitude).text = location?.longitude.toString()
+
+                this.location = location
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            findViewById<ImageView>(R.id.create_report_image_preview).setImageBitmap(imageBitmap)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +73,30 @@ class CreateReportActivity : AppCompatActivity() {
         supportActionBar?.setTitle(R.string.create_report_title)
 
         findViewById<FloatingActionButton>(R.id.create_report_fab).setOnClickListener {
-            URL("https://edu.festival.ml/deichkind/api/dykes/:dykeId/reports/new").openConnection().let {
-                it as HttpURLConnection
-            }.apply {
-                setRequestProperty("Content-Type", "application/json; charset=utf-8")
-                requestMethod = "POST"
-                doOutput = true
+            val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
 
+            Toast.makeText(this, dykeId, Toast.LENGTH_SHORT).show()
+
+            GlobalScope.launch {
+                sendReport(dykeId, ReportBlueprint().apply {
+                    title = "Test"
+                })
             }
         }
+
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1)
+        } else {
+            getLocation()
+        }
+
+
+        // val mapFragment = fragmentManager.findFragmentById(R.id.map) as MapFragment
+        // mapFragment.getMapAsync(this)
+
 
         val dykeEntries: MutableList<SpinnerItem> = DykeManager.getInstance(null).dykes.map {
             SpinnerItem(it.id, it.name)
@@ -195,13 +255,102 @@ class CreateReportActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onMapReady(map: GoogleMap?) {
+        map?.addMarker(MarkerOptions().position(LatLng(location?.latitude as Double, location?.longitude as Double)))
+    }
+
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.option_take_photo -> {
+            Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+                takePictureIntent.resolveActivity(packageManager)?.also {
+                    startActivityForResult(takePictureIntent, 1)
+                }
+            }
+            true
+        }
         R.id.option_close_create_report -> {
             finish()
             true
         }
         else -> {
             super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        when (requestCode) {
+            1 -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay! Do the
+                    // related task you need to do.
+                    getLocation()
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return
+            }
+
+            else -> {
+                // Ignore all other requests.
+            }
+        }
+    }
+
+    private suspend fun sendReport(dykeId: String, blueprint: ReportBlueprint) {
+        val result = trySendReportAsync(dykeId, blueprint).await()
+
+        runOnUiThread {
+            when (result.statusCode) {
+                200 -> {
+                    finish()
+                }
+                else -> {
+                    Toast.makeText(this@CreateReportActivity, "The report couldn't be made", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun trySendReportAsync(dykeId: String, blueprint: ReportBlueprint): Deferred<ApiResult> = GlobalScope.async {
+        val body = Gson().toJson(blueprint)
+        val result = ApiResult()
+
+        URL("https://edu.festival.ml/deichkind/api/dykes/$dykeId/reports/new").openConnection().let {
+            it as HttpURLConnection
+        }.apply {
+            setRequestProperty("Content-Type", "application/json; charset=utf-8")
+            requestMethod = "POST"
+            doOutput = true
+
+            val outputWriter = OutputStreamWriter(outputStream)
+            outputWriter.write(body)
+            outputWriter.flush()
+        }.let {
+            result.statusCode = it.responseCode
+
+            if (it.responseCode == 200) {
+                it.inputStream
+            } else {
+                it.errorStream
+            }
+        }.let { streamToRead ->
+            BufferedReader(InputStreamReader(streamToRead)).use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+
+                it.close()
+
+                result.rawResult = response.toString()
+
+                return@async result
+            }
         }
     }
 }
