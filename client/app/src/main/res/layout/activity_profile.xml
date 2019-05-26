@@ -20,7 +20,7 @@
 
     <LinearLayout
             android:id="@+id/profile_head"
-            android:layout_height="176dp"
+            android:layout_height="200dp"
             android:layout_width="match_parent"
             android:background="?attr/colorPrimary"
             android:gravity="center_horizontal"
@@ -32,27 +32,27 @@
     >
 
         <ImageView
+                android:id="@+id/profile_my_avatar"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 app:srcCompat="@mipmap/ic_launcher_round"
         />
 
         <TextView
+                android:id="@+id/profile_my_username"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:paddingTop="16dp"
-                android:text="Vainamo Lumikero"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         />
 
         <TextView
+                android:id="@+id/profile_my_email"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:text="vainamo@festival.ml"
         />
-
     </LinearLayout>
 
     <LinearLayout
@@ -60,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="?attr/colorPrimaryDark"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="16dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark"
             app:layout_constraintTop_toBottomOf="@id/profile_head"
@@ -69,21 +69,21 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:text="Melde dich an, um Meldungen erstellen zu können"
+                android:text="@string/profile_login_notice"
                 android:textColor="@android:color/white"
         />
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/profile_inputs"
             android:layout_height="0dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/profile_subbar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="48dp" app:layout_constraintVertical_bias="0.0">
+            app:layout_constraintBottom_toBottomOf="parent">
         <EditText
                 android:id="@+id/profile_username"
-                android:hint="Benutzername"
+                android:hint="@string/profile_username_hint"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginVertical="12dp"
@@ -93,7 +93,7 @@
 
         <EditText
                 android:id="@+id/profile_password"
-                android:hint="Passwort"
+                android:hint="@string/profile_password_hint"
                 android:inputType="textPassword"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="12dp"
@@ -107,7 +107,7 @@
                 android:layout_marginHorizontal="12dp"
                 android:layout_marginVertical="12dp"
                 android:layout_width="match_parent"
-                android:text="Anmelden"
+                android:text="@string/profile_login"
         />
 
         <TextView

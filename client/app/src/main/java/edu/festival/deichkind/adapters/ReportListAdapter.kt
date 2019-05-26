@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import edu.festival.deichkind.DykeManager
+import edu.festival.deichkind.util.DykeManager
 import edu.festival.deichkind.R
 import edu.festival.deichkind.models.Report
 import java.text.DateFormat

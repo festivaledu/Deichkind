@@ -4,7 +4,7 @@ import android.content.Context
 import android.support.v4.content.AsyncTaskLoader
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import edu.festival.deichkind.DykeManager
+import edu.festival.deichkind.util.DykeManager
 import edu.festival.deichkind.models.Dyke
 import java.io.File
 import java.net.URL
