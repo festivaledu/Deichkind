@@ -40,7 +40,7 @@
 					<md-list-item>
 						<div class="md-list-item-text">
 							<span>Route</span>
-							<p class="text-wrap">{{ currentRoutePath }}</p>
+							<p class="text-wrap">{{ currentRoutePath.replace(/^\/documentation/, "") }}</p>
 						</div>
 					</md-list-item>
 					
