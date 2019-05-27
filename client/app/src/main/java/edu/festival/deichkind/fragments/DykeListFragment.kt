@@ -24,14 +24,21 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.net.URL
 import com.google.gson.reflect.TypeToken
+import edu.festival.deichkind.MainActivity
 import edu.festival.deichkind.adapters.DykeListAdapter
 import edu.festival.deichkind.loaders.DykeListAsyncTaskLoader
 
 class DykeListFragment : Fragment() {
 
-    var dykesResponse: String = ""
+    private var loaderCallbacks: LoaderManager.LoaderCallbacks<Array<Dyke>>? = null
+
+    fun forceReloadLoader() {
+        loaderManager.restartLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Dyke>>)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        (activity as MainActivity).dykeListFragment = this
+
         return inflater.inflate(R.layout.fragment_dyke_list, container, false)
     }
 
@@ -47,7 +54,7 @@ class DykeListFragment : Fragment() {
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.dyke_list_recycler)
 
-        val loaderCallbacks = object : LoaderManager.LoaderCallbacks<Array<Dyke>> {
+        loaderCallbacks = object : LoaderManager.LoaderCallbacks<Array<Dyke>> {
             override fun onCreateLoader(p0: Int, p1: Bundle?): Loader<Array<Dyke>> {
                 return DykeListAsyncTaskLoader(this@DykeListFragment.context as Context)
             }
@@ -66,7 +73,7 @@ class DykeListFragment : Fragment() {
             }
         }
 
-        loaderManager.initLoader(0, null, loaderCallbacks)
+        loaderManager.initLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Dyke>>)
     }
 
     /* private fun getDykes() = runBlocking(Dispatchers.Default) {

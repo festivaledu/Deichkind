@@ -1,7 +1,10 @@
 package edu.festival.deichkind
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -16,20 +19,30 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import edu.festival.deichkind.fragments.DykeListFragment
 import edu.festival.deichkind.fragments.MainFragment
 import edu.festival.deichkind.fragments.ReportListFragment
 import edu.festival.deichkind.util.SessionManager
+import java.io.File
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-    var drawerLayout: DrawerLayout? = null
+    private var drawerLayout: DrawerLayout? = null
 
+    var dykeListFragment: DykeListFragment? = null
     var reportListFragment: ReportListFragment? = null
+
+    private fun forceReloadLoaders() {
+        dykeListFragment?.forceReloadLoader()
+        reportListFragment?.forceReloadLoader()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 0 && resultCode == RESULT_OK) {
             forceReloadLoaders()
-            Toast.makeText(this, "Sync in progress...", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.main_sync_in_progress_notice), Toast.LENGTH_SHORT).show()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
@@ -52,6 +65,25 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerToggle.syncState()
 
         navigationView.setNavigationItemSelectedListener(this)
+
+        val sharedPrefs = getSharedPreferences("ml.festival.edu.deichkind", Context.MODE_PRIVATE)
+        val syncOnStartup = sharedPrefs.getBoolean("sync-data-on-startup-if-network-available", false)
+        if (syncOnStartup) {
+            val networkInfo = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+
+            if (networkInfo != null && networkInfo.isConnected) {
+                val dykesFile = File(filesDir, "dykes.json")
+                val reportsFile = File(filesDir, "reports.json")
+
+                if (dykesFile.exists()) {
+                    dykesFile.delete()
+                }
+
+                if (reportsFile.exists()) {
+                    reportsFile.delete()
+                }
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -71,7 +103,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 supportActionBar?.setTitle(R.string.app_name)
             }
             R.id.nav_profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
+                val networkInfo = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+
+                if (networkInfo != null && networkInfo.isConnected) {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                } else {
+                    Toast.makeText(this, getString(R.string.main_network_connection_required_notice), Toast.LENGTH_SHORT).show()
+                }
             }
             R.id.nav_settings -> {
                 startActivityForResult(Intent(this, SettingsActivity::class.java), 0)
@@ -98,9 +136,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.GONE
             drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.VISIBLE
         }
-    }
-
-    fun forceReloadLoaders() {
-        reportListFragment?.forceReloadLoader()
     }
 }

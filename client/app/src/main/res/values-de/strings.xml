@@ -69,4 +69,22 @@
     <string name="profile_user_unknown_notice">Der Benutzer konnte nicht gefunden werden.</string>
     <string name="profile_username_hint">Benutzername</string>
     <string name="main_drawer_anonymous_notice">Öffne das Profil, um dich anzumelden</string>
+    <string name="create_report_title_missing_notice">Du musst einen Titel eingeben</string>
+    <string name="main_network_connection_required_notice">Dein Gerät muss mit dem Internet verbunden sein</string>
+    <string name="main_sync_in_progress_notice">Synchronisierung läuft…</string>
+    <string name="settings_about_creator_summary">FESTIVAL Development</string>
+    <string name="settings_about_creator_title">Entwickler</string>
+    <string name="settings_about_title">Über</string>
+    <string name="settings_about_version_title">Version</string>
+    <string name="settings_default_dyke_dialog_title">Deich auswählen</string>
+    <string name="settings_default_dyke_summary">Standard-Deich der bei jeder Meldung voreingestellt wird</string>
+    <string name="settings_default_dyke_title">Standard-Deich</string>
+    <string name="settings_general_title">Allgemein</string>
+    <string name="settings_sync_now_summary">Manuelle Synchronisierung aller Meldungen und Deiche jetzt durchführen</string>
+    <string name="settings_sync_now_title">Jetzt synchronisieren</string>
+    <string name="settings_sync_on_startup_summary">Synchronisiert alle Meldungen und Deiche bei jedem Start der App
+        sofern eine Internetverbindung vorhanden ist
+    </string>
+    <string name="settings_sync_on_startup_title">Synchronisierung beim Start</string>
+    <string name="settings_sync_title">Synchronisierung</string>
 </resources>

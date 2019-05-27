@@ -15,15 +15,22 @@ import java.io.File
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
+        preferenceManager.sharedPreferencesName = "ml.festival.edu.deichkind"
+
         addPreferencesFromResource(R.xml.app_resources)
 
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
         findPreference("sync-data-now").setOnPreferenceClickListener {
-            val reportFile = File(context?.filesDir, "reports.json")
+            val dykesFile = File(context?.filesDir, "dykes.json")
+            val reportsFile = File(context?.filesDir, "reports.json")
 
-            if (reportFile.exists()) {
-                reportFile.delete()
+            if (dykesFile.exists()) {
+                dykesFile.delete()
+            }
+
+            if (reportsFile.exists()) {
+                reportsFile.delete()
             }
 
             (activity as SettingsActivity).apply {

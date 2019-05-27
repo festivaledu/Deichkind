@@ -1,6 +1,7 @@
 package edu.festival.deichkind.fragments
 
 import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.LoaderManager
 import android.support.v4.content.Loader
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -23,6 +25,7 @@ import edu.festival.deichkind.adapters.ReportListAdapter
 import edu.festival.deichkind.loaders.ReportListAsyncTaskLoader
 import edu.festival.deichkind.models.Report
 import edu.festival.deichkind.util.SessionManager
+import java.io.File
 
 class ReportListFragment : Fragment() {
 
@@ -30,6 +33,18 @@ class ReportListFragment : Fragment() {
 
     fun forceReloadLoader() {
         loaderManager.restartLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Report>>)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            val reportsFile = File(context?.filesDir, "reports.json")
+
+            if (reportsFile.exists()) {
+                reportsFile.delete()
+            }
+
+            forceReloadLoader()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,13 +84,13 @@ class ReportListFragment : Fragment() {
             if (SessionManager.getInstance(null).session == null) {
                 NoSessionDialog().show(fragmentManager, "dialog")
             } else {
-                startActivity(Intent(activity, CreateReportActivity::class.java))
+                startActivityForResult(Intent(activity, CreateReportActivity::class.java), 1)
             }
         }
     }
 
     fun onItemClick(item: Report) {
-        var bundle = Bundle().apply {
+        val bundle = Bundle().apply {
             putParcelable("REPORT", item)
         }
 

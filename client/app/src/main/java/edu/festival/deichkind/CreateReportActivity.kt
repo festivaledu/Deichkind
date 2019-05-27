@@ -1,6 +1,7 @@
 package edu.festival.deichkind
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -76,7 +77,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
         findViewById<FloatingActionButton>(R.id.create_report_fab).setOnClickListener {
             if (findViewById<EditText>(R.id.create_report_title_input).text.isEmpty()) {
-                Toast.makeText(this, "You need to give this report a title", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.create_report_title_missing_notice), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -327,6 +328,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
         runOnUiThread {
             when (result.statusCode) {
                 200 -> {
+                    setResult(Activity.RESULT_OK)
                     finish()
                 }
                 else -> {
