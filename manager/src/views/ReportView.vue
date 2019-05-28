@@ -54,7 +54,7 @@
 						<md-list-item v-for="(value, key, index) in reportData.details" :key="`detail_${index}`">
 							<div class="md-list-item-text">
 								<span>{{ $t(`reports.detailKeys.${key}`) }}</span>
-								<span>{{ $t(`reports.detailValues.${key}.${value}`) }}</span>
+								<span>{{ localizableHasKeyPath(`reports.detailValues.${key}.${value}`) ? $t(`reports.detailValues.${key}.${value}`) : value }}</span>
 							</div>
 						</md-list-item>
 					</md-list>
@@ -143,6 +143,7 @@ form {
 import AppDrawer from "@/components/AppDrawer.vue"
 import { AccountAPI, DykeAPI, ReportAPI } from "@/scripts/ApiUtil"
 import { required } from "vuelidate/lib/validators";
+import localizable from "@/localizable.json";
 
 let asyncForEach = async (array, callback) => {
 	for (let index = 0; index < array.length; index++) {
@@ -269,10 +270,11 @@ export default {
 			
 			return initials;
 		},
-		objectHasKeyPath(object, path) {
+		localizableHasKeyPath(path) {
+			path = `${navigator.language}.${path}`;
 			let result = path.split(".").reduce((previous, current) => {
 				return previous != null && typeof previous[current] !== "undefined" ? previous[current] : null
-			}, object);
+			}, localizable);
 			
 			return result != null;
 		}
