@@ -43,6 +43,16 @@
 						</a>
 					</div>
 					
+					<img src="/deichkind/img/dyke-position-descriptor.svg" class="dyke-position-descriptor" />
+					<md-list class="md-double-line">
+						<md-list-item>
+							<div class="md-list-item-text">
+								<span>{{ $t("reports.position_title") }}</span>
+								<span>{{ localizableHasKeyPath(`reports.position_values.${reportData.position}`) ? $t(`reports.position_values.${reportData.position}`) : reportData.position }}</span>
+							</div>
+						</md-list-item>
+					</md-list>
+					
 					<md-subheader>{{ $t("reports.details") }}</md-subheader>
 					<md-list class="md-double-line">
 						<md-list-item>
@@ -135,6 +145,12 @@ form {
 	textarea {
 		resize: none !important;
 	}
+}
+
+.dyke-position-descriptor {
+	display: block;
+	margin: 16px auto 0;
+	padding: 0 16px;
 }
 </style>
 
