@@ -76,6 +76,14 @@
                     android:text="@string/create_report_position_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             />
+
+            <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:src="@drawable/ic_artboard"
+            />
+
             <TextView
                     android:id="@+id/report_detail_position"
                     android:layout_height="wrap_content"

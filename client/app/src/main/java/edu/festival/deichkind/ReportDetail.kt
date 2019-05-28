@@ -35,10 +35,10 @@ class ReportDetail : AppCompatActivity() {
 
         val position = HashMap<String, String>()
         for (i in resources.getStringArray(R.array.report_spinner_position_keys).indices) {
-            types[resources.getStringArray(R.array.report_spinner_position_keys)[i]] = resources.getStringArray(R.array.report_spinner_position_values)[i]
+            position[resources.getStringArray(R.array.report_spinner_position_keys)[i]] = resources.getStringArray(R.array.report_spinner_position_values)[i]
         }
 
-        findViewById<TextView>(R.id.report_detail_position).text = position[report.position]
+        findViewById<TextView>(R.id.report_detail_position).text = position[report.position] ?: report.position
 
         findViewById<TextView>(R.id.report_detail_location).text = "${report.latitude} / ${report.longitude}"
 
