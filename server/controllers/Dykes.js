@@ -340,19 +340,23 @@ router.post("/:dykeId/reports/new", async (req, res) => {
 		accountId: account.id,
 		resolved: false,
 		deleted: false
-	})).then(reportObj => {
-		Comment.create({
-			id: String.prototype.concat(dykeObj.id, reportObj.id, account.id, new Date().getTime()),
-			dykeId: dykeObj.id,
-			reportId: reportObj.id,
-			message: reportData.message,
-			accountId: account.id
-		}).then(commentObj => {
-			return res.status(httpStatus.OK).send({
-				report: reportObj,
-				comment: commentObj
+	})).then(async reportObj => {
+		
+		let commentObj;
+		if (reportData.message.length) {
+			commentObj = await Comment.create({
+				id: String.prototype.concat(dykeObj.id, reportObj.id, account.id, new Date().getTime()),
+				dykeId: dykeObj.id,
+				reportId: reportObj.id,
+				message: reportData.message,
+				accountId: account.id
 			});
-		}).catch(error => ErrorHandler(req, res, error));
+		}
+		
+		return res.status(httpStatus.OK).send({
+			report: reportObj,
+			comment: commentObj
+		});
 	}).catch(error => ErrorHandler(req, res, error));
 });
 
