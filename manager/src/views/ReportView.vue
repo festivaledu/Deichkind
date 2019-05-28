@@ -36,8 +36,8 @@
 					</div>
 				</transition>
 				<div v-else-if="reportData && dykeData">
-					<md-subheader>{{ $t("reports.photos") }}</md-subheader>
-					<div class="row">
+					<md-subheader v-if="reportData.photos.length">{{ $t("reports.photos") }}</md-subheader>
+					<div class="row" v-if="reportData.photos.length">
 						<a :href="`${currentOrigin}/api/reports/${reportData.id}/photos/${photoObj.id}/file`" target="_blank" class="col col-4 col-md-2 col-photo" v-for="(photoObj, index) in reportData.photos" :key="`photo_${index}`">
 							<img :src="`${currentOrigin}/api/reports/${reportData.id}/photos/${photoObj.id}/file`" />
 						</a>
