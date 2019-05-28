@@ -80,7 +80,7 @@
 				},
 				"waterLoss": {
 					"none": "None",
-					"isolated": "Isolated",
+					"isolated": "Moist area",
 					"punctually": "Punctually",
 					"areally": "Areally"
 				},
@@ -97,12 +97,21 @@
 				},
 				"deformationType": {
 					"none": "None",
-					"upheavel": "Upheavel", 
+					"upheavel": "Upheavel / Raising", 
 					"bagging": "Bagging", 
 					"slipped-topsoil": "Slipped Topsoil", 
-					"shift": "Shift",
+					"shift": "Shift / Slide",
 					"slipped-slope": "Slipped Slope"
 				}
+			},
+			"position_title": "Position",
+			"position_values": {
+				"outer-slope": "Outer Slope (A)",
+				"crown": "Dyke Crown (B)",
+				"inner-slope": "Inner Slope (C)",
+				"inner-berm": "Inner Berm (D)",
+				"dyke-defense-road": "Dyke Defense Road (E)",
+				"moat": "Moat (F)"
 			},
 			"comments": "Comments",
 			"message_resolved": "Report has been resolved!",
@@ -229,10 +238,10 @@
 			"details": "Details",
 			"dyke": "Deich",
 			"detailKeys": {
-				"type": "Art der Meldung",
+				"type": "Meldungsart",
 				"waterLoss": "Wasserverlust",
-				"waterCondition": "Zustand des Wassers",
-				"leakageType": "Wasserverlust",
+				"waterCondition": "Wasserbeschaffenheit",
+				"leakageType": "Austrittsart",
 				"deformationType": "Verformung"
 			},
 			"detailValues": {
@@ -265,6 +274,15 @@
 					"shift": "Verschiebung / Gleiten",
 					"slipped-slope": "Rutschung der Böschung"
 				}
+			},
+			"position_title": "Position",
+			"position_values": {
+				"outer-slope": "Außenböschung (A)",
+				"crown": "Deichkrone (B)",
+				"inner-slope": "Binnenböschung (C)",
+				"inner-berm": "Binnenberme (D)",
+				"dyke-defense-road": "Deichverteidigungsstraße (E)",
+				"moat": "Ringgraben (F)"
 			},
 			"comments": "Kommentare",
 			"message_resolved": "Bericht wurde als \"Gelöst\" markiert!",
