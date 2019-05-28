@@ -30,6 +30,8 @@
                 android:orientation="vertical"
         >
 
+            <!-- Type -->
+
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -45,6 +47,62 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
             />
+
+            <!-- Dyke -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_dyke_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_dyke"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <!-- Position -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_position_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_position"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <!-- Location -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_location_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/report_detail_location"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+            />
+
+            <!-- Water loss -->
 
             <TextView
                     android:layout_height="wrap_content"
@@ -62,6 +120,8 @@
                     android:paddingTop="16dp"
             />
 
+            <!-- Water condition -->
+
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -78,6 +138,8 @@
                     android:paddingTop="16dp"
             />
 
+            <!-- Leakage -->
+
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -93,6 +155,8 @@
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
             />
+
+            <!-- Deformation -->
 
             <TextView
                     android:layout_height="wrap_content"

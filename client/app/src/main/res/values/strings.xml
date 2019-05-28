@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Alku</string>
 
     <string name="main_drawer_close_description" translatable="false"></string>
@@ -16,6 +16,12 @@
     <string name="main_tab_reports_name">Reports</string>
     <string name="main_tab_dykes_name">Dykes</string>
 
+    <string name="create_report_location_header">Location of this report</string>
+    <string name="create_report_information_header">Information about this report</string>
+    <string name="create_report_damage_header">Which type of damage occurred?</string>
+
+    <string name="create_report_position_title">Position of damage</string>
+    <string name="create_report_location_title">Position of reporter</string>
     <string name="create_report_title">Create new report</string>
     <string name="create_report_dyke_title">Damaged dyke</string>
     <string name="create_report_type_title">Report type</string>
@@ -25,6 +31,7 @@
     <string name="create_report_deformationtype_title">Deformation type</string>
     <string name="create_report_no_session_notice">You need to be logged in, in order to send reports.</string>
     <string name="create_report_title_missing_notice">You need to give this report a title</string>
+    <string name="create_report_image_title">Image</string>
 
     <string name="profile_title">Profile</string>
     <string name="profile_login">Login</string>
@@ -38,6 +45,25 @@
     <string name="profile_unknown_error_notice">An unexpected error occurred. Please try again later.</string>
 
     <string name="settings_title">Settings</string>
+
+    <string-array name="report_spinner_position_keys">
+        <item>outer-slope</item>
+        <item>crown</item>
+        <item>inner-slope</item>
+        <item>inner-berm</item>
+        <item>dyke-defense-road</item>
+        <item>moat</item>
+    </string-array>
+
+    <string-array name="report_spinner_position_values">
+        <item>Outer slope (A)</item>
+        <item>Dyke crown (B)</item>
+        <item tools:ignore="TypographyOther">Inner slope (C)</item>
+        <item>Inner berm (D)</item>
+        <item>Dyke defense road (E)</item>
+        <item>Moat (F)</item>
+        <item>Other</item>
+    </string-array>
 
     <string-array name="report_spinner_type_keys">
         <item>initial</item>
@@ -104,6 +130,7 @@
         <item>Slipped slope</item>
         <item>Other</item>
     </string-array>
+    <string name="create_report_position_hint">Describe the position of the damage</string>
     <string name="create_report_waterloss_hint">Describe the water loss</string>
     <string name="create_report_watercondition_hint">Describe the water condition</string>
     <string name="create_report_leakagetype_hint">Describe the leakage type</string>

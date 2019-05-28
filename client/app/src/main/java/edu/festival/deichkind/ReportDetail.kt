@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import edu.festival.deichkind.models.Report
+import edu.festival.deichkind.util.DykeManager
 
 class ReportDetail : AppCompatActivity() {
 
@@ -28,6 +29,18 @@ class ReportDetail : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.report_detail_type).text = types[report.details.type]
+
+        val dyke = DykeManager.getInstance(null).dykes.find { it.id == report.dykeId }
+        findViewById<TextView>(R.id.report_detail_dyke).text = "${dyke?.name} (${dyke?.city}, ${dyke?.state})"
+
+        val position = HashMap<String, String>()
+        for (i in resources.getStringArray(R.array.report_spinner_position_keys).indices) {
+            types[resources.getStringArray(R.array.report_spinner_position_keys)[i]] = resources.getStringArray(R.array.report_spinner_position_values)[i]
+        }
+
+        findViewById<TextView>(R.id.report_detail_position).text = position[report.position]
+
+        findViewById<TextView>(R.id.report_detail_location).text = "${report.latitude} / ${report.longitude}"
 
         val waterLossTypes = HashMap<String, String>()
         for (i in resources.getStringArray(R.array.report_spinner_waterloss_keys).indices) {

@@ -37,10 +37,63 @@
                       android:layout_width="match_parent"
                       android:layout_height="match_parent"/> -->
 
+            <!-- Information -->
 
-            <TextView android:id="@+id/create_report_latitude" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <TextView android:id="@+id/create_report_longitude" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/create_report_information_header"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorPrimary"
+            />
 
+            <!-- Title -->
+
+            <EditText
+                    android:id="@+id/create_report_title_input"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="12dp"
+                    android:layout_marginTop="8dp"
+                    android:hint="@string/create_report_title_hint"
+            />
+
+            <!-- Type -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_type_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <Spinner
+                    android:id="@+id/create_report_type_spinner"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:spinnerMode="dialog"
+            />
+
+
+
+            <!-- Location -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/create_report_location_header"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorPrimary"
+            />
+
+            <!-- Dyke -->
 
             <TextView
                     android:layout_height="wrap_content"
@@ -57,29 +110,79 @@
                     android:spinnerMode="dialog"
             />
 
-            <EditText
-                    android:id="@+id/create_report_title_input"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:layout_marginHorizontal="12dp"
-                    android:layout_marginTop="8dp"
-                    android:hint="@string/create_report_title_hint"
-            />
+            <!-- Position -->
 
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:paddingLeft="16dp"
                     android:paddingTop="16dp"
-                    android:text="@string/create_report_type_title"
+                    android:text="@string/create_report_position_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             />
+
+            <ImageView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="16dp"
+                    android:src="@drawable/ic_artboard"
+            />
+
             <Spinner
-                    android:id="@+id/create_report_type_spinner"
+                    android:id="@+id/create_report_position_spinner"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:spinnerMode="dialog"
             />
+            <EditText
+                    android:id="@+id/create_report_position_input"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginHorizontal="12dp"
+                    android:hint="@string/create_report_position_hint"
+                    android:visibility="gone"
+            />
+
+            <!-- Coordinates -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="@string/create_report_location_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            />
+            <TextView
+                    android:id="@+id/create_report_latitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="8dp"
+            />
+            <TextView
+                    android:id="@+id/create_report_longitude"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+            />
+
+
+
+            <!-- Damage -->
+
+            <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/create_report_damage_header"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorPrimary"
+            />
+
+            <!-- Water loss -->
 
             <TextView
                     android:layout_height="wrap_content"
@@ -104,6 +207,8 @@
                     android:visibility="gone"
             />
 
+            <!-- Water condition -->
+
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -126,6 +231,8 @@
                     android:hint="@string/create_report_watercondition_hint"
                     android:visibility="gone"
             />
+
+            <!-- Leakage type -->
 
             <TextView
                     android:layout_height="wrap_content"
@@ -150,6 +257,8 @@
                     android:visibility="gone"
             />
 
+            <!-- Deformation -->
+
             <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -173,13 +282,17 @@
                     android:visibility="gone"
             />
 
+            <!-- Image -->
+
             <TextView
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
-                    android:text="Image"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/create_report_image_title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@color/colorPrimary"
             />
             <ImageView
                     android:id="@+id/create_report_image_preview"

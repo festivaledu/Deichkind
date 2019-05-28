@@ -10,6 +10,16 @@
     <string name="create_report_leakagetype_title">Austrittsart</string>
     <string name="create_report_deformationtype_title">Verformung</string>
 
+    <string-array name="report_spinner_position_values">
+        <item>Außenböschung (A)</item>
+        <item>Deichkrone (B)</item>
+        <item>Binnenböschung (C)</item>
+        <item>Binnenberme (D)</item>
+        <item>Deichverteidigungsstraße (E)</item>
+        <item>Ringgraben (F)</item>
+        <item>Andere</item>
+    </string-array>
+
     <string-array name="report_spinner_type_values">
         <item>Erstmeldung</item>
         <item>Folgemeldung</item>
@@ -87,4 +97,11 @@
     </string>
     <string name="settings_sync_on_startup_title">Synchronisierung beim Start</string>
     <string name="settings_sync_title">Synchronisierung</string>
+    <string name="create_report_damage_header">Welcher Schaden ist aufgetreten?</string>
+    <string name="create_report_image_title">Bild</string>
+    <string name="create_report_information_header">Informationen zur Meldung</string>
+    <string name="create_report_location_header">Position der Meldung</string>
+    <string name="create_report_location_title">Position des Melders</string>
+    <string name="create_report_position_hint">Beschreibe die Position, an dem der Schaden aufgetreten ist</string>
+    <string name="create_report_position_title">Position des Schadens</string>
 </resources>

@@ -2,6 +2,7 @@ package edu.festival.deichkind
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -81,13 +82,19 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                 return@setOnClickListener
             }
 
-            val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
             val title = findViewById<EditText>(R.id.create_report_title_input).text.toString()
             val type = (findViewById<Spinner>(R.id.create_report_type_spinner).selectedItem as SpinnerItem).getKey()
+            val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
+            val position = (findViewById<Spinner>(R.id.create_report_position_spinner).selectedItem as SpinnerItem).getKey()
+            val positionText = findViewById<EditText>(R.id.create_report_position_input).text.toString()
             val waterLoss = (findViewById<Spinner>(R.id.create_report_waterloss_spinner).selectedItem as SpinnerItem).getKey()
+            val waterLossText = findViewById<EditText>(R.id.create_report_waterloss_input).text.toString()
             val waterCondition = (findViewById<Spinner>(R.id.create_report_watercondition_spinner).selectedItem as SpinnerItem).getKey()
+            val waterConditionText = findViewById<EditText>(R.id.create_report_watercondition_input).text.toString()
             val leakage = (findViewById<Spinner>(R.id.create_report_leakagetype_spinner).selectedItem as SpinnerItem).getKey()
+            val leakageText = findViewById<EditText>(R.id.create_report_leakagetype_input).text.toString()
             val deformation = (findViewById<Spinner>(R.id.create_report_deformationtype_spinner).selectedItem as SpinnerItem).getKey()
+            val deformationText = findViewById<EditText>(R.id.create_report_deformationtype_input).text.toString()
 
             GlobalScope.launch {
                 sendReport(dykeId, ReportBlueprint().apply {
@@ -95,14 +102,14 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                     this.message = ""
                     this.latitude = location?.latitude as Double
                     this.longitde = location?.longitude as Double
-                    this.position = ""
+                    this.position = if (position != "other") position else positionText
 
                     details.apply {
                         this.type = type
-                        this.waterLoss = waterLoss
-                        this.waterCondition = waterCondition
-                        this.leakageType = leakage
-                        this.deformationType = deformation
+                        this.waterLoss = if (waterLoss != "other") waterLoss else waterLossText
+                        this.waterCondition = if (waterCondition != "other") waterCondition else waterConditionText
+                        this.leakageType = if (leakage != "other") leakage else leakageText
+                        this.deformationType = if (deformation != "other") deformation else deformationText
                     }
                 })
             }
@@ -123,7 +130,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
 
         val dykeEntries: MutableList<SpinnerItem> = DykeManager.getInstance(null).dykes.map {
-            SpinnerItem(it.id, it.name)
+            SpinnerItem(it.id, "${it.name} (${it.city}, ${it.state})")
         } as MutableList<SpinnerItem>
 
 
@@ -131,6 +138,47 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
         ArrayAdapter(this, R.layout.spinner_item, dykeEntries).also {
             it.setDropDownViewResource(R.layout.spinner_dropdown_item)
             dykeSpinner.adapter = it
+        }
+
+        val positionSpinner = findViewById<Spinner>(R.id.create_report_position_spinner)
+        ArrayAdapter(this, R.layout.spinner_item, arrayOf(
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[0],
+                resources.getStringArray(R.array.report_spinner_position_values)[0]
+            ),
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[1],
+                resources.getStringArray(R.array.report_spinner_position_values)[1]
+            ),
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[2],
+                resources.getStringArray(R.array.report_spinner_position_values)[2]
+            ),
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[3],
+                resources.getStringArray(R.array.report_spinner_position_values)[3]
+            ),
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[4],
+                resources.getStringArray(R.array.report_spinner_position_values)[4]
+            ),
+            SpinnerItem(
+                resources.getStringArray(R.array.report_spinner_position_keys)[5],
+                resources.getStringArray(R.array.report_spinner_position_values)[5]
+            ),
+            SpinnerItem(
+                "other",
+                resources.getStringArray(R.array.report_spinner_position_values)[6]
+            )
+        )).also {
+            it.setDropDownViewResource(R.layout.spinner_dropdown_item)
+            positionSpinner.adapter = it
+        }
+        positionSpinner.onItemSelectedListener = object : OnItemSelectedListener() {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val spinnerItem = positionSpinner.selectedItem as SpinnerItem
+                findViewById<EditText>(R.id.create_report_position_input).visibility = if (spinnerItem.getKey() == "other") View.VISIBLE else View.GONE
+            }
         }
 
         val typeSpinner = findViewById<Spinner>(R.id.create_report_type_spinner)
@@ -271,6 +319,11 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                 findViewById<EditText>(R.id.create_report_deformationtype_input).visibility = if (spinnerItem.getKey() == "other") View.VISIBLE else View.GONE
             }
         }
+
+        val sharedPrefs = getSharedPreferences("ml.festival.edu.deichkind", Context.MODE_PRIVATE)
+        val defaultDyke = sharedPrefs.getString("default-dyke", "")
+
+        findViewById<Spinner>(R.id.create_report_dyke_spinner).setSelection(DykeManager.getInstance(null).dykes.indexOfFirst { it.id == defaultDyke })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
