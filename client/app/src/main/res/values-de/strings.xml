@@ -10,6 +10,16 @@
     <string name="create_report_leakagetype_title">Austrittsart</string>
     <string name="create_report_deformationtype_title">Verformung</string>
 
+    <string-array name="report_spinner_position_values">
+        <item>Außenböschung (A)</item>
+        <item>Deichkrone (B)</item>
+        <item>Binnenböschung (C)</item>
+        <item>Binnenberme (D)</item>
+        <item>Deichverteidigungsstraße (E)</item>
+        <item>Ringgraben (F)</item>
+        <item>Andere</item>
+    </string-array>
+
     <string-array name="report_spinner_type_values">
         <item>Erstmeldung</item>
         <item>Folgemeldung</item>
@@ -57,4 +67,41 @@
     <string name="create_report_deformationtype_hint">Beschreibe die Verformung</string>
     <string name="create_report_title_hint">Titel der Meldung</string>
     <string name="create_report_dyke_title">Beschädigter Deich</string>
+    <string name="create_report_no_session_notice">Du musst angemeldet sein, um Meldungen machen zu können.</string>
+    <string name="profile_empty_fields_notice">Du musst alle Felder ausfüllen</string>
+    <string name="profile_login">Anmelden</string>
+    <string name="profile_login_notice">Du musst angemeldet sein, um Meldungen erstellen zu können</string>
+    <string name="profile_login_successful_notice">Erfolgreich angemeldet</string>
+    <string name="profile_password_hint">Passwort</string>
+    <string name="profile_password_incorrect_notice">Das Passwort ist falsch</string>
+    <string name="profile_unknown_error_notice">Ein unbekannter Fehler ist aufgetreten. Versuch es später erneut.
+    </string>
+    <string name="profile_user_unknown_notice">Der Benutzer konnte nicht gefunden werden.</string>
+    <string name="profile_username_hint">Benutzername</string>
+    <string name="main_drawer_anonymous_notice">Öffne das Profil, um dich anzumelden</string>
+    <string name="create_report_title_missing_notice">Du musst einen Titel eingeben</string>
+    <string name="main_network_connection_required_notice">Dein Gerät muss mit dem Internet verbunden sein</string>
+    <string name="main_sync_in_progress_notice">Synchronisierung läuft…</string>
+    <string name="settings_about_creator_summary">FESTIVAL Development</string>
+    <string name="settings_about_creator_title">Entwickler</string>
+    <string name="settings_about_title">Über</string>
+    <string name="settings_about_version_title">Version</string>
+    <string name="settings_default_dyke_dialog_title">Deich auswählen</string>
+    <string name="settings_default_dyke_summary">Standard-Deich der bei jeder Meldung voreingestellt wird</string>
+    <string name="settings_default_dyke_title">Standard-Deich</string>
+    <string name="settings_general_title">Allgemein</string>
+    <string name="settings_sync_now_summary">Manuelle Synchronisierung aller Meldungen und Deiche jetzt durchführen</string>
+    <string name="settings_sync_now_title">Jetzt synchronisieren</string>
+    <string name="settings_sync_on_startup_summary">Synchronisiert alle Meldungen und Deiche bei jedem Start der App
+        sofern eine Internetverbindung vorhanden ist
+    </string>
+    <string name="settings_sync_on_startup_title">Synchronisierung beim Start</string>
+    <string name="settings_sync_title">Synchronisierung</string>
+    <string name="create_report_damage_header">Welcher Schaden ist aufgetreten?</string>
+    <string name="create_report_image_title">Bild</string>
+    <string name="create_report_information_header">Informationen zur Meldung</string>
+    <string name="create_report_location_header">Position der Meldung</string>
+    <string name="create_report_location_title">Position des Melders</string>
+    <string name="create_report_position_hint">Beschreibe die Position, an dem der Schaden aufgetreten ist</string>
+    <string name="create_report_position_title">Position des Schadens</string>
 </resources>

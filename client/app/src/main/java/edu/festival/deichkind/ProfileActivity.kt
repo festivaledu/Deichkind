@@ -164,6 +164,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.option_logout -> {
+            SessionManager.getInstance(null).session = null
             finish()
             true
         }
