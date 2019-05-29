@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Alku</string>
+    <string name="app_name">Deichkind</string>
     <string name="main_tab_dykes_name">Deiche</string>
     <string name="main_tab_reports_name">Meldungen</string>
     <string name="create_report_waterloss_title">Wasserverlust</string>
