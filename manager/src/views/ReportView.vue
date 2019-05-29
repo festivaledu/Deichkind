@@ -69,8 +69,8 @@
 						</md-list-item>
 					</md-list>
 					
-					<md-subheader>{{ $t("reports.comments") }}</md-subheader>
-					<md-list class="md-triple-line">
+					<md-subheader v-if="reportData.comments.length">{{ $t("reports.comments") }}</md-subheader>
+					<md-list class="md-triple-line" v-if="reportData.comments.length">
 						<div v-for="(comment, index) in reportData.comments" :key="`comment_${index}`">
 							<md-list-item>
 								<md-avatar v-if="userData[comment.accountId].profileImage">
@@ -229,6 +229,7 @@ export default {
 			} catch (error) {
 				console.log(error);
 				this.showSnackbar.error = true;
+				this.isWorking = false;
 			}
 			
 			if (this.reportData) {
@@ -287,7 +288,9 @@ export default {
 			return initials;
 		},
 		localizableHasKeyPath(path) {
-			path = `${navigator.language}.${path}`;
+			const lang = localizable[navigator.language] ? navigator.language : "en-US";
+			
+			path = `${lang}.${path}`;
 			let result = path.split(".").reduce((previous, current) => {
 				return previous != null && typeof previous[current] !== "undefined" ? previous[current] : null
 			}, localizable);
