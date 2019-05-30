@@ -114,9 +114,9 @@
 
             <TextView
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:layout_width="wrap_content"
                     android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
                     android:text="@string/create_report_position_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
             />

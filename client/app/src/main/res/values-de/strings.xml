@@ -104,4 +104,6 @@
     <string name="create_report_location_title">Position des Melders</string>
     <string name="create_report_position_hint">Beschreibe die Position, an dem der Schaden aufgetreten ist</string>
     <string name="create_report_position_title">Position des Schadens</string>
+    <string name="create_report_finished_notice">Meldung erfolgreich abgeschickt.</string>
+    <string name="create_report_upload_notice">Meldung wird hochgeladen, bitte warten…</string>
 </resources>

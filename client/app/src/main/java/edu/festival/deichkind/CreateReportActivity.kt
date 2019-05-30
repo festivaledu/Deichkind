@@ -11,7 +11,6 @@ import android.location.Location
 import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
@@ -54,6 +53,49 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currentPhotoPath: String = ""
     private var location: Location? = null
 
+    fun compressBitmap(file: File): File? {
+        try {
+
+            // BitmapFactory options to downsize the image
+            val o = BitmapFactory.Options()
+            o.inJustDecodeBounds = true
+            o.inSampleSize = 6
+            // factor of downsizing the image
+
+            var inputStream = FileInputStream(file)
+            //Bitmap selectedBitmap = null;
+            BitmapFactory.decodeStream(inputStream, null, o)
+            inputStream.close()
+
+            // The new size we want to scale to
+            val requiredSize = 75
+
+            // Find the correct scale value. It should be the power of 2.
+            var scale = 1
+            while (o.outWidth / scale / 2 >= requiredSize && o.outHeight / scale / 2 >= requiredSize) {
+                scale *= 2
+            }
+
+            val o2 = BitmapFactory.Options()
+            o2.inSampleSize = scale
+            inputStream = FileInputStream(file)
+
+            val selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2)
+            inputStream.close()
+
+            // here i override the original image file
+            file.createNewFile()
+            val outputStream = FileOutputStream(file)
+
+            selectedBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+
+            return file
+        } catch (e: Exception) {
+            return null
+        }
+
+    }
+
     private fun createImageFile(): File {
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.GERMANY).format(Date())
@@ -72,8 +114,10 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun getLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                findViewById<TextView>(R.id.create_report_latitude).text = location?.latitude.toString()
-                findViewById<TextView>(R.id.create_report_longitude).text = location?.longitude.toString()
+                if (location != null) {
+                    findViewById<TextView>(R.id.create_report_latitude).text = location.latitude.toString()
+                    findViewById<TextView>(R.id.create_report_longitude).text = location.longitude.toString()
+                }
 
                 this.location = location
             }
@@ -103,6 +147,8 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                 return@setOnClickListener
             }
 
+            Toast.makeText(this, getString(R.string.create_report_upload_notice), Toast.LENGTH_LONG).show()
+
             val title = findViewById<EditText>(R.id.create_report_title_input).text.toString()
             val type = (findViewById<Spinner>(R.id.create_report_type_spinner).selectedItem as SpinnerItem).getKey()
             val dykeId = (findViewById<Spinner>(R.id.create_report_dyke_spinner).selectedItem as SpinnerItem).getKey()
@@ -121,8 +167,8 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                 sendReport(dykeId, ReportBlueprint().apply {
                     this.title = title
                     this.message = ""
-                    this.latitude = this@CreateReportActivity.location?.latitude as Double
-                    this.longitude = this@CreateReportActivity.location?.longitude as Double
+                    this.latitude = if (this@CreateReportActivity.location != null) this@CreateReportActivity.location?.latitude as Double else 0.0
+                    this.longitude = if (this@CreateReportActivity.location != null) this@CreateReportActivity.location?.longitude as Double else 0.0
                     this.position = if (position != "other") position else positionText
 
                     details.apply {
@@ -415,12 +461,18 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
         val report: CreateReportResponse = Gson().fromJson(result.rawResult, object : TypeToken<CreateReportResponse>() {}.type)
 
         if (result.statusCode == 200 && currentPhotoPath.isNotEmpty()) {
+            compressBitmap(File(currentPhotoPath))
+
             FormDataHelper().multipartRequest("https://edu.festival.ml/deichkind/api/reports/${report.report?.id}/photos", mapOf(), currentPhotoPath,"photo", "image/jpeg")
+
+            File(currentPhotoPath).delete()
         }
 
         runOnUiThread {
             when (result.statusCode) {
                 200 -> {
+                    Toast.makeText(this, getString(R.string.create_report_finished_notice), Toast.LENGTH_LONG).show()
+
                     setResult(Activity.RESULT_OK)
                     finish()
                 }

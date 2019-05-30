@@ -32,6 +32,8 @@
     <string name="create_report_no_session_notice">You need to be logged in, in order to send reports.</string>
     <string name="create_report_title_missing_notice">You need to give this report a title</string>
     <string name="create_report_image_title">Image</string>
+    <string name="create_report_upload_notice">Uploading report. Please wait…</string>
+    <string name="create_report_finished_notice">Report successfully uploaded.</string>
 
     <string name="profile_title">Profile</string>
     <string name="profile_login">Login</string>

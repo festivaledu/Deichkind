@@ -1,11 +1,17 @@
 package edu.festival.deichkind
 
+import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
+import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import edu.festival.deichkind.models.Report
 import edu.festival.deichkind.util.DykeManager
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.net.URL
 
 class ReportDetail : AppCompatActivity() {
 
@@ -69,5 +75,17 @@ class ReportDetail : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.report_detail_deformationtype).text = deformationTypes[report.details.deformationType] ?: report.details.deformationType
+
+        if (report.photos.isNotEmpty()) {
+            GlobalScope.launch {
+                val image = BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/reports/${report.id}/photos/${report.photos[0].id}/file").openConnection().getInputStream())
+
+                runOnUiThread {
+                    findViewById<ImageView>(R.id.report_detail_image).setImageBitmap(image)
+                }
+            }
+        } else {
+            findViewById<TextView>(R.id.report_detail_image_title).visibility = View.GONE
+        }
     }
 }

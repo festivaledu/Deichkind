@@ -94,7 +94,7 @@ class FormDataHelper {
 
             inputStream = connection.inputStream
 
-            result = this.convertStreamToString(inputStream)
+            //result = this.convertStreamToString(inputStream)
 
             fileInputStream.close()
             inputStream!!.close()

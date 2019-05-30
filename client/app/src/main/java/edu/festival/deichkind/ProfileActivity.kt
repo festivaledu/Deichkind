@@ -16,9 +16,11 @@ import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.models.AuthResponse
 import edu.festival.deichkind.models.ProfileResponse
 import edu.festival.deichkind.models.Session
+import edu.festival.deichkind.util.BitmapHelper
 import edu.festival.deichkind.util.SessionManager
 import kotlinx.coroutines.*
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
@@ -44,27 +46,6 @@ class ProfileActivity : AppCompatActivity() {
         return result.toString()
     }
 
-    fun getCircularBitmap(bitmap: Bitmap): Bitmap {
-        val output = Bitmap.createBitmap( bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(output)
-
-        val color = -0xbdbdbe
-        val paint = Paint()
-        val rect = Rect(0, 0, bitmap.width, bitmap.height)
-
-        paint.isAntiAlias = true
-        canvas.drawARGB(0, 0, 0, 0)
-        paint.color = color
-
-        canvas.drawCircle(bitmap.width / 2f, bitmap.height / 2f,bitmap.width / 2f, paint)
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
-        canvas.drawBitmap(bitmap, rect, rect, paint)
-
-        bitmap.recycle()
-
-        return output
-    }
-
     private fun login(username: String, password: String) = GlobalScope.launch {
         val result = tryLoginAsync(username, composeHash(password.toByteArray())).await()
 
@@ -88,7 +69,10 @@ class ProfileActivity : AppCompatActivity() {
                 email = profile.email
             }
 
-            SessionManager.getInstance(null).session?.avatar = getCircularBitmap(BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/account/" + SessionManager.getInstance(null).session?.id + "/avatar").openConnection().getInputStream()))
+            SessionManager.getInstance(null).session?.avatar = BitmapHelper().getCircularBitmap(BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/account/" + SessionManager.getInstance(null).session?.id + "/avatar").openConnection().getInputStream()))
+
+            val sessionFile = File(filesDir, "session.json")
+            sessionFile.writeText(Gson().toJson(SessionManager.getInstance(null).session))
         }
 
         runOnUiThread {
@@ -165,6 +149,12 @@ class ProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.option_logout -> {
             SessionManager.getInstance(null).session = null
+
+            val sessionFile = File(filesDir, "session.json")
+            if (sessionFile.exists()) {
+                sessionFile.delete()
+            }
+
             finish()
             true
         }

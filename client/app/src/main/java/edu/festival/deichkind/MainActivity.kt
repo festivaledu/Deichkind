@@ -1,9 +1,9 @@
 package edu.festival.deichkind
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -11,7 +11,6 @@ import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.widget.LinearLayoutCompat
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import android.view.View
@@ -19,11 +18,27 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.fragments.DykeListFragment
 import edu.festival.deichkind.fragments.MainFragment
 import edu.festival.deichkind.fragments.ReportListFragment
+import edu.festival.deichkind.models.RefreshTokenResult
+import edu.festival.deichkind.models.Session
+import edu.festival.deichkind.models.VerifyResponse
+import edu.festival.deichkind.util.BitmapHelper
 import edu.festival.deichkind.util.SessionManager
+import kotlinx.android.synthetic.main.activity_create_report.*
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+import java.io.OutputStreamWriter
+import java.net.HttpURLConnection
+import java.net.URL
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -31,6 +46,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     var dykeListFragment: DykeListFragment? = null
     var reportListFragment: ReportListFragment? = null
+
+    private fun checkSession() {
+        if (SessionManager.getInstance(null).session != null) {
+            drawerLayout?.findViewById<ImageView>(R.id.main_drawer_avatar)?.setImageBitmap(Bitmap.createScaledBitmap(SessionManager.getInstance(null).session?.avatar as Bitmap, 192, 192, false))
+            drawerLayout?.findViewById<TextView>(R.id.main_drawer_username)?.text = SessionManager.getInstance(null).session?.username
+            drawerLayout?.findViewById<TextView>(R.id.main_drawer_email)?.text = SessionManager.getInstance(null).session?.email
+
+            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.VISIBLE
+            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.GONE
+        } else {
+            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.GONE
+            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.VISIBLE
+        }
+    }
 
     private fun forceReloadLoaders() {
         dykeListFragment?.forceReloadLoader()
@@ -84,6 +113,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         }
+
+        val sessionFile = File(filesDir, "session.json")
+        if (sessionFile.exists()) {
+            SessionManager.getInstance(null).session = Gson().fromJson(sessionFile.readText(), object : TypeToken<Session>() {}.type)
+
+            GlobalScope.launch {
+                val verifyResponse = tryVerifyAsync().await()
+
+                if (verifyResponse.auth) {
+                    SessionManager.getInstance(null).session?.authToken = verifyResponse.token
+                } else {
+                    val result = tryRefreshAsync(SessionManager.getInstance(null).session?.refreshToken as String).await()
+
+                    if (result.statusCode == 200) {
+                        val response: RefreshTokenResult = Gson().fromJson(result.rawResult, object : TypeToken<RefreshTokenResult>() {}.type)
+                        SessionManager.getInstance(null).session?.authToken = response.token
+                    } else {
+                        sessionFile.delete()
+                        SessionManager.getInstance(null).session = null
+                    }
+                }
+
+                SessionManager.getInstance(null).session?.avatar = BitmapHelper().getCircularBitmap(BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/account/" + SessionManager.getInstance(null).session?.id + "/avatar").openConnection().getInputStream()))
+
+                runOnUiThread {
+                    checkSession()
+                }
+            }
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -125,16 +183,76 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onResume() {
         super.onResume()
 
-        if (SessionManager.getInstance(null).session != null) {
-            drawerLayout?.findViewById<ImageView>(R.id.main_drawer_avatar)?.setImageBitmap(Bitmap.createScaledBitmap(SessionManager.getInstance(null).session?.avatar as Bitmap, 192, 192, false))
-            drawerLayout?.findViewById<TextView>(R.id.main_drawer_username)?.text = SessionManager.getInstance(null).session?.username
-            drawerLayout?.findViewById<TextView>(R.id.main_drawer_email)?.text = SessionManager.getInstance(null).session?.email
+        checkSession()
+    }
 
-            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.VISIBLE
-            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.GONE
-        } else {
-            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_profile)?.visibility = View.GONE
-            drawerLayout?.findViewById<LinearLayout>(R.id.main_drawer_anonymous)?.visibility = View.VISIBLE
+    private fun tryRefreshAsync(refreshToken: String): Deferred<ApiResult> = GlobalScope.async {
+        val body = "{\"token\": \"$refreshToken\"}"
+        val result = ApiResult()
+
+        URL("https://edu.festival.ml/deichkind/api/auth/login").openConnection().let {
+            it as HttpURLConnection
+        }.apply {
+            setRequestProperty("Content-Type", "application/json; charset=utf-8")
+            requestMethod = "POST"
+            doOutput = true
+
+            val outputWriter = OutputStreamWriter(outputStream)
+            outputWriter.write(body)
+            outputWriter.flush()
+        }.let {
+            result.statusCode = it.responseCode
+
+            if (it.responseCode == 200) {
+                it.inputStream
+            } else {
+                it.errorStream
+            }
+        }.let { streamToRead ->
+            BufferedReader(InputStreamReader(streamToRead)).use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+
+                it.close()
+
+                result.rawResult = response.toString()
+
+                return@async result
+            }
+        }
+    }
+
+    private fun tryVerifyAsync(): Deferred<VerifyResponse> = GlobalScope.async {
+        var result: VerifyResponse
+
+        URL("https://edu.festival.ml/deichkind/api/auth/verify").openConnection().let {
+            it as HttpURLConnection
+        }.apply {
+            setRequestProperty("Authorization", "Bearer " + SessionManager.getInstance(null).session?.authToken)
+            requestMethod = "GET"
+        }.let {
+            if (it.responseCode == 200) it.inputStream else it.errorStream
+        }.let { streamToRead ->
+            BufferedReader(InputStreamReader(streamToRead)).use {
+                val response = StringBuffer()
+
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+
+                it.close()
+
+                result = Gson().fromJson(response.toString(), object : TypeToken<VerifyResponse>() {}.type)
+
+                return@async result
+            }
         }
     }
 }
