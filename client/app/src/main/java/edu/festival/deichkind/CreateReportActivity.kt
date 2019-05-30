@@ -6,15 +6,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.location.Location
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.support.v7.widget.Toolbar
-import android.text.Editable
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -27,27 +30,44 @@ import edu.festival.deichkind.listeners.OnItemSelectedListener
 import edu.festival.deichkind.util.DykeManager
 import java.net.HttpURLConnection
 import java.net.URL
-import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
-import edu.festival.deichkind.fragments.NoSessionDialog
+import com.google.gson.reflect.TypeToken
+import edu.festival.deichkind.models.CreateReportResponse
 import edu.festival.deichkind.models.ReportBlueprint
+import edu.festival.deichkind.util.FormDataHelper
 import edu.festival.deichkind.util.SessionManager
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import java.io.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private var currentPhotoPath: String = ""
     private var location: Location? = null
+
+    private fun createImageFile(): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.GERMANY).format(Date())
+        val storageDir: File = cacheDir
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            currentPhotoPath = absolutePath
+        }
+    }
+
 
     private fun getLocation() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -62,7 +82,8 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
+            // val imageBitmap = data?.extras?.get("data") as Bitmap
+            val imageBitmap = BitmapFactory.decodeFile(currentPhotoPath)
             findViewById<ImageView>(R.id.create_report_image_preview).setImageBitmap(imageBitmap)
         }
     }
@@ -100,8 +121,8 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
                 sendReport(dykeId, ReportBlueprint().apply {
                     this.title = title
                     this.message = ""
-                    this.latitude = location?.latitude as Double
-                    this.longitde = location?.longitude as Double
+                    this.latitude = this@CreateReportActivity.location?.latitude as Double
+                    this.longitude = this@CreateReportActivity.location?.longitude as Double
                     this.position = if (position != "other") position else positionText
 
                     details.apply {
@@ -340,7 +361,21 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
         R.id.option_take_photo -> {
             Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
                 takePictureIntent.resolveActivity(packageManager)?.also {
-                    startActivityForResult(takePictureIntent, 1)
+                    val photoFile: File? = try {
+                        createImageFile()
+                    } catch (ex: IOException) {
+                        null
+                    }
+                    // Continue only if the File was successfully created
+                    photoFile?.also {
+                        val photoURI: Uri = FileProvider.getUriForFile(
+                            this,
+                            "edu.festival.deichkind.fileprovider",
+                            it
+                        )
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                        startActivityForResult(takePictureIntent, 1)
+                    }
                 }
             }
             true
@@ -377,6 +412,11 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private suspend fun sendReport(dykeId: String, blueprint: ReportBlueprint) {
         val result = trySendReportAsync(dykeId, blueprint).await()
+        val report: CreateReportResponse = Gson().fromJson(result.rawResult, object : TypeToken<CreateReportResponse>() {}.type)
+
+        if (result.statusCode == 200 && currentPhotoPath.isNotEmpty()) {
+            FormDataHelper().multipartRequest("https://edu.festival.ml/deichkind/api/reports/${report.report?.id}/photos", mapOf(), currentPhotoPath,"photo", "image/jpeg")
+        }
 
         runOnUiThread {
             when (result.statusCode) {
