@@ -42,8 +42,8 @@
 
 							<div class="md-list-item-text">
 								<p>{{ reportItem.title }} <span v-if="reportItem.resolved">({{ $t("reports.resolved") }})</span></p>
-								<span>{{ reportItem.comments[0].message | br }}</span>
-								<span>{{ userData[reportItem.accountId].username }} – {{ dykeData.find(_ => _.id === reportItem.dykeId).name }} – {{ reportItem.comments[0].createdAt | date }}</span>
+								<span v-if="reportItem.comments.length">{{ reportItem.comments[0].message | br }}</span>
+								<span>{{ userData[reportItem.accountId].username }} – {{ dykeData.find(_ => _.id === reportItem.dykeId).name }} – {{ reportItem.createdAt | date }}</span>
 							</div>
 							<md-icon>chevron_right</md-icon>
 						</md-list-item>
