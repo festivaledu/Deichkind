@@ -5,7 +5,6 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 class FormDataHelper {
-
     fun multipartRequest(
         urlTo: String,
         params: Map<String, String>,
@@ -13,9 +12,9 @@ class FormDataHelper {
         filefield: String,
         fileMimeType: String
     ): String {
-        var connection: HttpURLConnection? = null
-        var outputStream: DataOutputStream? = null
-        var inputStream: InputStream? = null
+        var connection: HttpURLConnection?
+        var outputStream: DataOutputStream?
+        var inputStream: InputStream?
 
         val twoHyphens = "--"
         val boundary = "*****" + java.lang.Long.toString(System.currentTimeMillis()) + "*****"
@@ -94,8 +93,6 @@ class FormDataHelper {
 
             inputStream = connection.inputStream
 
-            //result = this.convertStreamToString(inputStream)
-
             fileInputStream.close()
             inputStream!!.close()
             outputStream.flush()
@@ -106,28 +103,4 @@ class FormDataHelper {
             throw e
         }
     }
-
-    private fun convertStreamToString(`is`: InputStream?): String {
-        val reader = BufferedReader(InputStreamReader(`is`))
-        val sb = StringBuilder()
-
-        var line: String? = null
-        try {
-            line = reader.readLine()
-            while (line != null) {
-                sb.append(line)
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        } finally {
-            try {
-                `is`!!.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-        }
-        return sb.toString()
-    }
-
 }

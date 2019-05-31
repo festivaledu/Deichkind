@@ -11,19 +11,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
-import com.google.gson.Gson
 
 import edu.festival.deichkind.R
 import edu.festival.deichkind.models.Dyke
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.net.URL
-import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.MainActivity
 import edu.festival.deichkind.adapters.DykeListAdapter
 import edu.festival.deichkind.loaders.DykeListAsyncTaskLoader

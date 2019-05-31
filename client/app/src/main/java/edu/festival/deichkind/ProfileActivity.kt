@@ -1,6 +1,5 @@
 package edu.festival.deichkind
 
-
 import android.graphics.*
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -28,12 +27,11 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
 
-
 class ProfileActivity : AppCompatActivity() {
 
-    var optionsMenu: Menu? = null
+    private var optionsMenu: Menu? = null
 
-    fun composeHash(input: ByteArray): String {
+    private fun composeHash(input: ByteArray): String {
         val characters = "0123456789abcdef"
         val bytes = MessageDigest.getInstance("SHA-512").digest(input)
         val result = StringBuilder(bytes.size * 2)

@@ -46,7 +46,6 @@ import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -54,7 +53,7 @@ class CreateReportActivity : AppCompatActivity(), OnMapReadyCallback {
     private var currentPhotoPath: String = ""
     private var location: Location? = null
 
-    fun compressBitmap(file: File): File? {
+    private fun compressBitmap(file: File): File? {
         try {
 
             // BitmapFactory options to downsize the image

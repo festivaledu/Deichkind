@@ -7,7 +7,6 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import edu.festival.deichkind.R
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
-import android.support.v4.content.ContextCompat.getSystemService
 import android.support.v7.preference.ListPreference
 import android.widget.Toast
 import edu.festival.deichkind.SettingsActivity
