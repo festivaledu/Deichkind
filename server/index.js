@@ -5,6 +5,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileupload = require("express-fileupload");
+const UserRole = require("./helpers/UserRole");
+const bcrypt = require("bcryptjs");
+const crypto = require("crypto-js");
 
 //#region Database Setup
 const fs = require('fs');
@@ -44,6 +47,20 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 db.sequelize.sync().then(() => {
+	db.models.Account.findOrCreate({
+		where: {
+			role: UserRole.ROOT
+		},
+		defaults: {
+			id: 0,
+			username: process.env.ROOT_USER,
+			email: process.env.ROOT_MAIL,
+			password: bcrypt.hashSync(crypto.SHA512(process.env.ROOT_PASS).toString(crypto.enc.Hex), bcrypt.genSaltSync(10))
+		}
+	}).then(([accountObj, created]) => {
+		if (created) console.log("\x1b[34m[INFO]\x1b[0m Created root account");
+	});
+	
 	db.models.Token.destroy({
 		truncate: true
 	});
