@@ -1,4 +1,4 @@
-package edu.festival.deichkind
+package edu.festival.deichkind.models
 
 class ApiResult {
 

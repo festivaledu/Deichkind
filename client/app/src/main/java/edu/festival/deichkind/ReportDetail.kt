@@ -1,6 +1,8 @@
 package edu.festival.deichkind
 
+import android.content.Context
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
@@ -76,7 +78,8 @@ class ReportDetail : AppCompatActivity() {
 
         findViewById<TextView>(R.id.report_detail_deformationtype).text = deformationTypes[report.details.deformationType] ?: report.details.deformationType
 
-        if (report.photos.isNotEmpty()) {
+        val networkInfo = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+        if (report.photos.isNotEmpty() && networkInfo != null && networkInfo.isConnected) {
             GlobalScope.launch {
                 val image = BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/reports/${report.id}/photos/${report.photos[0].id}/file").openConnection().getInputStream())
 

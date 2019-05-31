@@ -22,12 +22,12 @@ import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.fragments.*
+import edu.festival.deichkind.models.ApiResult
 import edu.festival.deichkind.models.RefreshTokenResult
 import edu.festival.deichkind.models.Session
 import edu.festival.deichkind.models.VerifyResponse
 import edu.festival.deichkind.util.BitmapHelper
 import edu.festival.deichkind.util.SessionManager
-import kotlinx.android.synthetic.main.activity_create_report.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async

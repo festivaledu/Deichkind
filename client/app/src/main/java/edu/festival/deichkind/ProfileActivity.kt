@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import edu.festival.deichkind.models.ApiResult
 import edu.festival.deichkind.models.AuthResponse
 import edu.festival.deichkind.models.ProfileResponse
 import edu.festival.deichkind.models.Session

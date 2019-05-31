@@ -33,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import edu.festival.deichkind.models.ApiResult
 import edu.festival.deichkind.models.CreateReportResponse
 import edu.festival.deichkind.models.ReportBlueprint
 import edu.festival.deichkind.util.FormDataHelper
