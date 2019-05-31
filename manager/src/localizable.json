@@ -1,7 +1,7 @@
 {
 	"en-US": {
 		"app": {
-			"app_name": "Deichkind",
+			"app_name": "Dykestra",
 			"loading": "Loading...",
 			"ok": "Ok",
 			"cancel": "Cancel",
@@ -133,7 +133,7 @@
 				"name": "Name",
 				"city": "City",
 				"state": "State",
-				"file": "KML File",
+				"file": "KML File (optional)",
 				"replaceKML": "Replace KML file"
 			},
 			"error_not_allowed": "You are not allowed to edit this dyke.",
@@ -172,7 +172,7 @@
 	},
 	"de-DE": {
 		"app": {
-			"app_name": "Deichkind",
+			"app_name": "Dykestra",
 			"loading": "Lade Daten...",
 			"ok": "OK",
 			"cancel": "Abbrechen",
@@ -194,7 +194,7 @@
 			"action_signin": "Anmelden"
 		},
 		"register": {
-			"toolbar_title": "Registrierem",
+			"toolbar_title": "Registrieren",
 			"welcome": "Registrieren – ",
 			"fields": {
 				"username": "Benutzername",
@@ -304,7 +304,7 @@
 				"name": "Name",
 				"city": "Stadt",
 				"state": "Bundesland",
-				"file": "KML-Datei",
+				"file": "KML-Datei (optional)",
 				"replaceKML": "KML-Datei ersetzen"
 			},
 			"error_not_allowed": "Dir ist es nicht erlaubt, diesen Deich zu bearbeiten.",

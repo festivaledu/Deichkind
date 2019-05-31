@@ -22,8 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false
 		},
 		kmlFile: {
-			type: DataTypes.BLOB,
-			allowNull: false
+			type: DataTypes.BLOB
 		},
 		accountId: {
 			type: DataTypes.STRING(32),

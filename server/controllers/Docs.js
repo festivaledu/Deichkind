@@ -274,7 +274,7 @@ router.get("/", (req, res) => {
 				method: "GET",
 				description: "Gets the KML map file for a specific dyke object",
 				errors: {
-					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found"]
+					[httpStatus.NOT_FOUND]: ["No dyke with identifier {dykeId} found", "Dyke does not have any associated KML file"]
 				}
 			},
 			"GET /:dykeId/reports": {
