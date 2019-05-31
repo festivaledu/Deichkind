@@ -194,7 +194,7 @@
 			"action_signin": "Anmelden"
 		},
 		"register": {
-			"toolbar_title": "Registrierem",
+			"toolbar_title": "Registrieren",
 			"welcome": "Registrieren – ",
 			"fields": {
 				"username": "Benutzername",
