@@ -1,7 +1,7 @@
 {
 	"en-US": {
 		"app": {
-			"app_name": "Deichkind",
+			"app_name": "Dykestra",
 			"loading": "Loading...",
 			"ok": "Ok",
 			"cancel": "Cancel",
@@ -172,7 +172,7 @@
 	},
 	"de-DE": {
 		"app": {
-			"app_name": "Deichkind",
+			"app_name": "Dykestra",
 			"loading": "Lade Daten...",
 			"ok": "OK",
 			"cancel": "Abbrechen",
