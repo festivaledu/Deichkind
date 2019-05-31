@@ -62,39 +62,41 @@ router.post("/new", async (req, res) => {
 		message: `Dyke with name ${dykeData.name} already exists`
 	});
 	
-	if (!req.files || !req.files.file) return res.status(httpStatus.BAD_REQUEST).send({
-		name: httpStatus[httpStatus.BAD_REQUEST],
-		code: httpStatus.BAD_REQUEST,
-		message: "No dyke file specified"
-	});
-	let dykeFile = req.files.file;
+	// if (!req.files || !req.files.file) return res.status(httpStatus.BAD_REQUEST).send({
+	// 	name: httpStatus[httpStatus.BAD_REQUEST],
+	// 	code: httpStatus.BAD_REQUEST,
+	// 	message: "No dyke file specified"
+	// });
 	
-	const xmlParser = new xml2js.Parser();
-	let parsed = await new Promise(function(resolve, reject) {
-		try {
-			xmlParser.parseString(dykeFile.data, (err, result) => {
-				if (err) {
-					reject(false);
-				} else {
-					resolve(result);
-				}
-			});
-		} catch (err) {
-			reject(false);
-		}
-	}).catch(some => {
-		
-	});
+	let dykeFile = req.files ? req.files.file : null;
+	if (dykeFile) {
+		const xmlParser = new xml2js.Parser();
+		let parsed = await new Promise(function(resolve, reject) {
+			try {
+				xmlParser.parseString(dykeFile.data, (err, result) => {
+					if (err) {
+						reject(false);
+					} else {
+						resolve(result);
+					}
+				});
+			} catch (err) {
+				reject(false);
+			}
+		}).catch(some => {
+			
+		});
 
-	if (!parsed) return res.status(httpStatus.BAD_REQUEST).send({
-		name: httpStatus[httpStatus.BAD_REQUEST],
-		code: httpStatus.BAD_REQUEST,
-		message: "Dyke file does not contain valid XML"
-	});
+		if (!parsed) return res.status(httpStatus.BAD_REQUEST).send({
+			name: httpStatus[httpStatus.BAD_REQUEST],
+			code: httpStatus.BAD_REQUEST,
+			message: "Dyke file does not contain valid XML"
+		});
+	}
 	
 	Dyke.create(Object.assign(dykeData, {
 		id: String.prototype.concat(dykeData.name, new Date().getTime()),
-		kmlFile: dykeFile.data,
+		kmlFile: dykeFile ? dykeFile.data : null,
 		accountId: account.id,
 	})).then(dykeObj => {
 		delete dykeObj.dataValues.kmlFile;
@@ -260,6 +262,12 @@ router.get("/:dykeId/file", (req, res) => {
 			name: httpStatus[httpStatus.NOT_FOUND],
 			code: httpStatus.NOT_FOUND,
 			message: `No dyke with identifier ${req.params.dykeId} found`
+		});
+		
+		if (!dykeObj.kmlFile.length) return res.status(httpStatus.NOT_FOUND).send({
+			name: httpStatus[httpStatus.NOT_FOUND],
+			code: httpStatus.NOT_FOUND,
+			message: "Dyke does not have any associated KML file"
 		});
 		
 		res.write(dykeObj.kmlFile, "binary");

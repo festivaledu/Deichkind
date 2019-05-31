@@ -96,8 +96,7 @@ export default {
 		dykeData: {
 			name: { required },
 			city: { required },
-			state: { required },
-			file: { required }
+			state: { required }
 		}
 	},
 	methods: {
