@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Deichkind</string>
+    <string name="app_name">Dykestra</string>
     <string name="main_tab_dykes_name">Deiche</string>
     <string name="main_tab_reports_name">Meldungen</string>
     <string name="create_report_waterloss_title">Wasserverlust</string>
@@ -106,4 +106,8 @@
     <string name="create_report_position_title">Position des Schadens</string>
     <string name="create_report_finished_notice">Meldung erfolgreich abgeschickt.</string>
     <string name="create_report_upload_notice">Meldung wird hochgeladen, bitte warten…</string>
+    <string name="main_no_internet_notice">Es scheint als wärst du offline. Ein Teil der App wurde daher deaktiviert.
+    </string>
+    <string name="list_offline_notice">Es sind keine gecachten Daten vorhanden und der Server ist nicht erreichbar.
+    </string>
 </resources>

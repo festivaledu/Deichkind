@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">Deichkind</string>
+    <string name="app_name">Dykestra</string>
 
     <string name="main_drawer_close_description" translatable="false"></string>
     <string name="main_drawer_open_description" translatable="false"></string>
@@ -12,9 +12,12 @@
 
     <string name="main_sync_in_progress_notice">Sync in progress…</string>
     <string name="main_network_connection_required_notice">You need a network connection to do this</string>
+    <string name="main_no_internet_notice">You seem to be offline. Most of the app\'s functionality has been disabled.</string>
 
     <string name="main_tab_reports_name">Reports</string>
     <string name="main_tab_dykes_name">Dykes</string>
+
+    <string name="list_offline_notice">There is no cached data and the server couldn\'t be reached.</string>
 
     <string name="create_report_location_header">Location of this report</string>
     <string name="create_report_information_header">Information about this report</string>

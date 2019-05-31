@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken
 import edu.festival.deichkind.MainActivity
 import edu.festival.deichkind.adapters.DykeListAdapter
 import edu.festival.deichkind.loaders.DykeListAsyncTaskLoader
+import java.io.File
 
 class DykeListFragment : Fragment() {
 
@@ -73,7 +74,11 @@ class DykeListFragment : Fragment() {
             }
         }
 
-        loaderManager.initLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Dyke>>)
+        val networkInfo = (context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+
+        if (File(context?.filesDir, "dykes.json").exists() || (networkInfo != null && networkInfo.isConnected)) {
+            loaderManager.initLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Dyke>>)
+        }
     }
 
     /* private fun getDykes() = runBlocking(Dispatchers.Default) {

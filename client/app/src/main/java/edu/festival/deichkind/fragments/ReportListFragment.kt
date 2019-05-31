@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.design.widget.FloatingActionButton
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import edu.festival.deichkind.CreateReportActivity
 import edu.festival.deichkind.MainActivity
@@ -67,6 +69,8 @@ class ReportListFragment : Fragment() {
                 val reportListAdapter = ReportListAdapter(p1 as Array<Report>)
                 reportListAdapter.onItemClick = { report -> onItemClick(report) }
 
+                view.findViewById<LinearLayout>(R.id.report_list_offline_note).visibility = View.GONE
+
                 recyclerView.apply {
                     layoutManager = LinearLayoutManager(context)
                     adapter = reportListAdapter
@@ -78,7 +82,11 @@ class ReportListFragment : Fragment() {
             }
         }
 
-        loaderManager.initLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Report>>)
+        val networkInfo = (context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+
+        if (File(context?.filesDir, "reports.json").exists() || (networkInfo != null && networkInfo.isConnected)) {
+            loaderManager.initLoader(0, null, loaderCallbacks as LoaderManager.LoaderCallbacks<Array<Report>>)
+        }
 
         view.findViewById<FloatingActionButton>(R.id.report_list_fab).setOnClickListener {
             if (SessionManager.getInstance(null).session == null) {

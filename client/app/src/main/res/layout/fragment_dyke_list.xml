@@ -22,16 +22,8 @@
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:gravity="center"
-                android:text="You're offline!"
+                android:text="@string/list_offline_notice"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        />
-
-        <Button
-                android:id="@+id/dyke_list_refresh_button"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Refresh"
         />
     </LinearLayout>
 

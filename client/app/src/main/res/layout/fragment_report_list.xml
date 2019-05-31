@@ -4,7 +4,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context=".fragments.ReportsListFragment">
+             tools:context=".fragments.ReportListFragment">
 
     <android.support.design.widget.CoordinatorLayout
             android:layout_height="match_parent"
@@ -25,5 +25,21 @@
                 app:srcCompat="@drawable/ic_add_white_24dp"
         />
     </android.support.design.widget.CoordinatorLayout>
+
+    <LinearLayout
+            android:id="@+id/report_list_offline_note"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+    >
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="@string/list_offline_notice"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+    </LinearLayout>
 
 </FrameLayout>

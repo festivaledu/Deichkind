@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -20,9 +21,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import edu.festival.deichkind.fragments.DykeListFragment
-import edu.festival.deichkind.fragments.MainFragment
-import edu.festival.deichkind.fragments.ReportListFragment
+import edu.festival.deichkind.fragments.*
 import edu.festival.deichkind.models.RefreshTokenResult
 import edu.festival.deichkind.models.Session
 import edu.festival.deichkind.models.VerifyResponse
@@ -43,6 +42,8 @@ import java.net.URL
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var drawerLayout: DrawerLayout? = null
+
+    private var networkInfo: NetworkInfo? = null
 
     var dykeListFragment: DykeListFragment? = null
     var reportListFragment: ReportListFragment? = null
@@ -95,52 +96,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         navigationView.setNavigationItemSelectedListener(this)
 
+        networkInfo = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+
         val sharedPrefs = getSharedPreferences("ml.festival.edu.deichkind", Context.MODE_PRIVATE)
         val syncOnStartup = sharedPrefs.getBoolean("sync-data-on-startup-if-network-available", false)
-        if (syncOnStartup) {
-            val networkInfo = (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
+        if (syncOnStartup && networkInfo != null && (networkInfo as NetworkInfo).isConnected) {
+            val dykesFile = File(filesDir, "dykes.json")
+            val reportsFile = File(filesDir, "reports.json")
 
-            if (networkInfo != null && networkInfo.isConnected) {
-                val dykesFile = File(filesDir, "dykes.json")
-                val reportsFile = File(filesDir, "reports.json")
+            if (dykesFile.exists()) {
+                dykesFile.delete()
+            }
 
-                if (dykesFile.exists()) {
-                    dykesFile.delete()
-                }
-
-                if (reportsFile.exists()) {
-                    reportsFile.delete()
-                }
+            if (reportsFile.exists()) {
+                reportsFile.delete()
             }
         }
 
         val sessionFile = File(filesDir, "session.json")
-        if (sessionFile.exists()) {
-            SessionManager.getInstance(null).session = Gson().fromJson(sessionFile.readText(), object : TypeToken<Session>() {}.type)
+        if (networkInfo != null && (networkInfo as NetworkInfo).isConnected) {
+            if (sessionFile.exists()) {
+                SessionManager.getInstance(null).session = Gson().fromJson(sessionFile.readText(), object : TypeToken<Session>() {}.type)
 
-            GlobalScope.launch {
-                val verifyResponse = tryVerifyAsync().await()
+                GlobalScope.launch {
+                    val verifyResponse = tryVerifyAsync().await()
 
-                if (verifyResponse.auth) {
-                    SessionManager.getInstance(null).session?.authToken = verifyResponse.token
-                } else {
-                    val result = tryRefreshAsync(SessionManager.getInstance(null).session?.refreshToken as String).await()
-
-                    if (result.statusCode == 200) {
-                        val response: RefreshTokenResult = Gson().fromJson(result.rawResult, object : TypeToken<RefreshTokenResult>() {}.type)
-                        SessionManager.getInstance(null).session?.authToken = response.token
+                    if (verifyResponse.auth) {
+                        SessionManager.getInstance(null).session?.authToken = verifyResponse.token
                     } else {
-                        sessionFile.delete()
-                        SessionManager.getInstance(null).session = null
+                        val result = tryRefreshAsync(SessionManager.getInstance(null).session?.refreshToken as String).await()
+
+                        if (result.statusCode == 200) {
+                            val response: RefreshTokenResult = Gson().fromJson(result.rawResult, object : TypeToken<RefreshTokenResult>() {}.type)
+                            SessionManager.getInstance(null).session?.authToken = response.token
+                        } else {
+                            sessionFile.delete()
+                            SessionManager.getInstance(null).session = null
+                        }
+                    }
+
+                    SessionManager.getInstance(null).session?.avatar = BitmapHelper().getCircularBitmap(BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/account/" + SessionManager.getInstance(null).session?.id + "/avatar").openConnection().getInputStream()))
+
+                    runOnUiThread {
+                        checkSession()
                     }
                 }
-
-                SessionManager.getInstance(null).session?.avatar = BitmapHelper().getCircularBitmap(BitmapFactory.decodeStream(URL("https://edu.festival.ml/deichkind/api/account/" + SessionManager.getInstance(null).session?.id + "/avatar").openConnection().getInputStream()))
-
-                runOnUiThread {
-                    checkSession()
-                }
             }
+        } else {
+            NoInternetDialog().show(supportFragmentManager, "dialog")
         }
     }
 
