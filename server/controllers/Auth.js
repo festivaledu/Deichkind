@@ -61,7 +61,7 @@ router.post("/register", (req, res) => {
 				email: accountObj.email,
 				role: accountObj.role
 			}, JWT_REFRESH_SECRET, {
-				expiresIn: 86400
+				expiresIn: 1209600
 			});
 			
 			Token.create({
@@ -71,7 +71,7 @@ router.post("/register", (req, res) => {
 					refreshToken: refreshToken,
 					role: accountObj.role
 				},
-				expires: new Date(new Date().getTime() + (86400 * 1000))
+				expires: new Date(new Date().getTime() + (1209600 * 1000))
 			});
 			
 			return res
@@ -139,7 +139,7 @@ router.post("/login", (req, res) => {
 			email: accountObj.email,
 			role: accountObj.role
 		}, JWT_REFRESH_SECRET, {
-			expiresIn: 86400
+			expiresIn: 1209600
 		});
 		
 		Token.create({
@@ -149,7 +149,7 @@ router.post("/login", (req, res) => {
 				refreshToken: refreshToken,
 				role: accountObj.role
 			},
-			expires: new Date(new Date().getTime() + (86400 * 1000))
+			expires: new Date(new Date().getTime() + (1209600 * 1000))
 		});
 		
 		return res
