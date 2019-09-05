@@ -150,7 +150,12 @@ export default {
 				
 				let self = this;
 				
-				let comments = Array.prototype.concat.apply([], this.reportData.map(reportObj => reportObj.comments.map(commentObj => commentObj.accountId)));
+				let comments = Array.prototype.concat.apply(
+					[],
+					this.reportData.map(reportObj => reportObj.accountId),
+					this.reportData.map(reportObj => reportObj.comments.map(commentObj => commentObj.accountId)),
+					this.dykeData.map(dykeObj => dykeObj.accountId)
+				);
 				let users = [...new Set(comments)];
 				await asyncForEach(users, async (user, index) => {
 					var _userData = await AccountAPI.getUserById(user);
